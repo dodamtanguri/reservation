@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -36,5 +37,6 @@ public class CategoriesDAO {
         CategoriesApiDto categoriesApiDto = new CategoriesApiDto();
         categoriesApiDto.setItems(categoryList);
         return categoriesApiDto;
+
     }
 }

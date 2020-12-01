@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import kr.or.connect.reservation.dto.CategoriesDTO;
 import kr.or.connect.reservation.dto.api.CategoriesApiDto;
 import kr.or.connect.reservation.service.CategoriesService;
 import lombok.RequiredArgsConstructor;
@@ -29,4 +30,7 @@ public class CategoryApiController {
     public CategoriesApiDto categoriesApiDto() {
         return categoriesService.getCategories();
     }
+//   public CategoriesDTO categoriesDTO() {
+//        return categoriesService.getCategories();
+//    }
 }
