@@ -7,6 +7,7 @@ import java.util.List;
 public class CategoriesApiDto {
     private List<CategoriesDTO> items;
 
+
     public List<CategoriesDTO> getItems() {
         return items;
     }
