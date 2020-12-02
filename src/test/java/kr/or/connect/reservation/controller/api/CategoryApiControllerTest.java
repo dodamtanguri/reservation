@@ -15,13 +15,9 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -47,13 +43,14 @@ public class CategoryApiControllerTest {
     public void getCategory() throws Exception {
         CategoriesDTO categoriesDTO = new CategoriesDTO();
         categoriesDTO.setId(1010);
-        categoriesDTO.setCount(2020);
         categoriesDTO.setName("Hello Test");
-        List<CategoriesApiDto> items = Arrays.asList(new CategoriesApiDto());
-
+        categoriesDTO.setCount(2020);
+        List<CategoriesDTO> categoriesDTOList = Arrays.asList(categoriesDTO);
+        CategoriesApiDto categoriesApiDto = new CategoriesApiDto();
+        categoriesApiDto.setItems(categoriesDTOList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/categories").contentType(MediaType.APPLICATION_JSON);
-        when(categoriesService.getCategories()).thenReturn((CategoriesApiDto) items);
+        when(categoriesService.getCategories()).thenReturn(categoriesApiDto);
 
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
         verify(categoriesService).getCategories();

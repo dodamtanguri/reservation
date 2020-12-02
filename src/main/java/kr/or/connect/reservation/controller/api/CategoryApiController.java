@@ -30,7 +30,5 @@ public class CategoryApiController {
     public CategoriesApiDto categoriesApiDto() {
         return categoriesService.getCategories();
     }
-//   public CategoriesDTO categoriesDTO() {
-//        return categoriesService.getCategories();
-//    }
+
 }
