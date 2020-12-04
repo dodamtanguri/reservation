@@ -17,7 +17,4 @@ public class CategoriesServiceImpl implements CategoriesService {
     public CategoriesApiDto getCategories() {
         return categoriesDAO.getCategories();
     }
-//    public CategoriesDTO getCategories() {
-//        return categoriesDAO.getCategories();
-//    }
 }
