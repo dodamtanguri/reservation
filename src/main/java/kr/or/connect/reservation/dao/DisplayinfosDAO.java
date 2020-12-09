@@ -10,11 +10,13 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static kr.or.connect.reservation.dao.sql.DisplayinfosSQL.SELECT_PRODUCT_LIST;
+import static kr.or.connect.reservation.dao.sql.DisplayinfosSQL.SELECT_TOTAL_PRODUCT;
 
 @Repository
 public class DisplayinfosDAO {
@@ -51,6 +53,11 @@ public class DisplayinfosDAO {
             }
         });
 
+    }
+    public int getTotalCount (int categoryId) {
+        Map<String,Integer> params = new HashMap<>();
+        params.put("CATEGORYID",categoryId);
+        return jdbc.queryForObject(SELECT_TOTAL_PRODUCT,params,Integer.class);
     }
 }
 

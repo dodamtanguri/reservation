@@ -7,4 +7,5 @@ public interface DisplayinfosService {
     public static final Integer START = 0;
 
     public DisplayinfosApiDto getDisplayInfos(int categoryId);
+
 }

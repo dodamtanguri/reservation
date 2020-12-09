@@ -16,5 +16,5 @@ public class DisplayinfosSQL {
             "FROM product p inner Join display_info di  ON  p.id = di.product_id\n" +
             "INNER JOIN category c ON c.id = p.category_id\n" +
             "INNER JOIN display_info_image dii ON dii.display_info_id = di.id\n" +
-            "WHERE c.id = :categoryId";
+            "WHERE c.id = :CATEGORYID";
 }

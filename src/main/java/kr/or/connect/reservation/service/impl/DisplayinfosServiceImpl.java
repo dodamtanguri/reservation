@@ -18,6 +18,9 @@ public class DisplayinfosServiceImpl implements DisplayinfosService {
     public DisplayinfosApiDto getDisplayInfos(int categoryId) {
         DisplayinfosApiDto displayinfosApiDto = new DisplayinfosApiDto();
         displayinfosApiDto.setProducts(displayinfosDAO.getDisplayInfos(categoryId,DisplayinfosService.START));
+        displayinfosApiDto.setTotalCount(displayinfosDAO.getTotalCount(categoryId));
         return displayinfosApiDto;
     }
+
+
 }
