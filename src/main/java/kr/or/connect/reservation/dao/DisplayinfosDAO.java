@@ -21,7 +21,7 @@ import static kr.or.connect.reservation.dao.sql.DisplayinfosSQL.SELECT_PRODUCT_L
 @Repository
 public class DisplayinfosDAO {
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<DisplayinfosApiDto> rowMapper = BeanPropertyRowMapper.newInstance(DisplayinfosApiDto.class);
+//    private RowMapper<DisplayinfosApiDto> rowMapper = BeanPropertyRowMapper.newInstance(DisplayinfosApiDto.class);
 
     @Autowired
     public DisplayinfosDAO(DataSource dataSource) {
@@ -57,6 +57,7 @@ public class DisplayinfosDAO {
                 return displayinfosDTO;
             }
         });
+
     }
 }
 
