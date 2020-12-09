@@ -27,8 +27,8 @@ public class DisplayinfosServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        List<DisplayinfosDTO> displayinfosDTO = displayinfosService.getDisplayInfos(3);
-        when(displayinfosDAO.getDisplayInfos(3,0)).thenReturn(displayinfosDTO);
+       // List<DisplayinfosDTO> displayinfosDTO = displayinfosService.getDisplayInfos(3);
+        //when(displayinfosDAO.getDisplayInfos(3,0)).thenReturn(displayinfosDTO);
     }
 
 

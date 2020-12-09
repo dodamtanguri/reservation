@@ -1,10 +1,8 @@
 package kr.or.connect.reservation.dao;
 
-import kr.or.connect.reservation.dto.CategoriesDTO;
 import kr.or.connect.reservation.dto.DisplayinfosDTO;
 import kr.or.connect.reservation.dto.api.DisplayinfosApiDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,19 +19,15 @@ import static kr.or.connect.reservation.dao.sql.DisplayinfosSQL.SELECT_PRODUCT_L
 @Repository
 public class DisplayinfosDAO {
     private NamedParameterJdbcTemplate jdbc;
-//    private RowMapper<DisplayinfosApiDto> rowMapper = BeanPropertyRowMapper.newInstance(DisplayinfosApiDto.class);
-
     @Autowired
     public DisplayinfosDAO(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
-
     public List<DisplayinfosDTO> getDisplayInfos(Integer categoryId, Integer start) {
         Map<String, Integer> params = new HashMap<>();
         params.put("CATEGORYID", categoryId);
         params.put("START", start);
         return jdbc.query(SELECT_PRODUCT_LIST, params, new RowMapper<DisplayinfosDTO>() {
-            @Override
             public DisplayinfosDTO mapRow(ResultSet resultSet, int i) throws SQLException {
                 DisplayinfosDTO displayinfosDTO = new DisplayinfosDTO();
                 displayinfosDTO.setProductId(resultSet.getInt("productId"));
@@ -53,7 +47,6 @@ public class DisplayinfosDAO {
                 displayinfosDTO.setCreateDate(resultSet.getString("create_date"));
                 displayinfosDTO.setModifyDate(resultSet.getString("modify_date"));
                 displayinfosDTO.setFileId(resultSet.getInt("file_id"));
-
                 return displayinfosDTO;
             }
         });

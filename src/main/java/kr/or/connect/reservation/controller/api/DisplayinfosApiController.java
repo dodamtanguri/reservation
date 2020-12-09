@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.DisplayinfosDTO;
+import kr.or.connect.reservation.dto.api.DisplayinfosApiDto;
 import kr.or.connect.reservation.service.DisplayinfosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class DisplayinfosApiController {
             @ApiResponse(code = 500, message = "Exception")
     })
     @RequestMapping(value = "/displayinfos", method = RequestMethod.GET)
-    public List<DisplayinfosDTO> displayinfosDto(
+    public DisplayinfosApiDto displayinfosDto(
             @RequestParam(name = "START", required = false, defaultValue = "0") int start,
             @RequestParam(name = "categoryId", required = false, defaultValue = "1") int categoryId) {
         return displayinfosService.getDisplayInfos(categoryId);

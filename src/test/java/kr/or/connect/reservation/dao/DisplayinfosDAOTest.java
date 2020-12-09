@@ -13,8 +13,8 @@ public class DisplayinfosDAOTest {
         ApplicationContext ac = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         DisplayinfosDAO displayinfosDAO = ac.getBean(DisplayinfosDAO.class);
         DisplayinfosDTO displayinfosDTO = new DisplayinfosDTO();
-        List<DisplayinfosDTO> result = displayinfosDAO.getDisplayInfos(3,0);
-        System.out.println(result);
+        //List<DisplayinfosDTO> result = displayinfosDAO.getDisplayInfos(3,0);
+        //System.out.println(result);
     }
 
 }
