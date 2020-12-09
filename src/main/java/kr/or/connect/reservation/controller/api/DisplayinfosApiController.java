@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import kr.or.connect.reservation.dto.DisplayinfosDTO;
 import kr.or.connect.reservation.dto.api.DisplayinfosApiDto;
 import kr.or.connect.reservation.service.DisplayinfosService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @Api(tags = {"상품목록 API"})
 @RestController

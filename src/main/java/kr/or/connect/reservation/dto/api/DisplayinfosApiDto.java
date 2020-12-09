@@ -17,6 +17,7 @@ public class DisplayinfosApiDto {
 
     public void setProducts(List<DisplayinfosDTO> products) {
         this.products = products;
+        this.productCount = products.size();
     }
 
     public int getTotalCount() {

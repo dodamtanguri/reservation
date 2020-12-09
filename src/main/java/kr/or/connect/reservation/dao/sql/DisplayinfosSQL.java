@@ -11,7 +11,7 @@ public class DisplayinfosSQL {
             "INNER JOIN display_info_image dii ON dii.display_info_id = di.id\n" +
             "WHERE c.id = :CATEGORYID ORDER by p.id LIMIT :START, 4";
 
-    //
+
     public static final String SELECT_TOTAL_PRODUCT = "SELECT COUNT(p.id)\n" +
             "FROM product p inner Join display_info di  ON  p.id = di.product_id\n" +
             "INNER JOIN category c ON c.id = p.category_id\n" +
