@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.service.impl;
 
-import kr.or.connect.reservation.dto.CategoriesDTO;
+
 import kr.or.connect.reservation.service.CategoriesService;
 import kr.or.connect.reservation.dao.CategoriesDAO;
 import kr.or.connect.reservation.dto.api.CategoriesApiDto;
