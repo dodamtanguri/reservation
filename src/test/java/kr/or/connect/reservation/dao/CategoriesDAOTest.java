@@ -2,7 +2,6 @@ package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.config.ApplicationConfig;
 import kr.or.connect.reservation.dto.CategoriesDTO;
-import kr.or.connect.reservation.dto.api.CategoriesApiDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,5 @@ public class CategoriesDAOTest {
         ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         CategoriesDAO categoriesDAO = context.getBean("categoriesDAO", CategoriesDAO.class);
         CategoriesDTO categoriesDTO = new CategoriesDTO();
-
     }
-
-
 }
