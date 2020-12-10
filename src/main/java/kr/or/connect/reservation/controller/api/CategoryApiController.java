@@ -26,7 +26,7 @@ public class CategoryApiController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Exception")
     })
-    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    @GetMapping("/categories")
     public CategoriesApiDto categoriesApiDto() {
         return categoriesService.getCategories();
     }

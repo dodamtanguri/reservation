@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.api.PromotionApiDto;
 import kr.or.connect.reservation.service.PromotionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class PromotionApiController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Exception")
     })
-    @RequestMapping(value = "/promotions",method = RequestMethod.GET)
+    @GetMapping(value = "/promotions")
     public PromotionApiDto promotionApiDto(){
         return promotionService.getPromotions();
     }
