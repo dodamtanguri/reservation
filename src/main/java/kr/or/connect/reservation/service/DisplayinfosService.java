@@ -8,4 +8,5 @@ public interface DisplayinfosService {
 
     public DisplayinfosApiDto getDisplayInfos(int categoryId);
 
+
 }
