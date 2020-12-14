@@ -1,12 +1,12 @@
 package kr.or.connect.reservation.dto.api;
 
-import kr.or.connect.reservation.dto.PromotionDto;
+import kr.or.connect.reservation.dto.PromotionDTO;
 
 import java.util.List;
 
 public class PromotionApiDto {
     private int size;
-    private List<PromotionDto> items;
+    private List<PromotionDTO> items;
 
     public int getSize() {
         return size;
@@ -16,11 +16,11 @@ public class PromotionApiDto {
         this.size = size;
     }
 
-    public List<PromotionDto> getItems() {
+    public List<PromotionDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<PromotionDto> items) {
+    public void setItems(List<PromotionDTO> items) {
         this.size = items.size();
         this.items = items;
     }

@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dao.sql;
 
-public class DisplayinfosSQL {
+public class ProductsSQL {
     //전시 상품 정보
     public static final String SELECT_PRODUCT_LIST = "SELECT p.id AS 'productId', c.id AS 'categoryId', di.id AS 'displayInfoId',c.name, \n" +
             "p.description, p.content, p.event, \n" +
@@ -17,4 +17,5 @@ public class DisplayinfosSQL {
             "INNER JOIN category c ON c.id = p.category_id\n" +
             "INNER JOIN display_info_image dii ON dii.display_info_id = di.id\n" +
             "WHERE c.id = :CATEGORYID";
+
 }

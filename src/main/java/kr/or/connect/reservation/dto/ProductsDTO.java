@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dto;
 
-public class DisplayinfosDTO {
+public class ProductsDTO {
 
    private int productId;
    private int categoryId;

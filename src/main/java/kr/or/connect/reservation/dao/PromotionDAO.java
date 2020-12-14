@@ -1,7 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import kr.or.connect.reservation.dto.PromotionDto;
-import kr.or.connect.reservation.dto.api.DisplayinfosApiDto;
+import kr.or.connect.reservation.dto.PromotionDTO;
 import kr.or.connect.reservation.dto.api.PromotionApiDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,8 +21,8 @@ public class PromotionDAO {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
     public PromotionApiDto getPromotionList() {
-        List<PromotionDto> promotionDtoList = jdbc.query(SELECT_PROMOTION_LIST, (resultSet, rowNum) -> {
-            PromotionDto promotionDto = new PromotionDto();
+        List<PromotionDTO> promotionDtoList = jdbc.query(SELECT_PROMOTION_LIST, (resultSet, rowNum) -> {
+            PromotionDTO promotionDto = new PromotionDTO();
             promotionDto.setId(resultSet.getInt("PromotionId"));
             promotionDto.setProductId(resultSet.getInt("ProductId"));
             promotionDto.setCategoryId(resultSet.getInt("CategoryId"));
