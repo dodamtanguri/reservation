@@ -1,7 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import kr.or.connect.reservation.dto.DisplayinfosDTO;
-import kr.or.connect.reservation.dto.api.DisplayinfosApiDto;
+import kr.or.connect.reservation.dto.ProductsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,28 +9,28 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static kr.or.connect.reservation.dao.sql.DisplayinfosSQL.SELECT_PRODUCT_LIST;
-import static kr.or.connect.reservation.dao.sql.DisplayinfosSQL.SELECT_TOTAL_PRODUCT;
+import static kr.or.connect.reservation.dao.sql.ProductsSQL.*;
 
 @Repository
-public class DisplayinfosDAO {
+public class ProductsDAO {
     private NamedParameterJdbcTemplate jdbc;
+
     @Autowired
-    public DisplayinfosDAO(DataSource dataSource) {
+    public ProductsDAO(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
-    public List<DisplayinfosDTO> getDisplayInfos(Integer categoryId, Integer start) {
+
+    public List<ProductsDTO> getProducts(Integer categoryId, Integer start) {
         Map<String, Integer> params = new HashMap<>();
         params.put("CATEGORYID", categoryId);
         params.put("START", start);
-        return jdbc.query(SELECT_PRODUCT_LIST, params, new RowMapper<DisplayinfosDTO>() {
-            public DisplayinfosDTO mapRow(ResultSet resultSet, int i) throws SQLException {
-                DisplayinfosDTO displayinfosDTO = new DisplayinfosDTO();
+        return jdbc.query(SELECT_PRODUCT_LIST, params, new RowMapper<ProductsDTO>() {
+            public ProductsDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+                ProductsDTO displayinfosDTO = new ProductsDTO();
                 displayinfosDTO.setProductId(resultSet.getInt("productId"));
                 displayinfosDTO.setCategoryId(categoryId);
                 displayinfosDTO.setDisplayInfoId(resultSet.getInt("displayInfoId"));
@@ -54,10 +53,12 @@ public class DisplayinfosDAO {
         });
 
     }
-    public int getTotalCount (int categoryId) {
-        Map<String,Integer> params = new HashMap<>();
-        params.put("CATEGORYID",categoryId);
-        return jdbc.queryForObject(SELECT_TOTAL_PRODUCT,params,Integer.class);
+
+    public int getTotalCount(int categoryId) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("CATEGORYID", categoryId);
+        return jdbc.queryForObject(SELECT_TOTAL_PRODUCT, params, Integer.class);
     }
+
 }
 

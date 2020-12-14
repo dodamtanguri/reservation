@@ -1,21 +1,21 @@
 package kr.or.connect.reservation.dto.api;
 
-import kr.or.connect.reservation.dto.DisplayinfosDTO;
+import kr.or.connect.reservation.dto.ProductsDTO;
 
 import java.util.List;
 
-public class DisplayinfosApiDto {
+public class ProductsApiDTO {
     public static final Integer START = 0;
     private int totalCount; //해당 카테고리의 전시 상품 수
     private int productCount; //읽어온 전시 상품 수
-    private List<DisplayinfosDTO> products;
+    private List<ProductsDTO> products;
 
 
-    public List<DisplayinfosDTO> getProducts() {
+    public List<ProductsDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(List<DisplayinfosDTO> products) {
+    public void setProducts(List<ProductsDTO> products) {
         this.products = products;
         this.productCount = products.size();
     }
