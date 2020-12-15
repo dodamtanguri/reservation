@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl implements CommentService{
     private final CommentDAO commentDAO;
 
     @Override
@@ -17,6 +17,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentApitDTO getComment(Integer productId) {
         CommentApitDTO commentApitDTO = new CommentApitDTO();
         commentApitDTO.setReservationUserComments(commentDAO.getComment(productId));
+        commentApitDTO.setTotalCount(commentDAO.getTotalCount(productId));
         return commentApitDTO;
 
     }

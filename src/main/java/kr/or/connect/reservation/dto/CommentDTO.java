@@ -12,7 +12,7 @@ public class CommentDTO {
     private String comment;
     private String createDate;
     private String modifyDate;
-    private CommentImagesDTO reservationUserCommentImages;
+    private List<CommentImagesDTO> reservationUserCommentImages;
 
     public int getId() {
         return id;
@@ -79,13 +79,12 @@ public class CommentDTO {
     }
 
 
-
-    public void setReservationUserCommentImages(CommentImagesDTO reservationUserCommentImages) {
-        this.reservationUserCommentImages = reservationUserCommentImages;
+    public List<CommentImagesDTO> getReservationUserCommentImages() {
+        return reservationUserCommentImages;
     }
 
-    public CommentImagesDTO getReservationUserCommentImages() {
-        return reservationUserCommentImages;
+    public void setReservationUserCommentImages(List<CommentImagesDTO> reservationUserCommentImages) {
+        this.reservationUserCommentImages = reservationUserCommentImages;
     }
 
     @Override

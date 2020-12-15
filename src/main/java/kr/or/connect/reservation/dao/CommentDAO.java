@@ -9,8 +9,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,22 +45,20 @@ public class CommentDAO {
                 commentDTO.setCreateDate(resultSet.getString("create_date"));
                 commentDTO.setModifyDate(resultSet.getString("modify_date"));
 
-                CommentImagesDTO commentImagesDTO = new CommentImagesDTO();
-                commentImagesDTO = getCommentImage(resultSet.getInt("reservationInfoId"));
-
-                if (commentImagesDTO != null)
-                    commentDTO.setReservationUserCommentImages(commentImagesDTO);
+                List<CommentImagesDTO> commentImagesDTOS = getCommentImage(resultSet.getInt("reservationInfoId"));
+                if (commentImagesDTOS != null)
+                    commentDTO.setReservationUserCommentImages(commentImagesDTOS);
                 return commentDTO;
 
             }
         });
     }
 
-    public CommentImagesDTO getCommentImage(Integer productId) {
+    public List<CommentImagesDTO> getCommentImage(Integer productId) {
         Map<String, Object> params = new HashMap<>();
         params.put("productId", productId);
         try {
-            return jdbc.queryForObject(SELECT_COMMENT_IMAGE, params, new RowMapper<CommentImagesDTO>() {
+            return jdbc.query(SELECT_COMMENT_IMAGE, params, new RowMapper<CommentImagesDTO>() {
                 @Override
                 public CommentImagesDTO mapRow(ResultSet resultSet, int i) throws SQLException {
                     CommentImagesDTO commentImagesDTO = new CommentImagesDTO();
@@ -66,12 +66,20 @@ public class CommentDAO {
                     commentImagesDTO.setReservationId(resultSet.getInt("reservationInfoId"));
                     commentImagesDTO.setCommentImageId(resultSet.getInt("reservationCommentId"));
                     commentImagesDTO.setFileId(resultSet.getInt("file_id"));
+
+
                     return commentImagesDTO;
                 }
             });
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            return Collections.emptyList();
+
         }
 
+    }
+    public int getTotalCount(Integer productId) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("productId", productId);
+        return jdbc.queryForObject(SELECT_COMMENT_TOTALCOUNT,params,Integer.class);
     }
 }

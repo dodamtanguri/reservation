@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProductsApiController {
     private final ProductsService productsService;
-    //private final CommentService commentService;
 
     @ApiOperation(value = "상품 목록 구하기")
     @ApiResponses({
@@ -32,16 +31,5 @@ public class ProductsApiController {
             @RequestParam(name = "categoryId", required = false, defaultValue = "1") int categoryId) {
         return productsService.getProducts(categoryId);
     }
-//
-//    @ApiOperation(value = "댓글 목록 구하기")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "OK"),
-//            @ApiResponse(code = 500, message = "Exception")
-//    })
-//    @GetMapping(value = "/displayinfos")
-//    public CommentApitDTO commentApitDTO(
-//
-//            @RequestParam(name = "productId", required = false, defaultValue = "1") int productId) {
-//        return commentService.getComment(productId);
-//    }
+
 }
