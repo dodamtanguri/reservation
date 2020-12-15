@@ -54,16 +54,16 @@ public class CommentDAO {
         });
     }
 
-    public CommentImagesDTO getCommentImage(Integer reservationInfoId) {
+    public CommentImagesDTO getCommentImage(Integer productId) {
         Map<String, Object> params = new HashMap<>();
-        params.put("reservationInfoId", reservationInfoId);
+        params.put("productId", productId);
         try {
             return jdbc.queryForObject(SELECT_COMMENT_IMAGE, params, new RowMapper<CommentImagesDTO>() {
                 @Override
                 public CommentImagesDTO mapRow(ResultSet resultSet, int i) throws SQLException {
                     CommentImagesDTO commentImagesDTO = new CommentImagesDTO();
                     commentImagesDTO.setCommentImageId(resultSet.getInt("reservationCommentImageId"));
-                    commentImagesDTO.setReservationId(reservationInfoId);
+                    commentImagesDTO.setReservationId(resultSet.getInt("reservationInfoId"));
                     commentImagesDTO.setCommentImageId(resultSet.getInt("reservationCommentId"));
                     commentImagesDTO.setFileId(resultSet.getInt("file_id"));
                     return commentImagesDTO;

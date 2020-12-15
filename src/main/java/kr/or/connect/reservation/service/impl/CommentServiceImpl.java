@@ -12,15 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentServiceImpl implements CommentService {
     private final CommentDAO commentDAO;
 
-
-
     @Override
     @Transactional(readOnly = true)
-    public CommentApitDTO getComment() {
+    public CommentApitDTO getComment(Integer productId) {
         CommentApitDTO commentApitDTO = new CommentApitDTO();
+        commentApitDTO.setReservationUserComments(commentDAO.getComment(productId));
+        return commentApitDTO;
 
-        commentApitDTO.setReservationUserComments(commentDAO.getComment(productId).);
-
-        return null;
     }
 }

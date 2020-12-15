@@ -6,6 +6,6 @@ import kr.or.connect.reservation.dto.api.CommentApitDTO;
 
 public interface CommentService {
 
-    public CommentApitDTO getComment();
+    public CommentApitDTO getComment(Integer productId);
 
 }
