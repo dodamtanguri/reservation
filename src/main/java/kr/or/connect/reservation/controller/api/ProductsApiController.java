@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-@Api(tags = {"상품목록 API"})
+@Api(tags = {"상품 API"})
 @RestController
 @RequestMapping(value = "/api")
 @RequiredArgsConstructor
@@ -28,4 +28,5 @@ public class ProductsApiController {
             @RequestParam(name = "categoryId", required = false, defaultValue = "1") int categoryId) {
         return productsService.getProducts(categoryId);
     }
+
 }

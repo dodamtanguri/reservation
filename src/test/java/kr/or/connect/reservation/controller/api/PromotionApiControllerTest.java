@@ -31,11 +31,13 @@ public class PromotionApiControllerTest {
     @Mock
     PromotionService promotionService;
     private MockMvc mockMvc;
+
     @Before
     public void createController() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(promotionApiController).addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
     }
+
     @Test
     public void getPromotion() throws Exception {
         PromotionDTO promotionDto = new PromotionDTO();

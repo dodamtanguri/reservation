@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.service;
 
 
+import kr.or.connect.reservation.dto.api.CommentApitDTO;
 import kr.or.connect.reservation.dto.api.ProductsApiDTO;
 
 public interface ProductsService {

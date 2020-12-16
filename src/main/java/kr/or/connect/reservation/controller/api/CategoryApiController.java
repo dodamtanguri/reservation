@@ -4,13 +4,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import kr.or.connect.reservation.dto.CategoriesDTO;
 import kr.or.connect.reservation.dto.api.CategoriesApiDto;
 import kr.or.connect.reservation.service.CategoriesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"카테고리 API"})

@@ -38,9 +38,10 @@ public class ProductsApiControllerTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(productsApiController).addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
     }
-    //total Product
+
+
     @Test
-    public void getTotalCount() throws Exception {
+    public void getProducts() throws Exception {
         ProductsDTO productsDTO = new ProductsDTO();
         productsDTO.setProductId(1010);
         productsDTO.setCategoryId(1);
@@ -59,9 +60,10 @@ public class ProductsApiControllerTest {
         productsDTO.setCreateDate("생성시간");
         productsDTO.setModifyDate("수정시간");
         productsDTO.setFileId(2020);
-        List<ProductsDTO> displayinfosDTOList = Arrays.asList(productsDTO);
+
+        List<ProductsDTO> productsDTOS = Arrays.asList(productsDTO);
         ProductsApiDTO productsApiDTO = new ProductsApiDTO();
-        productsApiDTO.setProducts(displayinfosDTOList);
+        productsApiDTO.setProducts(productsDTOS);
         productsApiDTO.setTotalCount(1);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/displayinfos").contentType(MediaType.APPLICATION_JSON);

@@ -25,9 +25,9 @@ public class DisplayInfoApiController {
             @ApiResponse(code = 500, message = "Exception")
     })
     @GetMapping(value = "/displayinfos/{displayInfoId}")
-    public DisplayInfosApiDTO displayInfosApiDTO (
+    public DisplayInfosApiDTO displayInfosApiDTO(
             @RequestParam(name = "displayInfoId", required = false, defaultValue = "1") int displayInfoId) {
-                return displayInfoService.getDisplayInfos(displayInfoId);
+        return displayInfoService.getDisplayInfos(displayInfoId);
     }
 
 

@@ -20,6 +20,7 @@ public class PromotionDAO {
     public PromotionDAO(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
+
     public PromotionApiDto getPromotionList() {
         List<PromotionDTO> promotionDtoList = jdbc.query(SELECT_PROMOTION_LIST, (resultSet, rowNum) -> {
             PromotionDTO promotionDto = new PromotionDTO();

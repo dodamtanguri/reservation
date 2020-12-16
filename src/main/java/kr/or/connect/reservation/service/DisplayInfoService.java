@@ -4,6 +4,6 @@ import kr.or.connect.reservation.dto.api.DisplayInfosApiDTO;
 
 public interface DisplayInfoService {
 
-    public DisplayInfosApiDTO getDisplayInfos(int displayId);
+    public DisplayInfosApiDTO getDisplayInfos(int displayInfoId);
 
 }
