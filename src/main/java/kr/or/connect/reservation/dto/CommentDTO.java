@@ -1,8 +1,15 @@
 package kr.or.connect.reservation.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
+@Setter
+@ToString
 public class CommentDTO {
     private int id;
     private int productId;
@@ -14,91 +21,4 @@ public class CommentDTO {
     private String modifyDate;
     private List<CommentImagesDTO> reservationUserCommentImages;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getReservationInfoId() {
-        return reservationInfoId;
-    }
-
-    public void setReservationInfoId(int reservationInfoId) {
-        this.reservationInfoId = reservationInfoId;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public String getReservationEmail() {
-        return reservationEmail;
-    }
-
-    public void setReservationEmail(String reservationEmail) {
-        this.reservationEmail = reservationEmail;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(String modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-
-    public List<CommentImagesDTO> getReservationUserCommentImages() {
-        return reservationUserCommentImages;
-    }
-
-    public void setReservationUserCommentImages(List<CommentImagesDTO> reservationUserCommentImages) {
-        this.reservationUserCommentImages = reservationUserCommentImages;
-    }
-
-    @Override
-    public String toString() {
-        return "CommentDTO{" +
-                "id=" + id +
-                ", productId=" + productId +
-                ", reservationInfoId=" + reservationInfoId +
-                ", score=" + score +
-                ", reservationEmail='" + reservationEmail + '\'' +
-                ", comment='" + comment + '\'' +
-                ", createDate='" + createDate + '\'' +
-                ", modifyDate='" + modifyDate + '\'' +
-                ", reservationUserCommentImages=" + reservationUserCommentImages +
-                '}';
-    }
 }
