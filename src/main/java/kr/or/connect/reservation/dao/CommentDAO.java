@@ -25,13 +25,14 @@ public class CommentDAO {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<CommentDTO> getComment(Integer productId) {
+    public List<CommentDTO> getComment(int productId, int start) {
         Map<String, Integer> params = new HashMap<>();
         params.put("productId", productId);
+        params.put("START", start);
         return jdbc.query(SELECT_COMMENT_LIST, params, (resultSet, i) -> {
             CommentDTO commentDTO = new CommentDTO();
             commentDTO.setId(resultSet.getInt("id"));
-            commentDTO.setProductId(resultSet.getInt("productId"));
+            commentDTO.setProductId(productId);
             commentDTO.setReservationInfoId(resultSet.getInt("reservationInfoId"));
             commentDTO.setScore(resultSet.getInt("score"));
             commentDTO.setReservationEmail(resultSet.getString("reservationEmail"));

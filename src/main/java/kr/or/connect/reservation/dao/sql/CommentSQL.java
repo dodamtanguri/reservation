@@ -4,7 +4,7 @@ public class CommentSQL {
     public static final String SELECT_COMMENT_LIST = " SELECT ruc.id, ruc.product_id as 'productId',ruc.reservation_info_id as 'reservationInfoId', ruc.score,u.email as 'reservationEmail',\n" +
             " ruc.comment, ruc.create_date, ruc.modify_date \n" +
             " FROM reservation_user_comment ruc inner join `user` u on ruc.user_id = u.id \n" +
-            " WHERE ruc.product_id  = :productId ORDER by ruc.id DESC LIMIT 0, 5";
+            " WHERE ruc.product_id  = :productId ORDER by ruc.id DESC LIMIT :START, 5";
     public static final String SELECT_COMMENT_TOTALCOUNT =" SELECT COUNT(ruc.id)\n" +
             " FROM reservation_user_comment ruc inner join `user` u on ruc.user_id = u.id \n" +
             " WHERE ruc.product_id  = :productId";

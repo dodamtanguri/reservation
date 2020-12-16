@@ -26,7 +26,7 @@ public class ProductsApiController {
     public ProductsApiDTO productsApiDTO(
             @RequestParam(name = "START", required = false, defaultValue = "0") int start,
             @RequestParam(name = "categoryId", required = false, defaultValue = "1") int categoryId) {
-        return productsService.getProducts(categoryId);
+        return productsService.getProducts(categoryId,start);
     }
 
 }

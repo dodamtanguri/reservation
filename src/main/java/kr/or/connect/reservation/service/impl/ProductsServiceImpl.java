@@ -18,9 +18,9 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     @Transactional(readOnly = true)
-    public ProductsApiDTO getProducts(int categoryId) {
+    public ProductsApiDTO getProducts(int categoryId, int start) {
         ProductsApiDTO productsApiDTO = new ProductsApiDTO();
-        productsApiDTO.setProducts(productsDAO.getProducts(categoryId, ProductsService.START));
+        productsApiDTO.setProducts(productsDAO.getProducts(categoryId, start));
         productsApiDTO.setTotalCount(productsDAO.getTotalCount(categoryId));
         return productsApiDTO;
     }

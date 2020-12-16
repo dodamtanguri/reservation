@@ -14,9 +14,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public CommentApitDTO getComment(Integer productId) {
+    public CommentApitDTO getComment(int productId, int start) {
         CommentApitDTO commentApitDTO = new CommentApitDTO();
-        commentApitDTO.setReservationUserComments(commentDAO.getComment(productId));
+        commentApitDTO.setReservationUserComments(commentDAO.getComment(productId,start));
         commentApitDTO.setTotalCount(commentDAO.getTotalCount(productId));
         return commentApitDTO;
 

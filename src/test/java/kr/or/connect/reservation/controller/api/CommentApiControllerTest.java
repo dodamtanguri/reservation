@@ -73,11 +73,11 @@ public class CommentApiControllerTest {
         commentApitDTO.setTotalCount(5);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/displayinfos/comment").contentType(MediaType.APPLICATION_JSON);
-        when(commentService.getComment(1)).thenReturn(commentApitDTO);
+        when(commentService.getComment(1,0)).thenReturn(commentApitDTO);
 
 
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
-        verify(commentService).getComment(1);
+        verify(commentService).getComment(1,0);
 
 
     }

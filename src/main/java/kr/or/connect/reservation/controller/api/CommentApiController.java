@@ -26,8 +26,8 @@ public class CommentApiController {
     })
     @GetMapping(value = "/displayinfos/comment")
     public CommentApitDTO commentApitDTO(
-
+            @RequestParam(name = "START", required = false, defaultValue = "0") int start,
             @RequestParam(name = "productId", required = false, defaultValue = "1") int productId) {
-        return commentService.getComment(productId);
+        return commentService.getComment(productId,start);
     }
 }
