@@ -59,9 +59,9 @@ public class ProductsApiControllerTest {
         productsDTO.setCreateDate("생성시간");
         productsDTO.setModifyDate("수정시간");
         productsDTO.setFileId(2020);
-        List<ProductsDTO> displayinfosDTOList = Arrays.asList(productsDTO);
+        List<ProductsDTO> productsDTOS = Arrays.asList(productsDTO);
         ProductsApiDTO productsApiDTO = new ProductsApiDTO();
-        productsApiDTO.setProducts(displayinfosDTOList);
+        productsApiDTO.setProducts(productsDTOS);
         productsApiDTO.setTotalCount(1);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/displayinfos").contentType(MediaType.APPLICATION_JSON);
