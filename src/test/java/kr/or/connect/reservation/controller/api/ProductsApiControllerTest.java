@@ -5,6 +5,7 @@ import kr.or.connect.reservation.dto.api.ProductsApiDTO;
 import kr.or.connect.reservation.service.ProductsService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -59,6 +60,7 @@ public class ProductsApiControllerTest {
         productsDTO.setCreateDate("생성시간");
         productsDTO.setModifyDate("수정시간");
         productsDTO.setFileId(2020);
+
         List<ProductsDTO> productsDTOS = Arrays.asList(productsDTO);
         ProductsApiDTO productsApiDTO = new ProductsApiDTO();
         productsApiDTO.setProducts(productsDTOS);

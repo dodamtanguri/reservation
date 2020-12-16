@@ -14,5 +14,5 @@ public class PromotionDTO {
     private String categoryName;
     private String productDescription;
     private int fileId;
-    
+
 }
