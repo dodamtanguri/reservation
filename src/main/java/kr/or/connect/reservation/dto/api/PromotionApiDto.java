@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+
 public class PromotionApiDto {
     private int size;
     private List<PromotionDTO> items;
@@ -19,6 +19,5 @@ public class PromotionApiDto {
         this.size = items.size();
         this.items = items;
     }
-
 
 }

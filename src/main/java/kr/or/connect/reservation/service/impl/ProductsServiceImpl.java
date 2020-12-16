@@ -1,8 +1,7 @@
 package kr.or.connect.reservation.service.impl;
 
-import kr.or.connect.reservation.dao.CommentDAO;
+
 import kr.or.connect.reservation.dao.ProductsDAO;
-import kr.or.connect.reservation.dto.api.CommentApitDTO;
 import kr.or.connect.reservation.dto.api.ProductsApiDTO;
 import kr.or.connect.reservation.service.ProductsService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ public class ProductsServiceImpl implements ProductsService {
         productsApiDTO.setTotalCount(productsDAO.getTotalCount(categoryId));
         return productsApiDTO;
     }
-
 
 
 }

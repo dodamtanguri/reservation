@@ -5,7 +5,6 @@ import kr.or.connect.reservation.dto.api.ProductsApiDTO;
 import kr.or.connect.reservation.service.ProductsService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -39,9 +38,10 @@ public class ProductsApiControllerTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(productsApiController).addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
     }
-    //total Product
+
+
     @Test
-    public void getTotalCount() throws Exception {
+    public void getProducts() throws Exception {
         ProductsDTO productsDTO = new ProductsDTO();
         productsDTO.setProductId(1010);
         productsDTO.setCategoryId(1);

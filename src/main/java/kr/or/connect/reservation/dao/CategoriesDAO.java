@@ -18,13 +18,13 @@ public class CategoriesDAO {
 
     private NamedParameterJdbcTemplate jdbc;
 
-    //JDBC
+
     @Autowired
     public CategoriesDAO(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    //Category 의 id, 이름, counts
+
     public CategoriesApiDto getCategories() {
         List<CategoriesDTO> categoryList = jdbc.query(SELECT_CATEGORY, (resultSet, rowNum) -> {
             CategoriesDTO categoriesDTO = new CategoriesDTO();

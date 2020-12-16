@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class CategoriesApiDto {
     private int size;
     private List<CategoriesDTO> items;

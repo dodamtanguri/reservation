@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+
 public class PromotionDTO {
     private int id;
     private int productId;
@@ -14,5 +14,4 @@ public class PromotionDTO {
     private String categoryName;
     private String productDescription;
     private int fileId;
-
 }

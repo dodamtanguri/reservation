@@ -9,7 +9,6 @@ import kr.or.connect.reservation.service.PromotionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"프로모션 API"})
@@ -26,7 +25,7 @@ public class PromotionApiController {
             @ApiResponse(code = 500, message = "Exception")
     })
     @GetMapping(value = "/promotions")
-    public PromotionApiDto promotionApiDto(){
+    public PromotionApiDto promotionApiDto() {
         return promotionService.getPromotions();
     }
 }

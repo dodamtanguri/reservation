@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class CommentImagesDTO {
     private int commentImageId;
     private int reservationId;

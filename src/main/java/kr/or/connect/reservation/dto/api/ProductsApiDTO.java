@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class ProductsApiDTO {
     public static final Integer START = 0;
     private int totalCount; //해당 카테고리의 전시 상품 수

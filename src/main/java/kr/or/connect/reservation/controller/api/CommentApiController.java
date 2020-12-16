@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.api.CommentApitDTO;
-import kr.or.connect.reservation.dto.api.ProductsApiDTO;
 import kr.or.connect.reservation.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CommentApiController {
     private final CommentService commentService;
+
     @ApiOperation(value = "댓글 목록 구하기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),

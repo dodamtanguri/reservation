@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class ProductImagesDTO {
     private int productId;
     private int productImageId;

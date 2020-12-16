@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class CommentApitDTO {
     private int totalCount;
     private int commentCount;

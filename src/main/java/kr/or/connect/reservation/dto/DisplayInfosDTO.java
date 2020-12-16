@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class DisplayInfosDTO {
     private int productId;
     private int categoryId;

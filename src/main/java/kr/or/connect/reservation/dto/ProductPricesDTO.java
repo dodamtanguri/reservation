@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class ProductPricesDTO {
     private int productPriceId;
     private int productId;

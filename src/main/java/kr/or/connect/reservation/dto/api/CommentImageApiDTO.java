@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class CommentImageApiDTO {
     private List<CommentImagesDTO> reservationUserCommentImages;
 

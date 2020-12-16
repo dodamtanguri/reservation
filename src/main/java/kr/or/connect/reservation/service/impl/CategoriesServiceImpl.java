@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CategoriesServiceImpl implements CategoriesService {
-   private final CategoriesDAO categoriesDAO;
+    private final CategoriesDAO categoriesDAO;
+
     @Override
     @Transactional(readOnly = true)
     public CategoriesApiDto getCategories() {

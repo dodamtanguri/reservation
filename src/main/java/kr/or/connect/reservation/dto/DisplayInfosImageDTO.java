@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class DisplayInfosImageDTO {
     private int displayInfoImageId;
     private int displayInfoId;

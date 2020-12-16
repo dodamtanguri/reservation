@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+
 public class CommentDTO {
     private int id;
     private int productId;
