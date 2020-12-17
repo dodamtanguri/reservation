@@ -22,9 +22,13 @@ public class ProductsDAO {
     }
 
     public List<ProductsDTO> getProducts(Integer categoryId, Integer start) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("CATEGORYID", categoryId);
-        params.put("START", start);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("CATEGORYID", categoryId);
+                put("START", start);
+            }
+        };
+
         return jdbc.query(SELECT_PRODUCT_LIST, params, (resultSet, i) -> {
             ProductsDTO displayinfosDTO = new ProductsDTO();
             displayinfosDTO.setProductId(resultSet.getInt("productId"));
@@ -50,8 +54,12 @@ public class ProductsDAO {
     }
 
     public int getTotalCount(int categoryId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("CATEGORYID", categoryId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("CATEGORYID", categoryId);
+            }
+        };
+
         return jdbc.queryForObject(SELECT_TOTAL_PRODUCT, params, Integer.class);
     }
 

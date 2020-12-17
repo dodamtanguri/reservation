@@ -67,10 +67,10 @@ public class ProductsApiControllerTest {
         productsApiDTO.setTotalCount(1);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/displayinfos").contentType(MediaType.APPLICATION_JSON);
-        when(productsService.getProducts(1,0)).thenReturn(productsApiDTO);
+        when(productsService.getProducts(1, 0)).thenReturn(productsApiDTO);
 
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
-        verify(productsService).getProducts(1,0);
+        verify(productsService).getProducts(1, 0);
 
     }
 }

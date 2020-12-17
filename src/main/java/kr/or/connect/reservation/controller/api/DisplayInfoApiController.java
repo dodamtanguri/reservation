@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.api.DisplayInfosApiDTO;
 import kr.or.connect.reservation.service.DisplayInfoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"전시정보 API"})
 @RestController
@@ -26,7 +23,7 @@ public class DisplayInfoApiController {
     })
     @GetMapping(value = "/displayinfos/{displayInfoId}")
     public DisplayInfosApiDTO displayInfosApiDTO(
-            @RequestParam(name = "displayInfoId", required = false, defaultValue = "1") int displayInfoId) {
+            @PathVariable(name = "displayInfoId") int displayInfoId) {
         return displayInfoService.getDisplayInfos(displayInfoId);
     }
 

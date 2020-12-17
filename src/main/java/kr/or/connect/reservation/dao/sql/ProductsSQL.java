@@ -1,7 +1,7 @@
 package kr.or.connect.reservation.dao.sql;
 
 public class ProductsSQL {
-    //전시 상품 정보
+
     public static final String SELECT_PRODUCT_LIST = "SELECT p.id AS 'productId', c.id AS 'categoryId', di.id AS 'displayInfoId',c.name, \n" +
             "p.description, p.content, p.event, \n" +
             "di.opening_hours, di.place_name, di.place_lot,  di.place_street, \n" +

@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.dao;
 
+import io.swagger.models.auth.In;
 import kr.or.connect.reservation.dto.CommentDTO;
 import kr.or.connect.reservation.dto.CommentImagesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,13 @@ public class CommentDAO {
     }
 
     public List<CommentDTO> getComment(int productId, int start) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("productId", productId);
-        params.put("START", start);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("productId", productId);
+                put("START", start);
+            }
+        };
+
         return jdbc.query(SELECT_COMMENT_LIST, params, (resultSet, i) -> {
             CommentDTO commentDTO = new CommentDTO();
             commentDTO.setId(resultSet.getInt("id"));
@@ -49,8 +54,12 @@ public class CommentDAO {
     }
 
     public List<CommentImagesDTO> getCommentImage(Integer productId) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("productId", productId);
+        Map<String, Object> params = new HashMap<String, Object>() {
+            {
+                put("productId", productId);
+            }
+        };
+
         try {
             return jdbc.query(SELECT_COMMENT_IMAGE, params, (resultSet, i) -> {
                 CommentImagesDTO commentImagesDTO = new CommentImagesDTO();
@@ -70,8 +79,12 @@ public class CommentDAO {
     }
 
     public int getTotalCount(Integer productId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("productId", productId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("productId", productId);
+            }
+        };
+
         return jdbc.queryForObject(SELECT_COMMENT_TOTALCOUNT, params, Integer.class);
     }
 }

@@ -23,8 +23,11 @@ public class DisplayInfosDAO {
     }
 
     public List<DisplayInfosDTO> getProduct(Integer displayInfoId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("displayInfoId", displayInfoId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("displayInfoId", displayInfoId);
+            }
+        };
         return jdbc.query(SELECT_DISPLAYINFO_BY_PRODUCT, params, (resultSet, i) -> {
             DisplayInfosDTO displayInfosDTO = new DisplayInfosDTO();
             displayInfosDTO.setProductId(resultSet.getInt("productId"));
@@ -49,8 +52,11 @@ public class DisplayInfosDAO {
     }
 
     public List<ProductImagesDTO> getProductImage(Integer displayInfoId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("displayInfoId", displayInfoId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("displayInfoId", displayInfoId);
+            }
+        };
         return jdbc.query(SELECT_DISPLAYINFO_BY_PRODUCT_IMAGE, params, (resultSet, i) -> {
             ProductImagesDTO productImagesDTO = new ProductImagesDTO();
             productImagesDTO.setProductId(resultSet.getInt("productId"));
@@ -68,8 +74,11 @@ public class DisplayInfosDAO {
     }
 
     public List<DisplayInfosImageDTO> getDisplayinfoImage(Integer displayInfoId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("displayInfoId", displayInfoId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("displayInfoId", displayInfoId);
+            }
+        };
         return jdbc.query(SELECT_DISPLAYINFO_IMAGE, params, (resultSet, i) -> {
             DisplayInfosImageDTO displayInfosImageDTO = new DisplayInfosImageDTO();
             displayInfosImageDTO.setDisplayInfoImageId(resultSet.getInt("id"));
@@ -86,14 +95,20 @@ public class DisplayInfosDAO {
     }
 
     public int avgScore(Integer displayInfoId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("displayInfoId", displayInfoId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("displayInfoId", displayInfoId);
+            }
+        };
         return jdbc.queryForObject(SELECT_COMMENT_AVERAGE, params, Integer.class);
     }
 
     public List<ProductPricesDTO> getProductPrices(Integer displayInfoId) {
-        Map<String, Integer> params = new HashMap<>();
-        params.put("displayInfoId", displayInfoId);
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("displayInfoId", displayInfoId);
+            }
+        };
         return jdbc.query(SELECT_PRODUCT_PRICES, params, (resultSet, i) -> {
             ProductPricesDTO productPricesDTO = new ProductPricesDTO();
             productPricesDTO.setProductPriceId(resultSet.getInt("id"));
