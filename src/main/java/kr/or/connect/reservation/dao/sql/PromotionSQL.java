@@ -6,7 +6,7 @@ public class PromotionSQL {
             "inner join category c on p.category_id = c.id \n" +
             "inner join product_image pi1 on p.id = pi1.product_id \n" +
             "inner join file_info fi  on pi1.file_id = fi.id \n" +
-            "WHERE pi1.type = 'ma' GROUP BY pr.id";
+            "WHERE pi1.type = 'ma'";
 
 
 
