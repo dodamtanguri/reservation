@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"kr.or.connect.reservation.controller.api"})
+@ComponentScan(basePackages = {"kr.or.connect.reservation.controller.api", "kr.or.connect.reservation.controller"})
 @PropertySource(value = {"classpath:application.properties"})
 @Import({SwaggerConfig.class})
 @RequiredArgsConstructor
@@ -48,6 +48,7 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
+
 
     }
 
