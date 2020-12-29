@@ -16,8 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
-      "/",
-      "login"
+            "/",
+            "login"
     };
     @Autowired
     CustomUserDetailsService customUserDetailsService;
@@ -44,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/users/loginerror").permitAll()
-                .antMatchers("api/reservationInfos","/api/categories").hasRole("USER")
+                .antMatchers("/", "/users/loginerror").permitAll()
+                .antMatchers("api/reservationInfos", "/api/categories").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
