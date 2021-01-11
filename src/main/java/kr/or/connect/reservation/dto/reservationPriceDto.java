@@ -10,6 +10,4 @@ public class reservationPriceDto {
     private int reservationId;
     private int productPriceId;
     private int count;
-
-
 }

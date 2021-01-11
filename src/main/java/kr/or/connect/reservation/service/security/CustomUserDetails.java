@@ -1,11 +1,15 @@
 package kr.or.connect.reservation.service.security;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-
+@Getter
+@Setter
 public class CustomUserDetails implements UserDetails {
+    private int userId;
     private String username;
     private String password;
     private boolean isEnabled;
@@ -13,6 +17,7 @@ public class CustomUserDetails implements UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private Collection<? extends GrantedAuthority> authorities;
+
 
     @Override
     public String getUsername() {

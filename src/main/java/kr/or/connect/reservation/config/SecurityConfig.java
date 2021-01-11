@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/users/loginform")
                 .usernameParameter("userId")
                 .passwordParameter("password")
-                .loginProcessingUrl("/users/loginform/authenticate")
+                .loginProcessingUrl("/users/loginform/authenticate")    // 이거 어딧어?
                 .failureForwardUrl("/users/loginerror?login_error=1")
                 .defaultSuccessUrl("/", true)
                 .permitAll()

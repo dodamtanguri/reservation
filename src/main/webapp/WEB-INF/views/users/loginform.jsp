@@ -10,7 +10,7 @@
 <body>
 <div>
     <div>
-        <form method="post" action="/users/loginform/authenticate">
+        <form method="post" action="/users/loginform/authenticate"> <!-- API가 어딧어??? -->
             <div>
                 <label>ID</label>
                 <input type="text" name="userId">
