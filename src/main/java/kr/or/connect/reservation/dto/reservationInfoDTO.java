@@ -16,14 +16,11 @@ public class reservationInfoDTO {
     private LocalDate reservationDate;
     private int cancelFlag;
     private LocalDate createDate = LocalDate.now();
-    private LocalDate modifyDate;
+    private LocalDate modifyDate = LocalDate.now();
 
 
     public void setreservationDate(Timestamp reservationDate) {
         this.reservationDate = reservationDate != null ? reservationDate.toLocalDateTime().toLocalDate() : null;
     }
 
-    public void setmodifyDate(Timestamp modifyDate) {
-        this.modifyDate = modifyDate != null ? modifyDate.toLocalDateTime().toLocalDate() : null;
-    }
 }
