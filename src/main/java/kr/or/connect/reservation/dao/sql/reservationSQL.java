@@ -7,4 +7,6 @@ public class reservationSQL {
             //reservationinfos_prices
     public static final String INSERT_RESERVATION_PRICES = "INSERT INTO reservation_info_price VALUES (default,:reservationId,:productPriceId,:count)";
 
+    public static final String SELECT_RESERVATION_INFOS= "select * from reservation_info where reservation_info_id = :reservationInfoId";
+    public static final String SELECT_RESERVATION_PRICES= "SELECT * from reservation_info_price where reservation_info_id = :reservationInfoId";
 }

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class ReservationPriceBody {
     private int count;
-    private int product_price_id;
+    private int productId;
 }

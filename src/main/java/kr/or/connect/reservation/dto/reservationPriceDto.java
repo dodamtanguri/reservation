@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class reservationPriceDto {
     private int id;
-    private int reservation_info_id;
-    private int product_price_id;
+    private int reservationInfoId;
+    private int productPriceId;
     private int count;
 }
