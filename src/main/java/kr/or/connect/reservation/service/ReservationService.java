@@ -1,16 +1,17 @@
 package kr.or.connect.reservation.service;
 
-import kr.or.connect.reservation.dto.ReservationBody;
-import kr.or.connect.reservation.dto.ReservationDTO;
-import kr.or.connect.reservation.dto.ReservationPriceBody;
+import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.Body.ReservationPriceBody;
+import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
-import kr.or.connect.reservation.dto.reservationInfoDTO;
 import kr.or.connect.reservation.service.security.UserDbService;
 
-public interface ReservationService extends UserDbService {
-    void insertInfo (ReservationBody body);
-    void insertPrice (ReservationPriceBody priceBody);
+import java.util.List;
 
-    ReservationApiDTO getReservationInfo (ReservationDTO dto);
-
+public interface ReservationService {
+    int insertReservationInfo(ReservationApiDTO reservationApiDTO);
+    ReservationApiDTO insertInfoAndPrices(ReservationApiDTO reservationApiDTO);
+    void insertReservationPrice(ReservationApiDTO reservationApiDTO, int reservationInfoId);
+    List<ReservationPrice> getReservationPrice(int reservationInfoId);
+    ReservationApiDTO getReservationResponse(int reservationInfoId);
 }

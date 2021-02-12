@@ -4,7 +4,6 @@ import kr.or.connect.reservation.dao.UserDAO;
 import kr.or.connect.reservation.dao.UserRoleDAO;
 import kr.or.connect.reservation.dto.UserDto;
 import kr.or.connect.reservation.dto.UserRoleDto;
-import kr.or.connect.reservation.dto.reservationInfoDTO;
 import kr.or.connect.reservation.service.UserService;
 import kr.or.connect.reservation.service.security.UserEntity;
 import kr.or.connect.reservation.service.security.UserRoleEntity;
@@ -29,9 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public reservationInfoDTO getUser(String loginUserId) {
+    public UserEntity getUser(String loginUserId) {
         UserDto userDto = userDAO.getUserByEmail(loginUserId);
-        return new UserEntity(userDto.getId(),userDto.getEmail(), userDto.getPassword());
+        return new UserEntity(userDto.getId(), userDto.getEmail(), userDto.getPassword());
     }
 
 

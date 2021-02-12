@@ -2,8 +2,7 @@ package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.config.ApplicationConfig;
 import kr.or.connect.reservation.config.SecurityConfig;
-import kr.or.connect.reservation.dto.reservationInfoDTO;
-import kr.or.connect.reservation.dto.reservationPriceDto;
+import kr.or.connect.reservation.dto.ReservationInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ApplicationConfig.class, SecurityConfig.class})
@@ -35,7 +33,7 @@ public class reservationDAOTest {
     DataSource dataSource;
 
     @Autowired
-    reservationDAO dao;
+    ReservationInfoDAO dao;
 
     @Autowired
     private WebApplicationContext context;
@@ -65,13 +63,13 @@ public class reservationDAOTest {
     @DisplayName("예약 정보 등록")
 
     public void insertInfo() throws Exception {
-        reservationInfoDTO infoDTO = new reservationInfoDTO();
+        ReservationInfo infoDTO = new ReservationInfo();
 
         LocalDate date = LocalDate.of(2020, 10, 10);
         //https://jojoldu.tistory.com/416 >> 테스트 코드에서 날짜 고정
         infoDTO.setId(1010);
         infoDTO.setProductId(1);
-        infoDTO.setDisplay_info_id(1);
+        infoDTO.setDisplayInfoId(1);
         infoDTO.setUserId(2);
         infoDTO.setreservationDate(new Timestamp(System.currentTimeMillis()));
         infoDTO.setCancelFlag(0);

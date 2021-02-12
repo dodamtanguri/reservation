@@ -5,7 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ReservationPriceBody {
+public class ReservationPrice {
+    private int id;
+    private int reservationInfoId;
+    private int productPriceId;
     private int count;
-    private int productId;
 }

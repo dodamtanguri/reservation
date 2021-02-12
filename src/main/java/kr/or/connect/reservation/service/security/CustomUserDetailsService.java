@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Qualifier("userServiceImpl")
+
     @Autowired
     UserDbService userdbService;
 

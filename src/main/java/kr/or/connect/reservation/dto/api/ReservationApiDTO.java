@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dto.api;
 
-import kr.or.connect.reservation.dto.reservationPriceDto;
+import kr.or.connect.reservation.dto.ReservationPrice;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class ReservationApiDTO {
-
-
-
     private int id;
     private int productId;
     private int displayInfoId;
@@ -22,7 +19,7 @@ public class ReservationApiDTO {
     private int cancelFlag;
     private LocalDate createDate = LocalDate.now();
     private LocalDate modifyDate = LocalDate.now();
-    private List<reservationPriceDto> prices;
+    private List<ReservationPrice> prices;
 
 
 

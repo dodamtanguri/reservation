@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class reservationInfoDTO {
+public class ReservationInfo {
     private int id;
     private int productId;
-    private int display_info_id;
+    private int displayInfoId;
     private int userId;
     private LocalDate reservationDate;
     private int cancelFlag;

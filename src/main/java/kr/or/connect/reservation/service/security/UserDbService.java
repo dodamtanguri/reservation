@@ -1,11 +1,11 @@
 package kr.or.connect.reservation.service.security;
 
-import kr.or.connect.reservation.dto.reservationInfoDTO;
+import kr.or.connect.reservation.dto.ReservationInfo;
 
 import java.util.List;
 
 public interface UserDbService {
-    reservationInfoDTO getUser(String loginId);
+    UserEntity getUser(String loginId);
     List<UserRoleEntity> getUserRoles(String loginUserId);
 
 

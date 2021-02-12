@@ -1,55 +1,61 @@
 package kr.or.connect.reservation.service.impl;
 
-import kr.or.connect.reservation.dao.reservationDAO;
-import kr.or.connect.reservation.dto.ReservationBody;
-import kr.or.connect.reservation.dto.ReservationDTO;
-import kr.or.connect.reservation.dto.ReservationPriceBody;
+import kr.or.connect.reservation.dao.ReservationInfoDAO;
+import kr.or.connect.reservation.dao.ReservationPriceDAO;
+import kr.or.connect.reservation.dao.ReservationResponseDAO;
+import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
-import kr.or.connect.reservation.dto.reservationInfoDTO;
 import kr.or.connect.reservation.service.ReservationService;
-import kr.or.connect.reservation.service.security.UserRoleEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
-    private final reservationDAO reservationDao;
-
-    @Autowired
-    public ReservationServiceImpl(reservationDAO reservationDao) {
-        this.reservationDao = reservationDao;
-    }
+    private final ReservationPriceDAO reservationPriceDAO;
+    private final ReservationInfoDAO reservationInfoDAO;
+    private final ReservationResponseDAO reservationResponseDAO;
 
 
     @Override
-    public void insertInfo(ReservationBody body) {
-        reservationDao.addInfo(body);
+    public int insertReservationInfo(ReservationApiDTO reservationApiDTO) {
+        return 0;
     }
 
     @Override
-    public void insertPrice(ReservationPriceBody priceBody) {
-        reservationDao.addPrice(priceBody);
-    }
+    @Transactional(readOnly = false)
+    public ReservationApiDTO insertInfoAndPrices(ReservationApiDTO reservationApiDTO) {
+        int reservationInfoId = insertReservationInfo(reservationApiDTO);
+        insertReservationPrice(reservationApiDTO, reservationInfoId);
 
-
-    @Override
-    public ReservationApiDTO getReservationInfo(ReservationDTO dto) {
-  reservationDao.getReservationPrice(dto);
+        return getReservationResponse(reservationInfoId);
     }
 
     @Override
-    public reservationInfoDTO getUser(String loginId) {
-        reservationInfoDTO reservation = reservationDao.getReservationInfo(loginId);
-        return reservation;
+    public void insertReservationPrice(ReservationApiDTO reservationApiDTO, int reservationInfoId) {
+        List<ReservationPrice> reservationPrices = reservationApiDTO.getPrices();
+
+        for (ReservationPrice reservationPrice : reservationPrices) {
+            reservationPrice.setReservationInfoId(reservationInfoId);
+            reservationPriceDAO.insertReservationPrice(reservationPrice);
+        }
     }
-
-
-
 
     @Override
-    public List<UserRoleEntity> getUserRoles(String loginUserId) {
-        return null;
+    public List<ReservationPrice> getReservationPrice(int reservationInfoId) {
+        return reservationPriceDAO.getReservationPrice(reservationInfoId);
     }
+
+    @Override
+    public ReservationApiDTO getReservationResponse(int reservationInfoId) {
+        ReservationApiDTO reservationApiDTO = reservationResponseDAO.getReservationResponse(reservationInfoId);
+        reservationApiDTO.setPrices(getReservationPrice(reservationInfoId));
+
+        return reservationApiDTO;
+    }
+
+
 }
