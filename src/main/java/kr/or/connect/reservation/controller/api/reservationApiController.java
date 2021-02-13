@@ -5,18 +5,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
-import kr.or.connect.reservation.dto.UserDto;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
+import kr.or.connect.reservation.service.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 
 @Api(tags = {"예약등록 API"})
 @RestController
@@ -33,11 +31,11 @@ public class reservationApiController {
     })
     @PostMapping(value = "/reservationInfos")
     public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
-        int userId = user.getId();
-        req.setUserId(userId);
-        int reservationInfoId = reservationSerivce.getReservationInfo().getId();
-
-        return reservationSerivce.responseReservation(reservationInfoId,userId);
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userID = customUserDetails.getUserId();
+        ReservationApiDTO apiDTO = new ReservationApiDTO();
+        int reservationInfoId = apiDTO.getId();
+        return reservationSerivce.responseReservation(userID, reservationInfoId);
 
     }
 }

@@ -12,13 +12,13 @@ import java.util.List;
 public interface ReservationService {
     int requestReservationInfo(ReservationApiDTO reservationApiDTO);
 
-    void requestInfoAndPrices(ReservationApiDTO reservationApiDTO);
-
     void requestPrices(ReservationApiDTO reservationApiDTO, int reservationInfoId);
 
-    List<ReservationPrice> getReservationPrice(int reservationInfoId);
+    void requestInfoAndPrices(ReservationApiDTO reservationApiDTO);
 
-    ReservationApiDTO getReservationInfo(int reservationInfoId);
+//    List<ReservationPrice> getReservationPrice(int reservationInfoId);
+//
+//    ReservationApiDTO getReservationInfo(int userID);
 
-    ReservationApiDTO responseReservation(int reservationInfoId, int userId );
+    ReservationApiDTO responseReservation(int userID, int reservationInfoId );
 }

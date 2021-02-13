@@ -47,10 +47,10 @@ public class ReservationInfoDAO {
         return insertAction.executeAndReturnKey(params).intValue();
     }
 
-    public ReservationApiDTO getReservationInfo(int reservationInfoId) {
+    public ReservationApiDTO getReservationInfo(int userID) {
         try {
             Map<String,Integer> params = new HashMap<>();
-            params.put("reservationInfoId",reservationInfoId);
+            params.put("userID",userID);
             return jdbc.queryForObject(SELECT_RESERVATION_INFOS,params,rowMapper);
         } catch (EmptyResultDataAccessException e) {
             return null;

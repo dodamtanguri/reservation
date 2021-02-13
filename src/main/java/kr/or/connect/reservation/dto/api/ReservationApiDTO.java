@@ -2,6 +2,7 @@ package kr.or.connect.reservation.dto.api;
 
 import kr.or.connect.reservation.dto.ReservationPrice;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ReservationApiDTO {
     private int id;
     private int productId;
@@ -21,7 +23,7 @@ public class ReservationApiDTO {
     private LocalDate modifyDate = LocalDate.now();
     private List<ReservationPrice> prices;
 
-    public ReservationApiDTO(int id, int productId, int displayInfoId, int userId, LocalDate reservationDate, int cancelFlag, LocalDate createDate, LocalDate modifyDate) {
+    public ReservationApiDTO(int id, int productId, int userId, int displayInfoId, LocalDate reservationDate, int cancelFlag, LocalDate createDate, LocalDate modifyDate) {
         this.id = id;
         this.productId = productId;
         this.displayInfoId = displayInfoId;
@@ -31,10 +33,4 @@ public class ReservationApiDTO {
         this.createDate = createDate;
         this.modifyDate = modifyDate;
     }
-
-    public void setreservationDate(Timestamp reservationDate) {
-        this.reservationDate = reservationDate != null ? reservationDate.toLocalDateTime().toLocalDate() : null;
-    }
-
-
 }

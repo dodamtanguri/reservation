@@ -12,8 +12,7 @@ public class ReservationBody {
 
     private int productId;
     private int displayInfoId;
-    private int reservationYearMonthDay;
-    private int userId;
-
+    private String reservationYearMonthDay;
+//    private int userId;
 
 }
