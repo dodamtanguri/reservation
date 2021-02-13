@@ -3,6 +3,7 @@ package kr.or.connect.reservation.service.impl;
 import kr.or.connect.reservation.dao.ReservationInfoDAO;
 import kr.or.connect.reservation.dao.ReservationPriceDAO;
 import kr.or.connect.reservation.dao.ReservationResponseDAO;
+import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
@@ -21,28 +22,27 @@ public class ReservationServiceImpl implements ReservationService {
 
 
     @Override
-    public int insertReservationInfo(ReservationApiDTO reservationApiDTO) {
-        return 0;
+    public int requestReservationInfo(ReservationApiDTO reservationApiDTO) {
+        return reservationInfoDAO.insertReservationInfo(reservationApiDTO);
     }
 
     @Override
     @Transactional(readOnly = false)
-    public ReservationApiDTO insertInfoAndPrices(ReservationApiDTO reservationApiDTO) {
-        int reservationInfoId = insertReservationInfo(reservationApiDTO);
-        insertReservationPrice(reservationApiDTO, reservationInfoId);
-
-        return getReservationResponse(reservationInfoId);
+    public void requestInfoAndPrices(ReservationApiDTO reservationApiDTO) {
+        int reservationInfoId = requestReservationInfo(reservationApiDTO);
+        requestPrices(reservationApiDTO, reservationInfoId);
     }
 
     @Override
-    public void insertReservationPrice(ReservationApiDTO reservationApiDTO, int reservationInfoId) {
+    @Transactional(readOnly = false)
+    public void requestPrices(ReservationApiDTO reservationApiDTO, int reservationInfoId) {
         List<ReservationPrice> reservationPrices = reservationApiDTO.getPrices();
-
         for (ReservationPrice reservationPrice : reservationPrices) {
             reservationPrice.setReservationInfoId(reservationInfoId);
             reservationPriceDAO.insertReservationPrice(reservationPrice);
         }
     }
+
 
     @Override
     public List<ReservationPrice> getReservationPrice(int reservationInfoId) {
@@ -50,11 +50,18 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationApiDTO getReservationResponse(int reservationInfoId) {
-        ReservationApiDTO reservationApiDTO = reservationResponseDAO.getReservationResponse(reservationInfoId);
-        reservationApiDTO.setPrices(getReservationPrice(reservationInfoId));
+    public ReservationApiDTO getReservationInfo(int reservationInfoId) {
+        return reservationInfoDAO.getReservationInfo(reservationInfoId);
 
-        return reservationApiDTO;
+    }
+
+    @Override
+    public ReservationApiDTO responseReservation(int reservationInfoId, int userId) {
+        ReservationApiDTO apiDTO = reservationInfoDAO.getReservationInfo(reservationInfoId);
+        apiDTO.setPrices(getReservationPrice(reservationInfoId));
+
+
+        return apiDTO;
     }
 
 

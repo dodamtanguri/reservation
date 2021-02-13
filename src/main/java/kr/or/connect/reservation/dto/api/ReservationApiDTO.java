@@ -21,7 +21,16 @@ public class ReservationApiDTO {
     private LocalDate modifyDate = LocalDate.now();
     private List<ReservationPrice> prices;
 
-
+    public ReservationApiDTO(int id, int productId, int displayInfoId, int userId, LocalDate reservationDate, int cancelFlag, LocalDate createDate, LocalDate modifyDate) {
+        this.id = id;
+        this.productId = productId;
+        this.displayInfoId = displayInfoId;
+        this.userId = userId;
+        this.reservationDate = reservationDate;
+        this.cancelFlag = cancelFlag;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
+    }
 
     public void setreservationDate(Timestamp reservationDate) {
         this.reservationDate = reservationDate != null ? reservationDate.toLocalDateTime().toLocalDate() : null;

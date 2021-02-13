@@ -14,4 +14,6 @@ public class ReservationBody {
     private int displayInfoId;
     private int reservationYearMonthDay;
     private int userId;
+
+
 }
