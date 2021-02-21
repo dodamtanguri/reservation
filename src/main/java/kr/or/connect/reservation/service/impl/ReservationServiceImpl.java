@@ -36,6 +36,7 @@ public class ReservationServiceImpl implements ReservationService {
             reservationPriceDAO.insertReservationPrice(reservationPrice);
         }
     }
+
     @Override
     @Transactional(readOnly = false)
     public void requestInfoAndPrices(ReservationApiDTO reservationApiDTO) {
@@ -45,25 +46,9 @@ public class ReservationServiceImpl implements ReservationService {
         requestPrices(reservationApiDTO, reservationInfoId);
     }
 
-
-
-//
-//    @Override
-//    public List<ReservationPrice> getReservationPrice(int reservationInfoId) {
-//
-//        return reservationPriceDAO.getReservationPrice(reservationInfoId);
-//    }
-//
-//    @Override
-//    public ReservationApiDTO getReservationInfo(int userID) {
-//        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        userID = customUserDetails.getUserId();
-//        return reservationInfoDAO.getReservationInfo(userID);
-//
-//    }
-
+    
     @Override
-    public ReservationApiDTO responseReservation(int userID,int reservationInfoId) {
+    public ReservationApiDTO responseReservation(int userID, int reservationInfoId) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userID = customUserDetails.getUserId();
         ReservationApiDTO apiDTO = reservationInfoDAO.getReservationInfo(userID);

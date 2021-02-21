@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api")
 @RequiredArgsConstructor
-public class reservationApiController {
+public class ReservationApiController {
 
     private final ReservationService reservationSerivce;
 
@@ -35,6 +35,7 @@ public class reservationApiController {
         int userID = customUserDetails.getUserId();
         ReservationApiDTO apiDTO = new ReservationApiDTO();
         int reservationInfoId = apiDTO.getId();
+
         return reservationSerivce.responseReservation(userID, reservationInfoId);
 
     }

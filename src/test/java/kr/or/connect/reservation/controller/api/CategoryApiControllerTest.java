@@ -1,7 +1,7 @@
 package kr.or.connect.reservation.controller.api;
 
 import kr.or.connect.reservation.dto.CategoriesDTO;
-import kr.or.connect.reservation.dto.api.CategoriesApiDto;
+import kr.or.connect.reservation.dto.api.CategoriesApiDTO;
 import kr.or.connect.reservation.service.CategoriesService;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class CategoryApiControllerTest {
         categoriesDTO.setName("Hello Test");
         categoriesDTO.setCount(2020);
         List<CategoriesDTO> categoriesDTOList = Arrays.asList(categoriesDTO);
-        CategoriesApiDto categoriesApiDto = new CategoriesApiDto();
+        CategoriesApiDTO categoriesApiDto = new CategoriesApiDTO();
         categoriesApiDto.setItems(categoriesDTOList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/categories").contentType(MediaType.APPLICATION_JSON);

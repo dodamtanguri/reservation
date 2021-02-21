@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CategoriesApiDto {
+public class CategoriesApiDTO {
     private int size;
     private List<CategoriesDTO> items;
 

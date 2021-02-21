@@ -1,13 +1,12 @@
 package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.dto.CategoriesDTO;
-import kr.or.connect.reservation.dto.api.CategoriesApiDto;
+import kr.or.connect.reservation.dto.api.CategoriesApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -25,7 +24,7 @@ public class CategoriesDAO {
     }
 
 
-    public CategoriesApiDto getCategories() {
+    public CategoriesApiDTO getCategories() {
         List<CategoriesDTO> categoryList = jdbc.query(SELECT_CATEGORY, (resultSet, rowNum) -> {
             CategoriesDTO categoriesDTO = new CategoriesDTO();
             categoriesDTO.setId(resultSet.getInt("id"));
@@ -34,7 +33,7 @@ public class CategoriesDAO {
             return categoriesDTO;
         });
 
-        CategoriesApiDto categoriesApiDto = new CategoriesApiDto();
+        CategoriesApiDTO categoriesApiDto = new CategoriesApiDTO();
         categoriesApiDto.setItems(categoryList);
         return categoriesApiDto;
 

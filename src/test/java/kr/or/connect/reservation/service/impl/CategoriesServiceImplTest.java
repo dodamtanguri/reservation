@@ -16,7 +16,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import kr.or.connect.reservation.dao.CategoriesDAO;
 import kr.or.connect.reservation.dto.CategoriesDTO;
-import kr.or.connect.reservation.dto.api.CategoriesApiDto;
+import kr.or.connect.reservation.dto.api.CategoriesApiDTO;
 
 @WebAppConfiguration
 public class CategoriesServiceImplTest {
@@ -42,13 +42,13 @@ public class CategoriesServiceImplTest {
         List<CategoriesDTO> categories = new ArrayList<>();
         categories.add(category);
 
-        CategoriesApiDto actual = new CategoriesApiDto();
+        CategoriesApiDTO actual = new CategoriesApiDTO();
         actual.setItems(categories);
 
         when(categoriesDAO.getCategories()).thenReturn(actual);
 
         // when
-        CategoriesApiDto result = categoriesService.getCategories();
+        CategoriesApiDTO result = categoriesService.getCategories();
 
         // then
         assertThat(actual, is(result));
