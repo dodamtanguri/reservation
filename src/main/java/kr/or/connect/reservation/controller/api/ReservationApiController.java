@@ -35,7 +35,8 @@ public class ReservationApiController {
         int userID = customUserDetails.getUserId();
         ReservationApiDTO apiDTO = new ReservationApiDTO();
         int reservationInfoId = apiDTO.getId();
-
+        reservationSerivce.requestPrices(apiDTO,reservationInfoId);
+        reservationSerivce.requestInfoAndPrices(apiDTO);
         return reservationSerivce.responseReservation(userID, reservationInfoId);
 
     }

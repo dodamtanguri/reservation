@@ -19,14 +19,19 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationPriceDAO reservationPriceDAO;
     private final ReservationInfoDAO reservationInfoDAO;
 
-
+/*
+Get UserID
+현재 로그인된 사용자의UserID를 가져옴
+ */
     @Override
     public int requestReservationInfo(ReservationApiDTO reservationApiDTO) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reservationApiDTO.setUserId(customUserDetails.getUserId());
         return reservationInfoDAO.insertReservationInfo(reservationApiDTO);
     }
-
+/*
+Price Insert
+ */
     @Override
     @Transactional(readOnly = false)
     public void requestPrices(ReservationApiDTO reservationApiDTO, int reservationInfoId) {
@@ -36,7 +41,9 @@ public class ReservationServiceImpl implements ReservationService {
             reservationPriceDAO.insertReservationPrice(reservationPrice);
         }
     }
-
+/*
+reservation Info Insert
+ */
     @Override
     @Transactional(readOnly = false)
     public void requestInfoAndPrices(ReservationApiDTO reservationApiDTO) {
@@ -46,7 +53,9 @@ public class ReservationServiceImpl implements ReservationService {
         requestPrices(reservationApiDTO, reservationInfoId);
     }
 
-    
+    /*
+    Insert된 데이터 Select
+     */
     @Override
     public ReservationApiDTO responseReservation(int userID, int reservationInfoId) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

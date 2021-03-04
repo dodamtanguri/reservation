@@ -16,9 +16,7 @@ public interface ReservationService {
 
     void requestInfoAndPrices(ReservationApiDTO reservationApiDTO);
 
-//    List<ReservationPrice> getReservationPrice(int reservationInfoId);
-//
-//    ReservationApiDTO getReservationInfo(int userID);
+
 
     ReservationApiDTO responseReservation(int userID, int reservationInfoId );
 }
