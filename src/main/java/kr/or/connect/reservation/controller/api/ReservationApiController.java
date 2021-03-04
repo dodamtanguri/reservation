@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
 import kr.or.connect.reservation.service.security.CustomUserDetails;
@@ -35,7 +36,10 @@ public class ReservationApiController {
         int userID = customUserDetails.getUserId();
         ReservationApiDTO apiDTO = new ReservationApiDTO();
         int reservationInfoId = apiDTO.getId();
-        reservationSerivce.requestPrices(apiDTO,reservationInfoId);
+        ReservationPrice price = new ReservationPrice();
+        price.setReservationInfoId(reservationInfoId);
+       // JsonData >> null 
+                reservationSerivce.requestPrices(apiDTO,reservationInfoId);
         reservationSerivce.requestInfoAndPrices(apiDTO);
         return reservationSerivce.responseReservation(userID, reservationInfoId);
 
