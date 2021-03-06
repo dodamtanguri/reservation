@@ -30,8 +30,8 @@ import static kr.or.connect.reservation.dao.sql.reservationSQL.*;
 @Repository
 public class ReservationInfoDAO {
     private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<ReservationApiDTO> rowMapper = BeanPropertyRowMapper.newInstance(ReservationApiDTO.class);
-    private SimpleJdbcInsert insertAction;
+    private final BeanPropertyRowMapper<ReservationInfo> rowMapper = BeanPropertyRowMapper.newInstance(ReservationInfo.class);
+    private final SimpleJdbcInsert insertAction;
 
     @Autowired
     public ReservationInfoDAO(DataSource dataSource) {
@@ -41,13 +41,13 @@ public class ReservationInfoDAO {
                 .usingGeneratedKeyColumns("id");
     }
 
-    // reservationinfo insert
-    public int insertReservationInfo(ReservationApiDTO reservationApiDTO) {
-        SqlParameterSource params = new BeanPropertySqlParameterSource(reservationApiDTO);
-        return insertAction.executeAndReturnKey(params).intValue();
+
+    public void insertReservationInfo(ReservationInfo reservationInfo) {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
+        insertAction.executeAndReturnKey(params).intValue();
     }
 
-    public ReservationApiDTO getReservationInfo(int userID) {
+    public ReservationInfo getReservationInfo(int userID) {
         try {
             Map<String,Integer> params = new HashMap<>();
             params.put("userID",userID);

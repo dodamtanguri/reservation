@@ -10,13 +10,9 @@ import kr.or.connect.reservation.service.security.UserDbService;
 import java.util.List;
 
 public interface ReservationService {
-    int requestReservationInfo(ReservationApiDTO reservationApiDTO);
+    ReservationInfo insertReservationInfo(ReservationInfo reservationInfo);
 
-    void requestPrices(ReservationApiDTO reservationApiDTO, int reservationInfoId);
-
-    void requestInfoAndPrices(ReservationApiDTO reservationApiDTO);
-
-
+    void insertPrices(  int reservationInfoId);
 
     ReservationApiDTO responseReservation(int userID, int reservationInfoId );
 }

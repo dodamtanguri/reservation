@@ -13,6 +13,6 @@ public class ReservationBody {
     private int productId;
     private int displayInfoId;
     private String reservationYearMonthDay;
-//    private int userId;
+    //private int userId;
 
 }

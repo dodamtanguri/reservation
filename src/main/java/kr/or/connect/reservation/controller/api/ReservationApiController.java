@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
@@ -28,19 +29,18 @@ public class ReservationApiController {
     @ApiOperation(value = "예약 등록 하기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 500, message = "Exception")
+
     })
     @PostMapping(value = "/reservationInfos")
     public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userID = customUserDetails.getUserId();
-        ReservationApiDTO apiDTO = new ReservationApiDTO();
-        int reservationInfoId = apiDTO.getId();
-        ReservationPrice price = new ReservationPrice();
-        price.setReservationInfoId(reservationInfoId);
-       // JsonData >> null 
-                reservationSerivce.requestPrices(apiDTO,reservationInfoId);
-        reservationSerivce.requestInfoAndPrices(apiDTO);
+        ReservationInfo reservationInfo = new ReservationInfo();
+
+        int reservationInfoId = reservationInfo.getId();
+        int userID = reservationInfo.getUserId();
+
+        reservationSerivce.requestReservationInfo(reservationInfo);
+        reservationSerivce.requestPrices(reservationInfoId);
+
         return reservationSerivce.responseReservation(userID, reservationInfoId);
 
     }

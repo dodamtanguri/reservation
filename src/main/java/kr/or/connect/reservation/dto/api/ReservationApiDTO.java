@@ -25,14 +25,5 @@ public class ReservationApiDTO {
     private LocalDate modifyDate = LocalDate.now();
     private List<ReservationPrice> prices;
 
-    public ReservationApiDTO(int id, int productId, int userId, int displayInfoId, LocalDate reservationDate, int cancelFlag, LocalDate createDate, LocalDate modifyDate) {
-        this.id = id;
-        this.productId = productId;
-        this.displayInfoId = displayInfoId;
-        this.userId = userId;
-        this.reservationDate = reservationDate;
-        this.cancelFlag = cancelFlag;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
-    }
+
 }
