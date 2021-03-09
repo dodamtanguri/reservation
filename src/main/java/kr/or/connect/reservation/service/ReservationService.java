@@ -12,7 +12,8 @@ import java.util.List;
 public interface ReservationService {
     ReservationInfo insertReservationInfo(ReservationInfo reservationInfo);
 
-    void insertPrices(  int reservationInfoId);
+    ReservationPrice insertPrices(ReservationInfo reservationInfo);
 
-    ReservationApiDTO responseReservation(int userID, int reservationInfoId );
+
+    ReservationApiDTO responseReservation(ReservationInfo reservationInfo);
 }

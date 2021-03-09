@@ -26,7 +26,6 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationInfo insertReservationInfo(ReservationInfo reservationInfo) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reservationInfo.setUserId(customUserDetails.getUserId());
-        //requestPrices(reservationInfo.getId());
         reservationInfoDAO.insertReservationInfo(reservationInfo);
         return reservationInfo;
     }
@@ -34,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     /*
     Price Insert
+    어짜피 Insert하는건데 그냥 여기서 리턴 안해줘도 select해올때 상관 없는거 아닌지
      */
     @Override
     @Transactional(readOnly = false)
@@ -49,18 +49,11 @@ public class ReservationServiceImpl implements ReservationService {
     Insert된 데이터 Select
      */
     @Override
-    public ReservationApiDTO responseReservation(ReservationInfo reservationInfo, ReservationPrice price) {
+    public ReservationApiDTO responseReservation(ReservationInfo reservationInfo) {
         ReservationApiDTO apiDTO = new ReservationApiDTO();
+        apiDTO.setPrices(reservationPriceDAO.getReservationPrice(reservationInfo.getId()));
+        reservationInfoDAO.getReservationInfo(reservationInfo.getUserId());
 
-        apiDTO.setId(reservationInfo.getId());
-        apiDTO.setProductId(reservationInfo.getProductId());
-        apiDTO.setDisplayInfoId(reservationInfo.getDisplayInfoId());
-        apiDTO.setUserId(reservationInfo.getUserId());
-        apiDTO.setReservationDate(reservationInfo.getReservationDate());
-        apiDTO.setCancelFlag(reservationInfo.getCancelFlag());
-        apiDTO.setCreateDate(reservationInfo.getCreateDate());
-        apiDTO.setModifyDate(reservationInfo.getModifyDate());
-        apiDTO.setPrices();
         return apiDTO;
     }
 

@@ -35,13 +35,10 @@ public class ReservationApiController {
     public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
         ReservationInfo reservationInfo = new ReservationInfo();
 
-        int reservationInfoId = reservationInfo.getId();
-        int userID = reservationInfo.getUserId();
-
-        reservationSerivce.requestReservationInfo(reservationInfo);
-        reservationSerivce.requestPrices(reservationInfoId);
-
-        return reservationSerivce.responseReservation(userID, reservationInfoId);
+        reservationInfo.setreservationDate(req.getReservationYearMonthDay());
+        reservationSerivce.insertReservationInfo(reservationInfo);
+        reservationSerivce.insertPrices(reservationInfo);
+        return reservationSerivce.responseReservation(reservationInfo);
 
     }
 }

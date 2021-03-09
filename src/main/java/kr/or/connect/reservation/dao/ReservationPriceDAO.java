@@ -33,9 +33,9 @@ public class ReservationPriceDAO {
                 .usingGeneratedKeyColumns("id");
     }
 
-    public int insertReservationPrice(ReservationPrice reservationPrice) {
+    public void insertReservationPrice(ReservationPrice reservationPrice) {
         SqlParameterSource params = new BeanPropertySqlParameterSource(reservationPrice);
-        return insertAction.execute(params);
+        insertAction.execute(params);
     }
 
     public List<ReservationPrice> getReservationPrice(int reservationInfoId) {
