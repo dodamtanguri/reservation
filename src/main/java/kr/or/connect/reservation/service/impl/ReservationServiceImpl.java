@@ -27,13 +27,20 @@ public class ReservationServiceImpl implements ReservationService {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reservationInfo.setUserId(customUserDetails.getUserId());
         reservationInfoDAO.insertReservationInfo(reservationInfo);
+//        reservationInfoDAO.getReservationInfo(customUserDetails.getUserId());
         return reservationInfo;
     }
-
-
+/*
+reservationInfoId select
+ */
+@Override
+@Transactional(readOnly = true)
+public ReservationInfo selectReservationInfo(ReservationInfo reservationInfo) {
+    return reservationInfoDAO.getReservationInfo(reservationInfo.getUserId());
+}
     /*
     Price Insert
-    어짜피 Insert하는건데 그냥 여기서 리턴 안해줘도 select해올때 상관 없는거 아닌지
+
      */
     @Override
     @Transactional(readOnly = false)
@@ -43,6 +50,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservationPriceDAO.insertReservationPrice(price);
         return price;
     }
+
 
 
     /*

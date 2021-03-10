@@ -37,8 +37,9 @@ public class ReservationApiController {
         reservationInfo.setReservationDate(req.getReservationYearMonthDay());
         reservationInfo.setProductId(req.getProductId());
         reservationInfo.setDisplayInfoId(req.getDisplayInfoId());
-        
+
         reservationSerivce.insertReservationInfo(reservationInfo);
+        reservationSerivce.selectReservationInfo(reservationInfo);
         reservationSerivce.insertPrices(reservationInfo);
         return reservationSerivce.responseReservation(reservationInfo);
 

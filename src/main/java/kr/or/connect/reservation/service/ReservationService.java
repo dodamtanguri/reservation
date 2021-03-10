@@ -12,6 +12,8 @@ import java.util.List;
 public interface ReservationService {
     ReservationInfo insertReservationInfo(ReservationInfo reservationInfo);
 
+    ReservationInfo selectReservationInfo(ReservationInfo reservationInfo);
+
     ReservationPrice insertPrices(ReservationInfo reservationInfo);
 
 
