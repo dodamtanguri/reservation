@@ -34,8 +34,10 @@ public class ReservationApiController {
     @PostMapping(value = "/reservationInfos")
     public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
         ReservationInfo reservationInfo = new ReservationInfo();
-
-        reservationInfo.setreservationDate(req.getReservationYearMonthDay());
+        reservationInfo.setReservationDate(req.getReservationYearMonthDay());
+        reservationInfo.setProductId(req.getProductId());
+        reservationInfo.setDisplayInfoId(req.getDisplayInfoId());
+        
         reservationSerivce.insertReservationInfo(reservationInfo);
         reservationSerivce.insertPrices(reservationInfo);
         return reservationSerivce.responseReservation(reservationInfo);

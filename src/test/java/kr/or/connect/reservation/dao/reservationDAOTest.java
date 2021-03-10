@@ -71,10 +71,10 @@ public class reservationDAOTest {
         infoDTO.setProductId(1);
         infoDTO.setDisplayInfoId(1);
         infoDTO.setUserId(2);
-        infoDTO.setreservationDate(new Timestamp(System.currentTimeMillis()));
+        infoDTO.setReservationDate(new Timestamp(System.currentTimeMillis()));
         infoDTO.setCancelFlag(0);
-        infoDTO.setCreateDate(date);
-        infoDTO.setModifyDate(date);
+//        infoDTO.setCreateDate(date);
+//        infoDTO.setModifyDate(date);
         //dao.insertResInfo(infoDTO);
         assertNotNull(infoDTO);
         assertEquals(1010, infoDTO.getId());
