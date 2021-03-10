@@ -12,10 +12,10 @@ import java.util.List;
 public interface ReservationService {
     ReservationInfo insertReservationInfo(ReservationInfo reservationInfo);
 
-    ReservationInfo selectReservationInfo(ReservationInfo reservationInfo);
+    int selectReservationInfoId(ReservationInfo reservationInfo);
 
-    ReservationPrice insertPrices(ReservationInfo reservationInfo);
+    ReservationPrice insertPrices(int reservationId);
 
 
-    ReservationApiDTO responseReservation(ReservationInfo reservationInfo);
+    ReservationApiDTO responseReservation(ReservationInfo reservationInfo, int reservationId);
 }

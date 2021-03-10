@@ -35,8 +35,9 @@ reservationInfoId select
  */
 @Override
 @Transactional(readOnly = true)
-public ReservationInfo selectReservationInfo(ReservationInfo reservationInfo) {
-    return reservationInfoDAO.getReservationInfo(reservationInfo.getUserId());
+public int selectReservationInfoId(ReservationInfo reservationInfo) {
+     int reservationId = reservationInfoDAO.getReservationInfo(reservationInfo.getUserId()).getId();
+     return reservationId;
 }
     /*
     Price Insert
@@ -44,9 +45,9 @@ public ReservationInfo selectReservationInfo(ReservationInfo reservationInfo) {
      */
     @Override
     @Transactional(readOnly = false)
-    public ReservationPrice insertPrices(ReservationInfo reservationInfo) {
+    public ReservationPrice insertPrices(int reservationId) {
         ReservationPrice price = new ReservationPrice();
-        price.setReservationInfoId(reservationInfo.getId());
+        price.setReservationInfoId(reservationId);
         reservationPriceDAO.insertReservationPrice(price);
         return price;
     }
@@ -57,11 +58,10 @@ public ReservationInfo selectReservationInfo(ReservationInfo reservationInfo) {
     Insert된 데이터 Select
      */
     @Override
-    public ReservationApiDTO responseReservation(ReservationInfo reservationInfo) {
+    public ReservationApiDTO responseReservation(ReservationInfo reservationInfo, int reservationId) {
         ReservationApiDTO apiDTO = new ReservationApiDTO();
         apiDTO.setPrices(reservationPriceDAO.getReservationPrice(reservationInfo.getId()));
-        reservationInfoDAO.getReservationInfo(reservationInfo.getUserId());
-
+        reservationInfoDAO.getReservationInfo(reservationId);
         return apiDTO;
     }
 

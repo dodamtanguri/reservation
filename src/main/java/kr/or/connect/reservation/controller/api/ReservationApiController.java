@@ -39,9 +39,9 @@ public class ReservationApiController {
         reservationInfo.setDisplayInfoId(req.getDisplayInfoId());
 
         reservationSerivce.insertReservationInfo(reservationInfo);
-        reservationSerivce.selectReservationInfo(reservationInfo);
-        reservationSerivce.insertPrices(reservationInfo);
-        return reservationSerivce.responseReservation(reservationInfo);
+        int reservationId = reservationSerivce.selectReservationInfoId(reservationInfo);
+        reservationSerivce.insertPrices(reservationId);
+        return reservationSerivce.responseReservation(reservationInfo, reservationId);
 
     }
 }
