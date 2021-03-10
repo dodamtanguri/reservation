@@ -27,7 +27,7 @@ public class ReservationServiceImpl implements ReservationService {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reservationInfo.setUserId(customUserDetails.getUserId());
         reservationInfoDAO.insertReservationInfo(reservationInfo);
-//        reservationInfoDAO.getReservationInfo(customUserDetails.getUserId());
+
         return reservationInfo;
     }
 /*
@@ -45,11 +45,10 @@ public int selectReservationInfoId(ReservationInfo reservationInfo) {
      */
     @Override
     @Transactional(readOnly = false)
-    public ReservationPrice insertPrices(int reservationId) {
-        ReservationPrice price = new ReservationPrice();
-        price.setReservationInfoId(reservationId);
-        reservationPriceDAO.insertReservationPrice(price);
-        return price;
+    public ReservationPrice insertPrices(ReservationPrice reservationPrice, int reservationId) {
+        reservationPrice.setReservationInfoId(reservationId);
+        reservationPriceDAO.insertReservationPrice(reservationPrice);
+        return reservationPrice;
     }
 
 
@@ -60,8 +59,8 @@ public int selectReservationInfoId(ReservationInfo reservationInfo) {
     @Override
     public ReservationApiDTO responseReservation(ReservationInfo reservationInfo, int reservationId) {
         ReservationApiDTO apiDTO = new ReservationApiDTO();
-        apiDTO.setPrices(reservationPriceDAO.getReservationPrice(reservationInfo.getId()));
-        reservationInfoDAO.getReservationInfo(reservationId);
+        apiDTO.setPrices(reservationPriceDAO.getReservationPrice(reservationId));
+        reservationInfoDAO.getReservationInfo(reservationInfo.getUserId());
         return apiDTO;
     }
 

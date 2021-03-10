@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.Body.ReservationPriceBody;
 import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
@@ -37,10 +38,16 @@ public class ReservationApiController {
         reservationInfo.setReservationDate(req.getReservationYearMonthDay());
         reservationInfo.setProductId(req.getProductId());
         reservationInfo.setDisplayInfoId(req.getDisplayInfoId());
-
         reservationSerivce.insertReservationInfo(reservationInfo);
+
         int reservationId = reservationSerivce.selectReservationInfoId(reservationInfo);
-        reservationSerivce.insertPrices(reservationId);
+
+        ReservationPrice reservationPrice = new ReservationPrice();
+        reservationPrice.setCount(req.getPrices().get(0).getCount());
+        reservationPrice.setProductPriceId(req.getPrices().get(0).getProductPriceId());
+        reservationSerivce.insertPrices(reservationPrice,reservationId);
+
+
         return reservationSerivce.responseReservation(reservationInfo, reservationId);
 
     }

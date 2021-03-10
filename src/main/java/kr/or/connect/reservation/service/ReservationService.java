@@ -14,7 +14,7 @@ public interface ReservationService {
 
     int selectReservationInfoId(ReservationInfo reservationInfo);
 
-    ReservationPrice insertPrices(int reservationId);
+    ReservationPrice insertPrices(ReservationPrice reservationPrice, int reservationId);
 
 
     ReservationApiDTO responseReservation(ReservationInfo reservationInfo, int reservationId);
