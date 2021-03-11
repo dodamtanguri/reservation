@@ -1,15 +1,11 @@
 package kr.or.connect.reservation.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.dto.ReservationPrice;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
