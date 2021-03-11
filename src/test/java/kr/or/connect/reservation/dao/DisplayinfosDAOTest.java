@@ -11,8 +11,7 @@ public class DisplayinfosDAOTest {
         ApplicationContext ac = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         ProductsDAO displayinfosDAO = ac.getBean(ProductsDAO.class);
         ProductsDTO displayinfosDTO = new ProductsDTO();
-        //List<DisplayinfosDTO> result = displayinfosDAO.getDisplayInfos(3,0);
-        //System.out.println(result);
+
     }
 
 }
