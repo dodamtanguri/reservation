@@ -10,4 +10,5 @@ public class reservationSQL {
     public static final String SELECT_RESERVATION_PRICES= "SELECT rip.id,rip.product_price_id,rip.count,rip.reservation_info_id from reservation_info_price rip inner join reservation_info ri on rip.reservation_info_id = ri.id\n" +
             "where rip.reservation_info_id = :reservationInfoId LIMIT 1";
 
+    public static final String SELECT_GETRESERVATION_INFOS = "";
 }

@@ -1,8 +1,10 @@
 package kr.or.connect.reservation.dao;
 
+import kr.or.connect.reservation.dao.rowMapper.GetInfosRowMapper;
 import kr.or.connect.reservation.dao.rowMapper.InfoRowMapper;
 import kr.or.connect.reservation.dao.rowMapper.PriceRowMapper;
 import kr.or.connect.reservation.dto.ReservationPrice;
+import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,8 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static kr.or.connect.reservation.dao.sql.reservationSQL.SELECT_RESERVATION_INFOS;
-import static kr.or.connect.reservation.dao.sql.reservationSQL.SELECT_RESERVATION_PRICES;
+import static kr.or.connect.reservation.dao.sql.reservationSQL.*;
 
 @Repository
 public class ReservationDAO {
@@ -68,6 +69,15 @@ public class ReservationDAO {
             return null;
         }
     }
+    public GetReservationInfoApiDTO getReservationInfoApiDTO(int userID) {
+        try {
+            Map<String, Integer> params = new HashMap<>();
+            params.put("userID",userID);
+            return jdbc.queryForObject(SELECT_GETRESERVATION_INFOS,params,new GetInfosRowMapper());
 
+        }catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 
 }

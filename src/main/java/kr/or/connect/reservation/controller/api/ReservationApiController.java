@@ -6,16 +6,14 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
 import kr.or.connect.reservation.dto.ReservationPrice;
+import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
-@Api(tags = {"예약등록 API"})
+@Api(tags = {"예약 API"})
 @RestController
 @RequestMapping(value = "/api")
 @RequiredArgsConstructor
@@ -46,5 +44,10 @@ public class ReservationApiController {
 
         return reservationService.responseReservation(reservationInfo, reservationId);
 
+    }
+    @GetMapping(value = "/reservationInfos")
+    public GetReservationInfoApiDTO getReservation ()
+    {
+        return null;
     }
 }
