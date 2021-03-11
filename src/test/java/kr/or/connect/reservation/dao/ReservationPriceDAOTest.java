@@ -25,8 +25,7 @@ public class ReservationPriceDAOTest {
 
     @Autowired
     DataSource dataSource;
-    @Autowired
-    ReservationPriceDAO dao;
+
     @Autowired
     private WebApplicationContext context;
 
