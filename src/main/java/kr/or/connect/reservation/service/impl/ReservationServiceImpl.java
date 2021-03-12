@@ -57,5 +57,10 @@ public class ReservationServiceImpl implements ReservationService {
         return apiDTO;
     }
 
+    @Override
+    public int cancelReservation(int id, int userID) {
+        return dao.cancelReservation(id, userID);
+    }
+
 
 }

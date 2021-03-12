@@ -83,4 +83,15 @@ public class ReservationDAO {
         }
     }
 
+    public int cancelReservation(int id, int userID) {
+        try {
+            Map<String, Integer> params = new HashMap<>();
+            params.put("id", id);
+            params.put("userID", userID);
+            return jdbc.update(UPDATE_CANCEL_FLAG, params);
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
+    }
+
 }

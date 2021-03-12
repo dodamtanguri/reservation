@@ -15,6 +15,7 @@ public interface ReservationService {
 
     ReservationApiDTO responseReservation(ReservationApiDTO reservationInfo, int reservationId);
 
-
     GetReservationInfoApiDTO getReservation(int userID);
+
+    int cancelReservation(int id, int userID);
 }

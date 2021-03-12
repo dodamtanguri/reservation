@@ -4,7 +4,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import kr.or.connect.reservation.dto.Body.CancelBody;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.CancelReservation;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
@@ -58,5 +60,25 @@ public class ReservationApiController {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
         return reservationService.getReservation(userID);
+    }
+
+    @ApiOperation(value = "예약 취소 하기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+
+    })
+    @PutMapping(value = "/reservationInfos")
+    public CancelReservation cancelReservation(@RequestBody CancelBody req) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userID = customUserDetails.getUserId();
+        int status = reservationService.cancelReservation(req.getId(), userID);
+        CancelReservation cancelReservation = new CancelReservation();
+        if (status == 0) {
+            cancelReservation.setResult("fail");
+        } else {
+            cancelReservation.setResult("Success");
+        }
+
+        return cancelReservation;
     }
 }

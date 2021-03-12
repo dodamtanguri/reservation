@@ -12,4 +12,6 @@ public class reservationSQL {
             "    inner join product_price pp on p.id = pp.product_id\n" +
             "    inner join reservation_info_price rip on ri.id = rip.reservation_info_id\n" +
             " where user_id = :userID group by ri.id desc";
+
+    public static final String UPDATE_CANCEL_FLAG = "UPDATE reservation_info set cancel_flag = 1 WHERE id = :id and user_id = :userID;";
 }
