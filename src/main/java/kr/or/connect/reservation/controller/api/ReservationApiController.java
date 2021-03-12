@@ -48,6 +48,11 @@ public class ReservationApiController {
 
     }
 
+    @ApiOperation(value = "예약 조회 하기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+
+    })
     @GetMapping(value = "/reservationInfos")
     public GetReservationInfoApiDTO getReservation() {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
