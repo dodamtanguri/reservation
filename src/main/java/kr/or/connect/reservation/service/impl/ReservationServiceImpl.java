@@ -2,6 +2,7 @@ package kr.or.connect.reservation.service.impl;
 
 import kr.or.connect.reservation.dao.ReservationDAO;
 import kr.or.connect.reservation.dto.ReservationPrice;
+import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
 import kr.or.connect.reservation.service.security.CustomUserDetails;
@@ -46,6 +47,14 @@ public class ReservationServiceImpl implements ReservationService {
         reservationInfo.setId(reservationId);
         reservationInfo.setPrices(dao.getReservationPrice(reservationId));
         return reservationInfo;
+    }
+
+    @Override
+    public GetReservationInfoApiDTO getReservation(int userID) {
+        GetReservationInfoApiDTO apiDTO = new GetReservationInfoApiDTO();
+
+        apiDTO.setItems(dao.getReservationInfoApiDTO(userID));
+        return apiDTO;
     }
 
 

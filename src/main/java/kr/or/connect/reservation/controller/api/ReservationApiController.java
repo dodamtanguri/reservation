@@ -9,7 +9,9 @@ import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
+import kr.or.connect.reservation.service.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -45,9 +47,11 @@ public class ReservationApiController {
         return reservationService.responseReservation(reservationInfo, reservationId);
 
     }
+
     @GetMapping(value = "/reservationInfos")
-    public GetReservationInfoApiDTO getReservation ()
-    {
-        return null;
+    public GetReservationInfoApiDTO getReservation() {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userID = customUserDetails.getUserId();
+        return reservationService.getReservation(userID);
     }
 }
