@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class ReservationBody {
     private List<ReservationPriceBody> prices;
     private int productId;
     private int displayInfoId;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd",timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
     private Date reservationYearMonthDay;
     private int userId;
 
