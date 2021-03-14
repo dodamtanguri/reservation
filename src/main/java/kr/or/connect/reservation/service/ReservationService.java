@@ -1,21 +1,17 @@
 package kr.or.connect.reservation.service;
 
 
-import kr.or.connect.reservation.dto.ReservationPrice;
+import kr.or.connect.reservation.dto.Body.CancelBody;
+import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.CancelReservation;
 import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 
 
 public interface ReservationService {
-    void insertReservationInfo(ReservationApiDTO reservationInfo);
+    ReservationApiDTO insertReservationInfo(ReservationBody req);
 
-    int selectReservationInfoId(ReservationApiDTO reservationInfo);
+    GetReservationInfoApiDTO getReservation();
 
-    void insertPrices(ReservationPrice reservationPrice, int reservationId);
-
-    ReservationApiDTO responseReservation(ReservationApiDTO reservationInfo, int reservationId);
-
-    GetReservationInfoApiDTO getReservation(int userID);
-
-    int cancelReservation(int id, int userID);
+    CancelReservation cancelReservation(CancelBody req);
 }
