@@ -38,14 +38,11 @@ public class ReservationServiceImpl implements ReservationService {
 
         int reservationPriceId = dao.insertReservationPrice(priceDTO);
 
-
         dao.getReservationInfo(reservationInfoId);
         apiDTO.setId(reservationInfoId);
         apiDTO.setPrices(dao.getReservationPrice(reservationPriceId));
 
-
         return apiDTO;
-
 
     }
 
@@ -65,12 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
         int status = dao.cancelReservation(req.getId(), customUserDetails.getUserId());
 
         CancelReservation cancelReservation = new CancelReservation();
-        if (status == 0) {
-            cancelReservation.setResult("fail");
-        } else {
-            cancelReservation.setResult("Success");
-        }
-
+        cancelReservation.setResult(status == 0 ? "fail" : "Success");
 
         return cancelReservation;
     }

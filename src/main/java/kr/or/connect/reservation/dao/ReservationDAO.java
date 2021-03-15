@@ -39,6 +39,9 @@ public class ReservationDAO {
                 .usingGeneratedKeyColumns("id");
     }
 
+    /*
+    예약 등록 하
+     */
     public int insertReservationInfo(ReservationApiDTO reservationInfo) {
         SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
         return insertInfo.executeAndReturnKey(params).intValue();
@@ -69,6 +72,9 @@ public class ReservationDAO {
         }
     }
 
+    /*
+    예약 조회 하기
+     */
     public List<ReservationInfos> getReservationInfoApiDTO(int userID) {
 
         try {
@@ -82,6 +88,9 @@ public class ReservationDAO {
         }
     }
 
+    /*
+    예약 취소 하기
+     */
     public int cancelReservation(int id, int userID) {
         try {
             Map<String, Integer> params = new HashMap<>();

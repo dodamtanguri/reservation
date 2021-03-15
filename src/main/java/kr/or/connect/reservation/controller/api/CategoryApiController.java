@@ -6,9 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.api.CategoriesApiDTO;
 import kr.or.connect.reservation.service.CategoriesService;
-import kr.or.connect.reservation.service.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,8 +26,6 @@ public class CategoryApiController {
     })
     @GetMapping("/categories")
     public CategoriesApiDTO categoriesApiDto() {
-        CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         return categoriesService.getCategories();
     }
 
