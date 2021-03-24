@@ -20,11 +20,6 @@ public class UserServiceImpl implements UserService {
     private final UserDAO userDAO;
     private final UserRoleDAO userRoleDAO;
 
-//
-//    public UserServiceImpl(UserDAO userDAO, UserRoleDAO userRoleDAO) {
-//        this.userDAO = userDAO;
-//        this.userRoleDAO = userRoleDAO;
-//    }
 
     @Override
     @Transactional(readOnly = true)
