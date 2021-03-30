@@ -40,7 +40,7 @@ public class ReservationDAO {
     }
 
     /*
-    예약 등록 하
+    예약 등록 하기 
      */
     public int insertReservationInfo(ReservationApiDTO reservationInfo) {
         SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
