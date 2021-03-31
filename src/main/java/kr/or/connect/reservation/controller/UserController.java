@@ -15,11 +15,6 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-//    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
-//        this.userService = userService;
-//        this.passwordEncoder = passwordEncoder;
-//    }
-
     @GetMapping("/loginform")
     public String loginform() {
         return "/users/loginform";

@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.service.security;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 @Getter
 @Setter
+@NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private int userId;
     private String username;
@@ -17,7 +19,6 @@ public class CustomUserDetails implements UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private Collection<? extends GrantedAuthority> authorities;
-
 
     @Override
     public String getUsername() {
