@@ -25,7 +25,7 @@ public class ReservationApiController {
     private final ReservationService reservationService;
 
     @ApiOperation(value = "예약 등록 하기")
-    @ApiResponses({@ApiResponse(code = 200, message = "OK"),})
+    @ApiResponses({@ApiResponse(code = 200, message = "OK")})
     @PostMapping(value = "/reservationInfos")
     public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

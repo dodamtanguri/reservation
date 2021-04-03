@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +20,15 @@ public class CustomUserDetails implements UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private Collection<? extends GrantedAuthority> authorities;
+
+    public CustomUserDetails(String username) {
+    }
+
+    public CustomUserDetails(int userId, String username, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+    }
 
     @Override
     public String getUsername() {
