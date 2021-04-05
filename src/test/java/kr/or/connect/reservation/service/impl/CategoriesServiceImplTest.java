@@ -1,12 +1,8 @@
 package kr.or.connect.reservation.service.impl;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import kr.or.connect.reservation.dao.CategoriesDAO;
+import kr.or.connect.reservation.dto.CategoriesDTO;
+import kr.or.connect.reservation.dto.api.CategoriesApiDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -14,9 +10,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import kr.or.connect.reservation.dao.CategoriesDAO;
-import kr.or.connect.reservation.dto.CategoriesDTO;
-import kr.or.connect.reservation.dto.api.CategoriesApiDTO;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 @WebAppConfiguration
 public class CategoriesServiceImplTest {

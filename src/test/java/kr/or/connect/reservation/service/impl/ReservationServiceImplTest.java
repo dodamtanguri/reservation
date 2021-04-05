@@ -33,15 +33,11 @@ import static org.mockito.Mockito.*;
 public class ReservationServiceImplTest {
 
 
-    private MockMvc mockMvc;
-
     @InjectMocks
     public ReservationServiceImpl reservationService;
-
-
     @Mock
     public ReservationDAO reservationDAO;
-
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -80,7 +76,7 @@ public class ReservationServiceImplTest {
         int insertActual = 1;
         int insertInfoResult = reservationDAO.insertReservationInfo(apiDTO);
         int insertPriceResult = reservationDAO.insertReservationPrice(apiPrice);
-        System.out.println("insertInfoResult: "+insertInfoResult + "insertPriceResult: "+insertPriceResult);
+        System.out.println("insertInfoResult: " + insertInfoResult + "insertPriceResult: " + insertPriceResult);
         //then
         assertEquals(insertActual, insertInfoResult);
         assertEquals(insertActual, insertPriceResult);
@@ -138,15 +134,14 @@ public class ReservationServiceImplTest {
 
         //when
         int deleteActual = 1;
-        int deleteResult = reservationDAO.cancelReservation(cancel.getId(),1);
+        int deleteResult = reservationDAO.cancelReservation(cancel.getId(), 1);
         //then
         assertEquals(deleteActual, deleteResult);
 
-        verify(reservationDAO,times(1)).cancelReservation(cancel.getId(),1);
+        verify(reservationDAO, times(1)).cancelReservation(cancel.getId(), 1);
 
 
     }
-
 
 
 }

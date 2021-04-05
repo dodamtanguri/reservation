@@ -25,16 +25,22 @@ public class ReservationApiController {
     private final ReservationService reservationService;
 
     @ApiOperation(value = "예약 등록 하기")
-    @ApiResponses({@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "SUCCESS"),
+            @ApiResponse(code = 400, message = "BAD_REQUEST"),
+            @ApiResponse(code = 500, message = "SERVER ERROR")
+    })
     @PostMapping(value = "/reservationInfos")
     public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
-        return reservationService.insertReservationInfo(req,userID);
+        return reservationService.insertReservationInfo(req, userID);
     }
 
     @ApiOperation(value = "예약 조회 하기")
-    @ApiResponses({@ApiResponse(code = 200, message = "OK"),})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "SUCCESS"),
+            @ApiResponse(code = 400, message = "BAD_REQUEST"),
+            @ApiResponse(code = 500, message = "SERVER ERROR")
+    })
     @GetMapping(value = "/reservationInfos")
     public GetReservationInfoApiDTO getReservation() {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -43,11 +49,14 @@ public class ReservationApiController {
     }
 
     @ApiOperation(value = "예약 취소 하기")
-    @ApiResponses({@ApiResponse(code = 200, message = "OK"),})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "SUCCESS"),
+            @ApiResponse(code = 400, message = "BAD_REQUEST"),
+            @ApiResponse(code = 500, message = "SERVER ERROR")
+    })
     @PutMapping(value = "/reservationInfos")
     public CancelReservation cancelReservation(@RequestBody CancelBody req) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
-        return reservationService.cancelReservation(req,userID);
+        return reservationService.cancelReservation(req, userID);
     }
 }
