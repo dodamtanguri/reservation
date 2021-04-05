@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Reservation</title>
   </head>
   <body>
-  $END$
+  <h1>메인페이지</h1>
+  <button type="button" onclick="location.href ='/users/loginform'">로그인</button>
+  <button type="button" onclick="location.href = '/logout'" >로그아웃</button> <br>
+  <button type="button" onclick="location.href = 'http://localhost:8080/swagger-ui.html'">swagger</button>
+
   </body>
 </html>

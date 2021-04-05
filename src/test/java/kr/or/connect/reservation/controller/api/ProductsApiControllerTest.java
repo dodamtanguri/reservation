@@ -36,7 +36,8 @@ public class ProductsApiControllerTest {
     @Before
     public void createController() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(productsApiController).addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(productsApiController)
+                .addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
     }
 
 
@@ -66,7 +67,8 @@ public class ProductsApiControllerTest {
         productsApiDTO.setProducts(productsDTOS);
         productsApiDTO.setTotalCount(1);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/displayinfos").contentType(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/displayinfos")
+                .contentType(MediaType.APPLICATION_JSON);
         when(productsService.getProducts(1, 0)).thenReturn(productsApiDTO);
 
         mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
