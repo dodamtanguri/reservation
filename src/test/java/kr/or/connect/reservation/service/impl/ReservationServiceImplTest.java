@@ -2,12 +2,8 @@ package kr.or.connect.reservation.service.impl;
 
 import kr.or.connect.reservation.dao.ReservationDAO;
 import kr.or.connect.reservation.dto.Body.CancelBody;
-import kr.or.connect.reservation.dto.Body.ReservationBody;
-import kr.or.connect.reservation.dto.Body.ReservationPriceBody;
 import kr.or.connect.reservation.dto.ReservationInfos;
-import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
-import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -46,46 +42,46 @@ public class ReservationServiceImplTest {
     }
 
     //예약 등록 하기
-    @Test
-    @DisplayName("예약 등록 하기 - ReservationInfos")
-    public void testInsertReservation() throws Exception {
-
-        //given
-        ReservationPriceBody reqPrice = new ReservationPriceBody();
-        reqPrice.setCount(2);
-        reqPrice.setProductPriceId(3);
-
-        List<ReservationPriceBody> reqPriceList = new ArrayList<>();
-        reqPriceList.add(reqPrice);
-
-        ReservationBody req = new ReservationBody();
-        req.setProductId(1);
-        req.setPrices(reqPriceList);
-        req.setUserId(1);
-        req.setDisplayInfoId(1);
-        req.setReservationYearMonthDay(new Date());
-
-        ReservationApiDTO apiDTO = new ReservationApiDTO();
-        ReservationPrice apiPrice = new ReservationPrice();
-
-        when(reservationDAO.insertReservationInfo(apiDTO)).thenReturn(1);
-        when(reservationDAO.insertReservationPrice(apiPrice)).thenReturn(1);
-
-
-        //When
-        int insertActual = 1;
-        int insertInfoResult = reservationDAO.insertReservationInfo(apiDTO);
-        int insertPriceResult = reservationDAO.insertReservationPrice(apiPrice);
-        System.out.println("insertInfoResult: " + insertInfoResult + "insertPriceResult: " + insertPriceResult);
-        //then
-        assertEquals(insertActual, insertInfoResult);
-        assertEquals(insertActual, insertPriceResult);
-
-
-        //vertify
-        verify(reservationDAO, times(1)).insertReservationInfo(apiDTO);
-
-    }
+//    @Test
+//    @DisplayName("예약 등록 하기 - ReservationInfos")
+//    public void testInsertReservation() throws Exception {
+//
+//        //given
+//        ReservationPriceBody reqPrice = new ReservationPriceBody();
+//        reqPrice.setCount(2);
+//        reqPrice.setProductPriceId(3);
+//
+//        List<ReservationPriceBody> reqPriceList = new ArrayList<>();
+//        reqPriceList.add(reqPrice);
+//
+//        ReservationBody req = new ReservationBody();
+//        req.setProductId(1);
+//        req.setPrices(reqPriceList);
+//        req.setUserId(1);
+//        req.setDisplayInfoId(1);
+//        req.setReservationYearMonthDay(new Date());
+//
+//        ReservationApiDTO apiDTO = new ReservationApiDTO();
+//        ReservationPrice apiPrice = new ReservationPrice();
+//
+//        when(reservationDAO.insertReservationInfo(apiDTO)).thenReturn(1);
+//        when(reservationDAO.insertReservationPrice(apiPrice)).thenReturn(1);
+//
+//
+//        //When
+//        int insertActual = 1;
+//        int insertInfoResult = reservationDAO.insertReservationInfo(apiDTO);
+//        int insertPriceResult = reservationDAO.insertReservationPrice(apiPrice);
+//        System.out.println("insertInfoResult: " + insertInfoResult + "insertPriceResult: " + insertPriceResult);
+//        //then
+//        assertEquals(insertActual, insertInfoResult);
+//        assertEquals(insertActual, insertPriceResult);
+//
+//
+//        //vertify
+//        verify(reservationDAO, times(1)).insertReservationInfo(apiDTO);
+//
+//    }
 
     // 예약조회하기
     @Test

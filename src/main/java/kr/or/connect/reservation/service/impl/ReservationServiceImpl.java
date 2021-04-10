@@ -11,6 +11,9 @@ import kr.or.connect.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
@@ -18,28 +21,28 @@ public class ReservationServiceImpl implements ReservationService {
 
 
     @Override
-    public ReservationApiDTO insertReservationInfo(ReservationBody req, int userID) {
+    public ReservationApiDTO insertReservationInfo(ReservationBody reservation, int userID) {
 
         ReservationApiDTO apiDTO = new ReservationApiDTO();
         apiDTO.setUserId(userID);
-        apiDTO.setProductId(req.getProductId());
-        apiDTO.setDisplayInfoId(req.getDisplayInfoId());
-        apiDTO.setReservationDate(req.getReservationYearMonthDay());
+        apiDTO.setProductId(reservation.getProductId());
+        apiDTO.setDisplayInfoId(reservation.getDisplayInfoId());
+        apiDTO.setReservationDate(reservation.getReservationYearMonthDay());
 
-        int reservationInfoId = dao.insertReservationInfo(apiDTO);
+        List<ReservationPrice> priceList = new ArrayList<>();
 
-        ReservationPrice priceDTO = new ReservationPrice();
-        priceDTO.setReservationInfoId(reservationInfoId);
-        priceDTO.setCount(req.getPrices().get(0).getCount());
-        priceDTO.setProductPriceId(req.getPrices().get(0).getProductPriceId());
+        for (int i = 0; i < reservation.getPrices().size(); i++) {
+            ReservationPrice priceDTO = new ReservationPrice();
+            priceDTO.setCount(reservation.getPrices().get(i).getCount());
+            priceDTO.setProductPriceId(reservation.getPrices().get(i).getProductPriceId());
 
-        int reservationPriceId = dao.insertReservationPrice(priceDTO);
+            priceList.add(priceDTO);
+        }
 
-        dao.getReservationInfo(reservationInfoId);
-        apiDTO.setId(reservationInfoId);
-        apiDTO.setPrices(dao.getReservationPrice(reservationPriceId));
+        apiDTO.setPrices(priceList);
 
-        return apiDTO;
+
+        return dao.insertReservationInfo(apiDTO);
 
     }
 
