@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"예약 API"})
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/reservationInfos")
 @RequiredArgsConstructor
 public class ReservationApiController {
 
@@ -29,11 +29,11 @@ public class ReservationApiController {
             @ApiResponse(code = 400, message = "BAD_REQUEST"),
             @ApiResponse(code = 500, message = "SERVER ERROR")
     })
-    @PostMapping(value = "/reservationInfos")
-    public ReservationApiDTO reservation(@RequestBody ReservationBody req) {
+    @PostMapping
+    public ReservationApiDTO reservation(@RequestBody ReservationBody reservation) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
-        return reservationService.insertReservationInfo(req, userID);
+        return reservationService.insertReservationInfo(reservation, userID);
     }
 
     @ApiOperation(value = "예약 조회 하기")
@@ -41,7 +41,7 @@ public class ReservationApiController {
             @ApiResponse(code = 400, message = "BAD_REQUEST"),
             @ApiResponse(code = 500, message = "SERVER ERROR")
     })
-    @GetMapping(value = "/reservationInfos")
+    @GetMapping
     public GetReservationInfoApiDTO getReservation() {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
@@ -53,10 +53,10 @@ public class ReservationApiController {
             @ApiResponse(code = 400, message = "BAD_REQUEST"),
             @ApiResponse(code = 500, message = "SERVER ERROR")
     })
-    @PutMapping(value = "/reservationInfos")
-    public CancelReservation cancelReservation(@RequestBody CancelBody req) {
+    @PutMapping
+    public CancelReservation cancelReservation(@RequestBody CancelBody cancel) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
-        return reservationService.cancelReservation(req, userID);
+        return reservationService.cancelReservation(cancel, userID);
     }
 }

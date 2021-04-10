@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static javax.swing.UIManager.put;
 import static kr.or.connect.reservation.dao.sql.reservationSQL.*;
 
 @Repository
@@ -57,7 +56,7 @@ public class ReservationDAO {
     public ReservationApiDTO getReservationInfo(int reservationInfoId) {
         try {
             Map<String, Integer> params = new HashMap<>();
-            put("reservationInfoId", reservationInfoId);
+            params.put("reservationInfoId", reservationInfoId);
             return jdbc.queryForObject(SELECT_RESERVATION_INFOS, params, new InfoRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
@@ -67,7 +66,7 @@ public class ReservationDAO {
     public List<ReservationPrice> getReservationPrice(int reservationPriceId) {
         try {
             Map<String, Integer> params = new HashMap<>();
-            put("reservationPriceId", reservationPriceId);
+            params.put("reservationPriceId", reservationPriceId);
             return jdbc.query(SELECT_RESERVATION_PRICES, params, new PriceRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return Collections.emptyList();
@@ -81,7 +80,7 @@ public class ReservationDAO {
         try {
 
             Map<String, Integer> params = new HashMap<>();
-            put("userID", userID);
+            params.put("userID", userID);
             return jdbc.query(SELECT_GET_RESERVATION_INFOS, params, new GetInfosRowMapper());
 
         } catch (EmptyResultDataAccessException e) {
@@ -95,8 +94,8 @@ public class ReservationDAO {
     public int cancelReservation(int id, int userID) {
         try {
             Map<String, Integer> params = new HashMap<>();
-            put("id", id);
-            put("userID", userID);
+            params.put("id", id);
+            params.put("userID", userID);
             return jdbc.update(UPDATE_CANCEL_FLAG, params);
         } catch (EmptyResultDataAccessException e) {
             return 0;
