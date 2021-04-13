@@ -1,12 +1,12 @@
 package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.dao.rowMapper.GetInfosRowMapper;
+import kr.or.connect.reservation.dao.rowMapper.PriceRowMapper;
 import kr.or.connect.reservation.dto.InsertReservationInfo;
 import kr.or.connect.reservation.dto.ReservationInfos;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -25,7 +25,6 @@ import static kr.or.connect.reservation.dao.sql.reservationSQL.*;
 
 @Repository
 public class ReservationDAO {
-    private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate jdbc;
     private final SimpleJdbcInsert insertInfo;
     private final SimpleJdbcInsert insertPrice;
@@ -33,7 +32,6 @@ public class ReservationDAO {
 
     @Autowired
     public ReservationDAO(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
         this.insertInfo = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_info")
@@ -52,28 +50,25 @@ public class ReservationDAO {
     }
 
     @Transactional
-    public int[] insertReservationPriceInfo(List<ReservationPrice> prices) {
+    public void insertReservationPriceInfo(List<ReservationPrice> prices) {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(prices);
-        return insertPrice.executeBatch(batch);
+        insertPrice.executeBatch(batch);
 
     }
 
     @Transactional
-    public List<Map<String,Object>> getReservationPriceInfo(int reservationInfoId, int limit) {
+    public List<ReservationPrice> getReservationPriceInfo(int reservationInfoId, int limit) {
         try {
             Map<String, Integer> params = new HashMap<String, Integer>() {
                 {
                     put("reservationInfoId", reservationInfoId);
                     put("limit", limit);
                 }
-
             };
-            return jdbc.queryForList(SELECT_RESERVATION_PRICES, params );
+            return jdbc.query(SELECT_RESERVATION_PRICES, params, new PriceRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return Collections.emptyList();
         }
-
-
     }
 
 

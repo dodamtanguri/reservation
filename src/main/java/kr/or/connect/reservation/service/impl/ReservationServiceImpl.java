@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -41,18 +40,15 @@ public class ReservationServiceImpl implements ReservationService {
             priceDTO.setProductPriceId(reservation.getPrices().get(i).getProductPriceId());
             priceList.add(priceDTO);
         }
-        int[] status = dao.insertReservationPriceInfo(priceList);
+        dao.insertReservationPriceInfo(priceList);
+
+        int limit = reservation.getPrices().size();
+        priceList = dao.getReservationPriceInfo(reservationInfoId, limit);
+
         ReservationApiDTO apiDTO = new ReservationApiDTO(info, priceList);
         apiDTO.setId(reservationInfoId);
-        int limit = reservation.getPrices().size();
-        List<Map<String, Object>> prices = dao.getReservationPriceInfo(reservationInfoId, limit);
-        List<Integer> priceList2 = new ArrayList<Integer>();
-        for(Map<String,Object> data : prices) {
-            priceList2.add(data.get("id"))  ;
-        }
-        for (int i = 0; i < limit; i++) {
-                apiDTO.getPrices().get(i).setId(prices.);
-        }
+        apiDTO.setPrices(priceList);
+
         return apiDTO;
     }
 
