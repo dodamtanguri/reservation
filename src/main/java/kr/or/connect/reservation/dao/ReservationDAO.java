@@ -78,8 +78,11 @@ public class ReservationDAO {
     public List<ReservationInfos> getReservationInfoApiDTO(int userID) {
         try {
 
-            Map<String, Integer> params = new HashMap<>();
-            params.put("userID", userID);
+            Map<String, Integer> params = new HashMap<String, Integer>() {
+                {
+                    put("userID", userID);
+                }
+            };
             return jdbc.query(SELECT_GET_RESERVATION_INFOS, params, new GetInfosRowMapper());
 
         } catch (EmptyResultDataAccessException e) {
@@ -92,9 +95,13 @@ public class ReservationDAO {
      */
     public int cancelReservation(int id, int userID) {
         try {
-            Map<String, Integer> params = new HashMap<>();
-            params.put("id", id);
-            params.put("userID", userID);
+            Map<String, Integer> params = new HashMap<String, Integer>() {
+                {
+                    put("id", id);
+                    put("userID", userID);
+                }
+            };
+
             return jdbc.update(UPDATE_CANCEL_FLAG, params);
         } catch (EmptyResultDataAccessException e) {
             return 0;

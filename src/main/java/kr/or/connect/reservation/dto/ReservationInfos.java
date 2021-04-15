@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class ReservationInfos {
     private int userId;
     private int sumPrice;
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private Date reservationDate;
-    private Date createDate = new Date();
-    private Date modifyDate = new Date();
+    private LocalDate reservationDate;
+    private LocalDateTime createDate =  LocalDateTime.now();
+    private LocalDateTime modifyDate;
 }

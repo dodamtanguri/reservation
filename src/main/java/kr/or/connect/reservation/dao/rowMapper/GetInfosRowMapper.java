@@ -19,9 +19,9 @@ public class GetInfosRowMapper implements RowMapper<ReservationInfos> {
         infos.setProductContent(resultSet.getString("content"));
         infos.setUserId(resultSet.getInt("user_id"));
         infos.setSumPrice(resultSet.getInt("sumPrice"));
-        infos.setReservationDate(resultSet.getDate("reservation_date"));
-        infos.setCreateDate(resultSet.getDate("create_date"));
-        infos.setModifyDate(resultSet.getDate("modify_date"));
+        infos.setReservationDate(resultSet.getDate("reservation_date").toLocalDate());
+        infos.setCreateDate(resultSet.getTimestamp("create_date").toLocalDateTime());
+        infos.setModifyDate(resultSet.getTimestamp("modify_date").toLocalDateTime());
         return infos;
     }
 }

@@ -11,6 +11,7 @@ import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationDAO dao;
 
     @Override
+    @Transactional
     public ReservationApiDTO insertReservationInfo(ReservationBody reservation, int userID) {
 
         InsertReservationInfo info = new InsertReservationInfo();
