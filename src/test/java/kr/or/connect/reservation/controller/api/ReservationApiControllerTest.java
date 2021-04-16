@@ -28,9 +28,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -77,7 +78,7 @@ public class ReservationApiControllerTest {
         body.setDisplayInfoId(1);
         body.setUserId(1);
         body.setPrices(reqPriceList);
-        body.setReservationYearMonthDay(new Date());
+        body.setReservationYearMonthDay(LocalDate.now());
 
         mockMvc.perform(
                 MockMvcRequestBuilders
@@ -96,18 +97,19 @@ public class ReservationApiControllerTest {
     @DisplayName("예약 조회 하기")
     public void getReservation() throws Exception {
 
-        ReservationInfos items = new ReservationInfos();
-        items.setId(51);
-        items.setProductId(1);
-        items.setDisplayInfoId(1);
-        items.setCancelFlag(0);
-        items.setProductDescription("PRODUCT DESCRIPTION");
-        items.setProductContent("PRODUCT CONTENT");
-        items.setUserId(1);
-        items.setSumPrice(20000);
-        items.setReservationDate(new Date());
-        items.setCreateDate(new Date());
-        items.setModifyDate(new Date());
+        ReservationInfos items = ReservationInfos.builder()
+                .id(51)
+                .productId(1)
+                .displayInfoId(1)
+                .cancelFlag(1)
+                .productDescription("PRODUCT DESCRIPTION")
+                .productContent("PRODUCT CONTENT")
+                .userId(1)
+                .sumPrice(11000)
+                .reservationDate(LocalDate.of(2020, 1, 2))
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now()).build();
+
         List<ReservationInfos> itemList = Arrays.asList(items);
         GetReservationInfoApiDTO getReservation = new GetReservationInfoApiDTO();
         getReservation.setItems(itemList);

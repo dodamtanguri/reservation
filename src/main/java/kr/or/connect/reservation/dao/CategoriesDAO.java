@@ -9,13 +9,12 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.List;
 
-
 import static kr.or.connect.reservation.dao.sql.CategoriesSQL.SELECT_CATEGORY;
 
 @Repository
 public class CategoriesDAO {
 
-    private NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
 
     @Autowired

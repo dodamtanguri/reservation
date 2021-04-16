@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static kr.or.connect.reservation.dao.sql.reservationSQL.*;
+import static kr.or.connect.reservation.dao.sql.ReservationSQL.*;
 
 @Repository
 public class ReservationDAO {

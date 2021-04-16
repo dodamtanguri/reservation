@@ -16,7 +16,7 @@ import static kr.or.connect.reservation.dao.sql.UserSQL.SELECT_USER_BY_EMAIL;
 @Repository
 public class UserDAO {
     private final RowMapper<UserDto> rowMapper = BeanPropertyRowMapper.newInstance(UserDto.class);
-    private NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
     @Autowired
     public UserDAO(DataSource dataSource) {

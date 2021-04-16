@@ -15,7 +15,7 @@ import static kr.or.connect.reservation.dao.sql.DisplayInfoSQL.*;
 
 @Repository
 public class DisplayInfosDAO {
-    private NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
     @Autowired
     public DisplayInfosDAO(DataSource dataSource) {

@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,9 +23,11 @@ public class ReservationApiDTO {
     private int userId;
     private int cancelFlag;
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private Date reservationDate;
-    private Date createDate = new Date();
-    private Date modifyDate = new Date();
+    private LocalDate reservationDate;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    private LocalDateTime createDate;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    private LocalDateTime modifyDate;
     private List<ReservationPrice> prices;
 
 

@@ -9,12 +9,13 @@ import java.sql.SQLException;
 public class PriceRowMapper implements RowMapper<ReservationPrice> {
     @Override
     public ReservationPrice mapRow(ResultSet resultSet, int i) throws SQLException {
-        ReservationPrice price = new ReservationPrice();
-        price.setId(resultSet.getInt("Id"));
-        price.setProductPriceId(resultSet.getInt("product_price_id"));
-        price.setCount(resultSet.getInt("count"));
-        price.setReservationInfoId(resultSet.getInt("reservation_info_id"));
+        return ReservationPrice.builder()
+                .id(resultSet.getInt("Id"))
+                .productPriceId(resultSet.getInt("product_price_id"))
+                .count(resultSet.getInt("count"))
+                .reservationInfoId(resultSet.getInt("reservation_info_id"))
+                .build();
 
-        return price;
+
     }
 }

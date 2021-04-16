@@ -10,18 +10,19 @@ public class GetInfosRowMapper implements RowMapper<ReservationInfos> {
 
     @Override
     public ReservationInfos mapRow(ResultSet resultSet, int i) throws SQLException {
-        ReservationInfos infos = new ReservationInfos();
-        infos.setId(resultSet.getInt("id"));
-        infos.setProductId(resultSet.getInt("product_id"));
-        infos.setDisplayInfoId(resultSet.getInt("display_info_id"));
-        infos.setCancelFlag(resultSet.getInt("cancel_flag"));
-        infos.setProductDescription(resultSet.getString("description"));
-        infos.setProductContent(resultSet.getString("content"));
-        infos.setUserId(resultSet.getInt("user_id"));
-        infos.setSumPrice(resultSet.getInt("sumPrice"));
-        infos.setReservationDate(resultSet.getDate("reservation_date").toLocalDate());
-        infos.setCreateDate(resultSet.getTimestamp("create_date").toLocalDateTime());
-        infos.setModifyDate(resultSet.getTimestamp("modify_date").toLocalDateTime());
-        return infos;
+
+        return ReservationInfos.builder()
+                .id(resultSet.getInt("id"))
+                .productId(resultSet.getInt("product_id"))
+                .displayInfoId(resultSet.getInt("display_info_id"))
+                .cancelFlag(resultSet.getInt("cancel_flag"))
+                .productDescription(resultSet.getString("description"))
+                .productContent(resultSet.getString("content"))
+                .userId(resultSet.getInt("user_id"))
+                .sumPrice(resultSet.getInt("sumPrice"))
+                .reservationDate(resultSet.getDate("reservation_date").toLocalDate())
+                .createDate(resultSet.getTimestamp("create_date").toLocalDateTime())
+                .modifyDate(resultSet.getTimestamp("modify_date").toLocalDateTime())
+                .build();
     }
 }

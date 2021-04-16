@@ -26,21 +26,22 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public ReservationApiDTO insertReservationInfo(ReservationBody reservation, int userID) {
 
-        InsertReservationInfo info = new InsertReservationInfo();
-        info.setUserId(userID);
-        info.setProductId(reservation.getProductId());
-        info.setDisplayInfoId(reservation.getDisplayInfoId());
-        info.setReservationDate(reservation.getReservationYearMonthDay());
+        InsertReservationInfo info = InsertReservationInfo.builder()
+                .userId(userID)
+                .productId(reservation.getProductId())
+                .displayInfoId(reservation.getDisplayInfoId())
+                .reservationDate(reservation.getReservationYearMonthDay()).build();
+
 
         int reservationInfoId = dao.insertReservationInfo(info);
 
         List<ReservationPrice> priceList = new ArrayList<>();
         for (int i = 0; i < reservation.getPrices().size(); i++) {
-            ReservationPrice priceDTO = new ReservationPrice();
-            priceDTO.setReservationInfoId(reservationInfoId);
-            priceDTO.setCount(reservation.getPrices().get(i).getCount());
-            priceDTO.setProductPriceId(reservation.getPrices().get(i).getProductPriceId());
-            priceList.add(priceDTO);
+            priceList.add(ReservationPrice.builder()
+                    .reservationInfoId(reservationInfoId)
+                    .productPriceId(reservation.getPrices().get(i).getProductPriceId())
+                    .count(reservation.getPrices().get(i).getCount())
+                    .build());
         }
         dao.insertReservationPriceInfo(priceList);
 

@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dao.sql;
 
-public class reservationSQL {
+public class ReservationSQL {
 
     public static final String SELECT_RESERVATION_PRICES = "SELECT rip.id, rip.reservation_info_id, rip.product_price_id, rip.count from reservation_info_price rip\n" +
             "    inner join reservation_info ri on rip.reservation_info_id = ri.id where rip.reservation_info_id = :reservationInfoId order by id ASC LIMIT :limit";
