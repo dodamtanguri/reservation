@@ -45,17 +45,12 @@ public class ReservationDAO {
     public int insertReservationInfo(InsertReservationInfo insertReservationInfo) {
         SqlParameterSource params = new BeanPropertySqlParameterSource(insertReservationInfo);
         return insertInfo.executeAndReturnKey(params).intValue();
-
-
     }
-
     @Transactional
     public void insertReservationPriceInfo(List<ReservationPrice> prices) {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(prices);
         insertPrice.executeBatch(batch);
-
     }
-
     @Transactional
     public List<ReservationPrice> getReservationPriceInfo(int reservationInfoId, int limit) {
         try {

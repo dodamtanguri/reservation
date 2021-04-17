@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.dto.Body;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,5 +20,12 @@ public class ReservationBody {
     private LocalDate reservationYearMonthDay;
     private int userId;
 
-
+    @Builder
+    public ReservationBody(List<ReservationPriceBody> prices, int productId, int displayInfoId, LocalDate reservationYearMonthDay, int userId) {
+        this.prices = prices;
+        this.productId = productId;
+        this.displayInfoId = displayInfoId;
+        this.reservationYearMonthDay = reservationYearMonthDay;
+        this.userId = userId;
+    }
 }

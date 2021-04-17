@@ -24,10 +24,8 @@ public class ReservationApiDTO {
     private int cancelFlag;
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private LocalDate reservationDate;
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private LocalDateTime createDate;
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private LocalDateTime modifyDate;
+    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime modifyDate = LocalDateTime.now();
     private List<ReservationPrice> prices;
 
 

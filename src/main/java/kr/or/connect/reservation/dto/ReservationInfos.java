@@ -1,12 +1,12 @@
 package kr.or.connect.reservation.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Getter
 @Setter
@@ -19,22 +19,10 @@ public class ReservationInfos {
     private String productContent;
     private int userId;
     private int sumPrice;
-
+    @JsonFormat(shape=JsonFormat.Shape.NUMBER)
     private LocalDate reservationDate;
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
-
-    public Long getReservationDate() {
-        return reservationDate.toEpochDay();
-    }
-
-    public Long getCreateDate() {
-        return createDate.atZone(ZoneId.systemDefault()).toEpochSecond();
-    }
-
-    public Long getModifyDate() {
-        return modifyDate.atZone(ZoneId.systemDefault()).toEpochSecond();
-    }
+    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime modifyDate = LocalDateTime.now();
 
     @Builder
     public ReservationInfos(int id, int productId, int displayInfoId, int cancelFlag, String productDescription, String productContent, int userId, int sumPrice, LocalDate reservationDate, LocalDateTime createDate, LocalDateTime modifyDate) {

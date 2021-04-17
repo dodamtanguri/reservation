@@ -66,10 +66,10 @@ public class ReservationApiControllerTest {
     @WithMockCustomUser
     @DisplayName("예약 등록 하기 ")
     public void postReservation() throws Exception {
-        ReservationPriceBody reqPrice = new ReservationPriceBody();
-        reqPrice.setCount(2);
-        reqPrice.setProductPriceId(3);
-
+        ReservationPriceBody reqPrice = ReservationPriceBody.builder()
+                .count(2)
+                .productPriceId(3)
+                .build();
         List<ReservationPriceBody> reqPriceList = new ArrayList<>();
         reqPriceList.add(reqPrice);
 

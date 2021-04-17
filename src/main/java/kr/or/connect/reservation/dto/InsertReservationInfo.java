@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,12 +20,8 @@ public class InsertReservationInfo {
     private int cancelFlag;
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private LocalDate reservationDate;
-
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private LocalDateTime createDate =  LocalDateTime.now();
-
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private LocalDateTime modifyDate;
+    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime modifyDate = LocalDateTime.now();
 
     @Builder
     public InsertReservationInfo(int id, int productId, int displayInfoId, int userId, int cancelFlag, LocalDate reservationDate, LocalDateTime createDate, LocalDateTime modifyDate) {
