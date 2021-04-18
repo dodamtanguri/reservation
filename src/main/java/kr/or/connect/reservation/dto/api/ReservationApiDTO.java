@@ -25,9 +25,9 @@ public class ReservationApiDTO {
     @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate reservationDate;
     @JsonFormat(pattern = "yyyy.MM.dd")
-    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime createDate;
     @JsonFormat(pattern = "yyyy.MM.dd")
-    private LocalDateTime modifyDate = LocalDateTime.now();
+    private LocalDateTime modifyDate;
     private List<ReservationPrice> prices;
 
 

@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,11 @@ public class ReservationInfos {
     private String productContent;
     private int userId;
     private int sumPrice;
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate reservationDate;
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime createDate;
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime modifyDate;
 
     @Builder

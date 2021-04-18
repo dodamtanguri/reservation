@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,11 @@ public class InsertReservationInfo {
     private int displayInfoId;
     private int userId;
     private int cancelFlag;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private LocalDate reservationDate;
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime createDate = LocalDateTime.now();
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime modifyDate = LocalDateTime.now();
 
     @Builder

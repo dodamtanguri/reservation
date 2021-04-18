@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
 @WebAppConfiguration
 public class ReservationApiControllerTest {
@@ -66,6 +66,7 @@ public class ReservationApiControllerTest {
     @WithMockCustomUser
     @DisplayName("예약 등록 하기 ")
     public void postReservation() throws Exception {
+
         ReservationPriceBody reqPrice = ReservationPriceBody.builder()
                 .count(2)
                 .productPriceId(3)
@@ -73,24 +74,28 @@ public class ReservationApiControllerTest {
         List<ReservationPriceBody> reqPriceList = new ArrayList<>();
         reqPriceList.add(reqPrice);
 
-        ReservationBody body = new ReservationBody();
-        body.setProductId(1);
-        body.setDisplayInfoId(1);
-        body.setUserId(1);
-        body.setPrices(reqPriceList);
-        body.setReservationYearMonthDay(LocalDate.now());
+        ReservationBody body = ReservationBody.builder()
+                .productId(1)
+                .displayInfoId(1)
+                .userId(1)
+                .prices(reqPriceList)
+                .reservationYearMonthDay(LocalDate.of(2020, 1, 20)).build();
 
-        mockMvc.perform(
-                MockMvcRequestBuilders
-                        .post("/api/reservationInfos")
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(new ObjectMapper().writeValueAsString(body))
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String result = objectMapper.writeValueAsString(body);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>" + result);
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/reservationInfos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(body))
+                .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk())
+                .andDo(print()).andReturn();
 
     }
+
 
     @Test
     @WithMockCustomUser
