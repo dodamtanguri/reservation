@@ -53,7 +53,6 @@ public class ReservationServiceImplTest {
 
 
     @Test
-    @DisplayName("예약등록하기 ")
     public void insertReservationInfo() throws Exception {
         ReservationPriceBody reqPrice = ReservationPriceBody.builder()
                 .productPriceId(3)
@@ -101,6 +100,7 @@ public class ReservationServiceImplTest {
 
         assertEquals(insertReservationInfo.getProductId(), info.getProductId());
         assertEquals(insertReservationInfo.getDisplayInfoId(), info.getDisplayInfoId());
+        assertEquals(insertReservationInfo.getUserId(), info.getUserId());
 
 
     }

@@ -21,8 +21,8 @@ public class GetInfosRowMapper implements RowMapper<ReservationInfos> {
                 .userId(resultSet.getInt("user_id"))
                 .sumPrice(resultSet.getInt("sumPrice"))
                 .reservationDate(resultSet.getDate("reservation_date").toLocalDate())
-                .createDate(resultSet.getTimestamp("create_date").toLocalDateTime())
-                .modifyDate(resultSet.getTimestamp("modify_date").toLocalDateTime())
+                .createDate(resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null)
+                .modifyDate(resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null)
                 .build();
     }
 }
