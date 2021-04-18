@@ -16,7 +16,7 @@ public class ReservationBody {
     private List<ReservationPriceBody> prices;
     private int productId;
     private int displayInfoId;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate reservationYearMonthDay;
     private int userId;
 

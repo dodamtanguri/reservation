@@ -22,9 +22,11 @@ public class ReservationApiDTO {
     private int displayInfoId;
     private int userId;
     private int cancelFlag;
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate reservationDate;
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime createDate = LocalDateTime.now();
+    @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime modifyDate = LocalDateTime.now();
     private List<ReservationPrice> prices;
 

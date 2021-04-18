@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.service.impl;
 
+import kr.or.connect.reservation.controller.api.WithMockCustomUser;
 import kr.or.connect.reservation.dao.ReservationDAO;
 import kr.or.connect.reservation.dto.Body.CancelBody;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
@@ -15,9 +16,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,16 +28,19 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
-
 @WebAppConfiguration
-@WithMockUser(username = "carami@connect.co.kr", password = "1234", roles = {"ROLE_USER"})
+@WithMockCustomUser
+@Transactional
 public class ReservationServiceImplTest {
 
 
     @InjectMocks
     public ReservationServiceImpl reservationService;
+
+
     @Mock
     public ReservationDAO reservationDAO;
     private MockMvc mockMvc;
@@ -48,19 +52,15 @@ public class ReservationServiceImplTest {
     }
 
 
-    //예약 등록 하기
     @Test
-    @DisplayName("예약 등록 하기 - ReservationInfos")
-    public void testInsertReservation() throws Exception {
-
-        //given
+    @DisplayName("예약등록하기 ")
+    public void insertReservationInfo() throws Exception {
         ReservationPriceBody reqPrice = ReservationPriceBody.builder()
                 .productPriceId(3)
                 .count(3).build();
 
         List<ReservationPriceBody> reqPriceList = new ArrayList<>();
         reqPriceList.add(reqPrice);
-
 
         ReservationBody req = ReservationBody.builder()
                 .productId(1)
@@ -82,30 +82,29 @@ public class ReservationServiceImplTest {
 
         List<ReservationPrice> prices = new ArrayList<>();
         ReservationPrice price = ReservationPrice.builder()
+                .id(104)
                 .productPriceId(reqPrice.getProductPriceId())
                 .reservationInfoId(info.getId())
                 .count(reqPrice.getCount())
                 .build();
         prices.add(price);
 
+
         ReservationApiDTO actual = new ReservationApiDTO(info, prices);
-        //Insert Info
-        when(reservationDAO.insertReservationInfo(info)).thenReturn(53);
-        //Insert Price Info
-        reservationDAO.insertReservationPriceInfo(prices);
-        when(reservationDAO.getReservationPriceInfo(info.getId(), prices.size())).thenReturn(prices);
 
-        //Insert 후 response body
+        given(reservationDAO.insertReservationInfo(info)).willReturn(info.getId());
+        given(reservationDAO.getReservationPriceInfo(info.getId(), prices.size())).willReturn(prices);
 
-        ReservationApiDTO result = reservationService.insertReservationInfo(req, 1);
-        assertEquals(actual, result);
 
-        verify(reservationDAO, times(1)).insertReservationInfo(info);
-        verify(reservationDAO, times(1)).insertReservationPriceInfo(prices);
-        verify(reservationDAO, times(1)).getReservationPriceInfo(1, 2);
+        ReservationApiDTO insertReservationInfo = reservationService.insertReservationInfo(req, 1);
+
+
+        assertEquals(insertReservationInfo.getProductId(), info.getProductId());
+        assertEquals(insertReservationInfo.getDisplayInfoId(), info.getDisplayInfoId());
 
 
     }
+
 
     // 예약조회하기
     @Test
