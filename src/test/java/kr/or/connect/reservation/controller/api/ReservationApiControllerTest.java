@@ -68,10 +68,10 @@ public class ReservationApiControllerTest {
     @WithMockCustomUser
     @DisplayName("예약 등록 하기 ")
     public void postReservation() throws Exception {
-        ReservationPriceBody reqPrice = new ReservationPriceBody();
-        reqPrice.setCount(2);
-        reqPrice.setProductPriceId(3);
-
+        ReservationPriceBody reqPrice = ReservationPriceBody.builder()
+                .count(2)
+                .productPriceId(3)
+                .build();
         List<ReservationPriceBody> reqPriceList = new ArrayList<>();
         reqPriceList.add(reqPrice);
 
@@ -80,7 +80,7 @@ public class ReservationApiControllerTest {
         body.setDisplayInfoId(1);
         body.setUserId(1);
         body.setPrices(reqPriceList);
-        body.setReservationYearMonthDay(LocalDate.of(2020, 1, 2));
+        body.setReservationYearMonthDay(LocalDate.of(2020, 10, 10));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
