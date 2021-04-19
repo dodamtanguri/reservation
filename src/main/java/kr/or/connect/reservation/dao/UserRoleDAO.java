@@ -1,6 +1,5 @@
 package kr.or.connect.reservation.dao;
 
-import com.mysql.cj.result.Row;
 import kr.or.connect.reservation.dto.UserRoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,8 +16,8 @@ import static kr.or.connect.reservation.dao.sql.UserSQL.SELECT_USER_ROLE_BY_EMAI
 
 @Repository
 public class UserRoleDAO {
-    private NamedParameterJdbcTemplate jdbc;
-    private RowMapper<UserRoleDto> rowMapper = BeanPropertyRowMapper.newInstance(UserRoleDto.class);
+    private final NamedParameterJdbcTemplate jdbc;
+    private final RowMapper<UserRoleDto> rowMapper = BeanPropertyRowMapper.newInstance(UserRoleDto.class);
 
     @Autowired
     public UserRoleDAO(DataSource dataSource) {

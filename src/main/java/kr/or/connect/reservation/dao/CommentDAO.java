@@ -1,6 +1,5 @@
 package kr.or.connect.reservation.dao;
 
-import io.swagger.models.auth.In;
 import kr.or.connect.reservation.dto.CommentDTO;
 import kr.or.connect.reservation.dto.CommentImagesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import static kr.or.connect.reservation.dao.sql.CommentSQL.*;
 @Repository
 public class CommentDAO {
 
-    private NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
     @Autowired
     public CommentDAO(DataSource dataSource) {

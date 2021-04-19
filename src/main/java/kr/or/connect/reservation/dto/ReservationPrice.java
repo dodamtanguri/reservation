@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dto;
 
-import kr.or.connect.reservation.dto.Body.ReservationPriceBody;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +12,11 @@ public class ReservationPrice {
     private int productPriceId;
     private int count;
 
-
+    @Builder
+    public ReservationPrice(int id, int reservationInfoId, int productPriceId, int count) {
+        this.id = id;
+        this.reservationInfoId = reservationInfoId;
+        this.productPriceId = productPriceId;
+        this.count = count;
+    }
 }

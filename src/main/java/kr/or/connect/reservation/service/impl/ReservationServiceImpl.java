@@ -4,63 +4,67 @@ import kr.or.connect.reservation.dao.ReservationDAO;
 import kr.or.connect.reservation.dto.Body.CancelBody;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
 import kr.or.connect.reservation.dto.CancelReservation;
+import kr.or.connect.reservation.dto.InsertReservationInfo;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
 import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import kr.or.connect.reservation.service.ReservationService;
-import kr.or.connect.reservation.service.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
+
     private final ReservationDAO dao;
 
-
     @Override
-    public ReservationApiDTO insertReservationInfo(ReservationBody req) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @Transactional
+    public ReservationApiDTO insertReservationInfo(ReservationBody reservation, int userID) {
 
-        ReservationApiDTO apiDTO = new ReservationApiDTO();
-        apiDTO.setUserId(customUserDetails.getUserId());
-        apiDTO.setProductId(req.getProductId());
-        apiDTO.setDisplayInfoId(req.getDisplayInfoId());
-        apiDTO.setReservationDate(req.getReservationYearMonthDay());
+        InsertReservationInfo info = InsertReservationInfo.builder()
+                .userId(userID)
+                .productId(reservation.getProductId())
+                .displayInfoId(reservation.getDisplayInfoId())
+                .reservationDate(reservation.getReservationYearMonthDay()).build();
 
-        int reservationInfoId = dao.insertReservationInfo(apiDTO);
 
-        ReservationPrice priceDTO = new ReservationPrice();
-        priceDTO.setReservationInfoId(reservationInfoId);
-        priceDTO.setCount(req.getPrices().get(0).getCount());
-        priceDTO.setProductPriceId(req.getPrices().get(0).getProductPriceId());
+        int reservationInfoId = dao.insertReservationInfo(info);
 
-        int reservationPriceId = dao.insertReservationPrice(priceDTO);
+        List<ReservationPrice> priceList = new ArrayList<>();
+        for (int i = 0; i < reservation.getPrices().size(); i++) {
+            priceList.add(ReservationPrice.builder()
+                    .reservationInfoId(reservationInfoId)
+                    .productPriceId(reservation.getPrices().get(i).getProductPriceId())
+                    .count(reservation.getPrices().get(i).getCount())
+                    .build());
+        }
+        dao.insertReservationPriceInfo(priceList);
 
-        dao.getReservationInfo(reservationInfoId);
+        int limit = reservation.getPrices().size();
+        priceList = dao.getReservationPriceInfo(reservationInfoId, limit);
+
+        ReservationApiDTO apiDTO = new ReservationApiDTO(info, priceList);
         apiDTO.setId(reservationInfoId);
-        apiDTO.setPrices(dao.getReservationPrice(reservationPriceId));
+        apiDTO.setPrices(priceList);
 
         return apiDTO;
-
     }
 
-
     @Override
-    public GetReservationInfoApiDTO getReservation() {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public GetReservationInfoApiDTO getReservation(int userID) {
         GetReservationInfoApiDTO apiDTO = new GetReservationInfoApiDTO();
-        int userID = customUserDetails.getUserId();
         apiDTO.setItems(dao.getReservationInfoApiDTO(userID));
         return apiDTO;
     }
 
     @Override
-    public CancelReservation cancelReservation(CancelBody req) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int status = dao.cancelReservation(req.getId(), customUserDetails.getUserId());
-
+    public CancelReservation cancelReservation(CancelBody req, int userID) {
+        int status = dao.cancelReservation(req.getId(), userID);
         CancelReservation cancelReservation = new CancelReservation();
         cancelReservation.setResult(status == 0 ? "fail" : "Success");
 

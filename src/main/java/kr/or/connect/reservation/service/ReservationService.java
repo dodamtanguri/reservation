@@ -9,9 +9,9 @@ import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 
 
 public interface ReservationService {
-    ReservationApiDTO insertReservationInfo(ReservationBody req);
+    ReservationApiDTO insertReservationInfo(ReservationBody req, int userID);
 
-    GetReservationInfoApiDTO getReservation();
+    GetReservationInfoApiDTO getReservation(int userID);
 
-    CancelReservation cancelReservation(CancelBody req);
+    CancelReservation cancelReservation(CancelBody req, int userID);
 }

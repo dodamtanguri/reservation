@@ -52,6 +52,7 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
 
     }
 
+
     @Bean
     public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();

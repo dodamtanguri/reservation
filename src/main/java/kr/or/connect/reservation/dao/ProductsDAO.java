@@ -14,7 +14,7 @@ import static kr.or.connect.reservation.dao.sql.ProductsSQL.*;
 
 @Repository
 public class ProductsDAO {
-    private NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
     @Autowired
     public ProductsDAO(DataSource dataSource) {
