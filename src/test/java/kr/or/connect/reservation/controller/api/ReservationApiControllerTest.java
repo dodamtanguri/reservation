@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import kr.or.connect.reservation.config.ApplicationConfig;
 import kr.or.connect.reservation.dto.Body.CancelBody;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
@@ -19,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -40,10 +41,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
 @WebAppConfiguration
 public class ReservationApiControllerTest {
+
 
     @InjectMocks
     public ReservationApiController controller;
@@ -66,33 +68,33 @@ public class ReservationApiControllerTest {
     @WithMockCustomUser
     @DisplayName("예약 등록 하기 ")
     public void postReservation() throws Exception {
+        ReservationPriceBody reqPrice = new ReservationPriceBody();
+        reqPrice.setCount(2);
+        reqPrice.setProductPriceId(3);
 
-        ReservationPriceBody reqPrice = ReservationPriceBody.builder()
-                .count(2)
-                .productPriceId(3)
-                .build();
         List<ReservationPriceBody> reqPriceList = new ArrayList<>();
         reqPriceList.add(reqPrice);
 
-        ReservationBody body = ReservationBody.builder()
-                .productId(1)
-                .displayInfoId(1)
-                .userId(1)
-                .prices(reqPriceList)
-                .reservationYearMonthDay(LocalDate.of(2020, 1, 20)).build();
+        ReservationBody body = new ReservationBody();
+        body.setProductId(1);
+        body.setDisplayInfoId(1);
+        body.setUserId(1);
+        body.setPrices(reqPriceList);
+        body.setReservationYearMonthDay(LocalDate.of(2020, 1, 2));
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String result = objectMapper.writeValueAsString(body);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>" + result);
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/api/reservationInfos")
+                        .accept(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writeValueAsString(body))
+                        .contentType(MediaType.APPLICATION_JSON)
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .post("/api/reservationInfos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(body))
-                .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk())
-                .andDo(print()).andReturn();
+        ).andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
 
     }
 
