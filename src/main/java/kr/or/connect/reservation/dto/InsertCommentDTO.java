@@ -15,6 +15,7 @@ public class InsertCommentDTO {
     private int id;
     private int productId;
     private int reservationInfoId;
+    private int userId;
     private int score;
     private String comment;
     @JsonFormat(pattern = "yyyy.MM.dd")
@@ -24,10 +25,11 @@ public class InsertCommentDTO {
 
     @Builder
 
-    public InsertCommentDTO(int id, int productId, int reservationInfoId, int score, String comment, LocalDateTime createDate, LocalDateTime modifyDate) {
+    public InsertCommentDTO(int id, int productId, int reservationInfoId, int score, int userId, String comment, LocalDateTime createDate, LocalDateTime modifyDate) {
         this.id = id;
         this.productId = productId;
         this.reservationInfoId = reservationInfoId;
+        this.userId = userId;
         this.score = score;
         this.comment = comment;
         this.createDate = LocalDateTime.now();

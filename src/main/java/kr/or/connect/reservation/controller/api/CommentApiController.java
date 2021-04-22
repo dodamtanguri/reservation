@@ -4,13 +4,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import kr.or.connect.reservation.dto.PostCommentDTO;
 import kr.or.connect.reservation.dto.api.CommentApitDTO;
 import kr.or.connect.reservation.service.CommentService;
+import kr.or.connect.reservation.service.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Api(tags = {"댓글목록 API"})
 @RestController
@@ -30,4 +34,24 @@ public class CommentApiController {
             @RequestParam(name = "productId", required = false, defaultValue = "1") int productId) {
         return commentService.getComment(productId, start);
     }
+
+    @PostMapping(value = "/comments")
+    public PostCommentDTO postCommentDTO(
+            @RequestParam(name = "reservationInfoId", required = true, defaultValue = "17") int reservationInfoId,
+            @RequestParam(name = "score", required = true, defaultValue = "3") int score,
+            @RequestParam(name = "comment", required = true, defaultValue = "댓글을 저장합니다.") String comment,
+            @RequestParam(name = "multipartFile") MultipartFile file) throws IOException {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userID = customUserDetails.getUserId();
+
+        if (!file.getOriginalFilename().isEmpty()) {
+            file.transferTo(new File("/", file.getOriginalFilename()));
+            model.addAttribute("msg", "File uploaded successfully.");
+        } else {
+            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+        return commentService.insertComments(reservationInfoId, score, comment, userID);
+    }
+
+
 }

@@ -2,10 +2,15 @@ package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.dto.CommentDTO;
 import kr.or.connect.reservation.dto.CommentImagesDTO;
+import kr.or.connect.reservation.dto.InsertCommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.Collections;
@@ -19,10 +24,19 @@ import static kr.or.connect.reservation.dao.sql.CommentSQL.*;
 public class CommentDAO {
 
     private final NamedParameterJdbcTemplate jdbc;
+    private final SimpleJdbcInsert insertComment;
+    private final SimpleJdbcInsert insertImg;
 
     @Autowired
     public CommentDAO(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+
+        this.insertComment = new SimpleJdbcInsert(dataSource)
+                .withTableName("reservation_user_comment")
+                .usingGeneratedKeyColumns("id");
+        this.insertImg = new SimpleJdbcInsert(dataSource)
+                .withTableName("reservation_user_comment_image")
+                .usingGeneratedKeyColumns("id");
     }
 
     public List<CommentDTO> getComment(int productId, int start) {
@@ -85,5 +99,11 @@ public class CommentDAO {
         };
 
         return jdbc.queryForObject(SELECT_COMMENT_TOTALCOUNT, params, Integer.class);
+    }
+
+    @Transactional
+    public int insertComment(InsertCommentDTO insert) {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(insert);
+        return insertComment.executeAndReturnKey(params).intValue();
     }
 }
