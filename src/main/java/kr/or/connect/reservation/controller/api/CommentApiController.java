@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import kr.or.connect.reservation.dto.PostCommentDTO;
+import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.dto.api.CommentApitDTO;
 import kr.or.connect.reservation.service.CommentService;
 import kr.or.connect.reservation.service.security.CustomUserDetails;
@@ -36,7 +36,7 @@ public class CommentApiController {
     }
 
     @PostMapping(value = "/comments")
-    public PostCommentDTO postCommentDTO(
+    public PostCommentApiDTO postCommentDTO(
             @RequestParam(name = "reservationInfoId", required = true, defaultValue = "17") int reservationInfoId,
             @RequestParam(name = "score", required = true, defaultValue = "3") int score,
             @RequestParam(name = "comment", required = true, defaultValue = "댓글을 저장합니다.") String comment,

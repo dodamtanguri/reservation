@@ -4,7 +4,7 @@ import kr.or.connect.reservation.dao.CommentDAO;
 import kr.or.connect.reservation.dto.InsertCommentDTO;
 import kr.or.connect.reservation.dto.InsertCommentImgDTO;
 import kr.or.connect.reservation.dto.InsertFileDTO;
-import kr.or.connect.reservation.dto.PostCommentDTO;
+import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.dto.api.CommentApitDTO;
 import kr.or.connect.reservation.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public PostCommentDTO insertComments(int reservationInfoId, int score, String comment, int userID) {
+    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID) {
         InsertCommentDTO insert = InsertCommentDTO.builder()
                 .userId(userID)
                 .comment(comment)
