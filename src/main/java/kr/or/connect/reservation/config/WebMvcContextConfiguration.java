@@ -4,6 +4,8 @@ import kr.or.connect.reservation.interceptor.HttpInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.resource.EncodedResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -38,6 +40,7 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
                 .addResolver(new EncodedResourceResolver());
 
 
+
         /* Swagger 2 */
         registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/")
                 .resourceChain(true).addResolver(new EncodedResourceResolver());
@@ -58,6 +61,12 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
+        return resolver;
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        StandardServletMultipartResolver resolver = new StandardServletMultipartResolver();
         return resolver;
     }
 }

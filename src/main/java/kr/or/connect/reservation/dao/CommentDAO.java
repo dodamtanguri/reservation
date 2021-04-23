@@ -1,8 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import kr.or.connect.reservation.dto.CommentDTO;
-import kr.or.connect.reservation.dto.CommentImagesDTO;
-import kr.or.connect.reservation.dto.InsertCommentDTO;
+import kr.or.connect.reservation.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -25,6 +23,7 @@ public class CommentDAO {
 
     private final NamedParameterJdbcTemplate jdbc;
     private final SimpleJdbcInsert insertComment;
+    private final SimpleJdbcInsert insertFile;
     private final SimpleJdbcInsert insertImg;
 
     @Autowired
@@ -34,9 +33,12 @@ public class CommentDAO {
         this.insertComment = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_user_comment")
                 .usingGeneratedKeyColumns("id");
+        this.insertFile = new SimpleJdbcInsert(dataSource)
+                .withTableName("file_info")
+                .usingGeneratedKeyColumns("id");
         this.insertImg = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_user_comment_image")
-                .usingGeneratedKeyColumns("id");
+                .usingGeneratedKeyColumns("product_id");
     }
 
     public List<CommentDTO> getComment(int productId, int start) {
@@ -106,4 +108,18 @@ public class CommentDAO {
         SqlParameterSource params = new BeanPropertySqlParameterSource(insert);
         return insertComment.executeAndReturnKey(params).intValue();
     }
+
+    @Transactional
+    public int insertCommentFile(InsertFileDTO file) {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(file);
+        return insertFile.executeAndReturnKey(params).intValue();
+    }
+
+    @Transactional
+    public int insertCommentImg(InsertCommentImgDTO img) {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(img);
+        return insertImg.executeAndReturnKey(params).intValue();
+    }
+
+
 }

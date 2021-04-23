@@ -7,6 +7,7 @@ import javax.servlet.Filter;
 
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{ApplicationConfig.class, SecurityConfig.class};
@@ -29,5 +30,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
         return new Filter[]{encodingFilter};
     }
+
 
 }

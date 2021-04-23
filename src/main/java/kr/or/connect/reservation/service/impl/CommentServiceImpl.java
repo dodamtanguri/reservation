@@ -4,8 +4,8 @@ import kr.or.connect.reservation.dao.CommentDAO;
 import kr.or.connect.reservation.dto.InsertCommentDTO;
 import kr.or.connect.reservation.dto.InsertCommentImgDTO;
 import kr.or.connect.reservation.dto.InsertFileDTO;
-import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.dto.api.CommentApitDTO;
+import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID) {
+    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID,InsertFileDTO fileDTO) {
         InsertCommentDTO insert = InsertCommentDTO.builder()
                 .userId(userID)
                 .comment(comment)
@@ -38,12 +38,19 @@ public class CommentServiceImpl implements CommentService {
 
         int commentId = commentDAO.insertComment(insert);
 
-        InsertFileDTO insertFile = InsertFileDTO.builder()
-                .fileName()
 
-        int fileId = commentDAO.insertFile();
+        int fileId = commentDAO.insertCommentFile(fileDTO);
 
         InsertCommentImgDTO insertImg = InsertCommentImgDTO.builder()
+                .reservationInfoId(reservationInfoId)
+                .reservationUserCommentId(commentId)
+                .fileId(fileId)
+                .build();
+
+        int productId = commentDAO.insertCommentImg(insertImg);
+       PostCommentApiDTO commentApi = new PostCommentApiDTO();
+       commentApi.setProductId(productId);
+       commentApi.setResult(productId == 0 ? "fail":"Success");
 
 
 
