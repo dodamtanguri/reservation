@@ -14,4 +14,6 @@ public class CommentSQL {
             "from reservation_user_comment_image ruci inner join reservation_user_comment ruc on ruci.reservation_info_id = ruc.reservation_info_id \n" +
             "WHERE ruc.product_id = :productId ";
 
+    public static final String SELECT_COMMENT_PRODUCTID = "select product_id from reservation_info ri where ri.id = :reservationInfoId and ri.user_id = :userId";
+
 }

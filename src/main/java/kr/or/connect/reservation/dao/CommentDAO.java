@@ -29,7 +29,6 @@ public class CommentDAO {
     @Autowired
     public CommentDAO(DataSource dataSource) {
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-
         this.insertComment = new SimpleJdbcInsert(dataSource)
                 .withTableName("reservation_user_comment")
                 .usingGeneratedKeyColumns("id");
@@ -101,6 +100,19 @@ public class CommentDAO {
         };
 
         return jdbc.queryForObject(SELECT_COMMENT_TOTALCOUNT, params, Integer.class);
+    }
+
+    @Transactional
+    public int getProductId(int reservationInfoId, int userId) {
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("reservationInfoId", reservationInfoId);
+                put("userId", userId);
+            }
+        };
+        return jdbc.queryForObject(SELECT_COMMENT_PRODUCTID, params, Integer.class);
+
+
     }
 
     @Transactional

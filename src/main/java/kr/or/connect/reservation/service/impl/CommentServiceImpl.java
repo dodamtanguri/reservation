@@ -10,6 +10,7 @@ import kr.or.connect.reservation.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +29,12 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID,InsertFileDTO fileDTO) {
+    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID, MultipartFile file) {
+        int productId = commentDAO.getProductId(reservationInfoId, userID);
+
+
         InsertCommentDTO insert = InsertCommentDTO.builder()
+                .productId(productId)
                 .userId(userID)
                 .comment(comment)
                 .reservationInfoId(reservationInfoId)
@@ -37,6 +42,11 @@ public class CommentServiceImpl implements CommentService {
                 .build();
 
         int commentId = commentDAO.insertComment(insert);
+
+        InsertFileDTO fileDTO = new InsertFileDTO();
+        fileDTO.setFileName(file.getOriginalFilename());
+        fileDTO.setSaveFileName(file.getOriginalFilename());
+        fileDTO.setContentType(file.getContentType());
 
 
         int fileId = commentDAO.insertCommentFile(fileDTO);
@@ -46,14 +56,10 @@ public class CommentServiceImpl implements CommentService {
                 .reservationUserCommentId(commentId)
                 .fileId(fileId)
                 .build();
-
-        int productId = commentDAO.insertCommentImg(insertImg);
-       PostCommentApiDTO commentApi = new PostCommentApiDTO();
-       commentApi.setProductId(productId);
-       commentApi.setResult(productId == 0 ? "fail":"Success");
-
-
-
-        return null;
+        int status = commentDAO.insertCommentImg(insertImg);
+        PostCommentApiDTO commentApi = new PostCommentApiDTO();
+        commentApi.setProductId(productId);
+        commentApi.setResult(status == 0 ? "fail" : "Success");
+        return commentApi;
     }
 }
