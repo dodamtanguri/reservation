@@ -1,16 +1,16 @@
 package kr.or.connect.reservation.service.impl;
 
 import kr.or.connect.reservation.dao.CommentDAO;
-import kr.or.connect.reservation.dto.InsertCommentDTO;
-import kr.or.connect.reservation.dto.InsertCommentImgDTO;
-import kr.or.connect.reservation.dto.InsertFileDTO;
-import kr.or.connect.reservation.dto.api.CommentApitDTO;
+import kr.or.connect.reservation.dto.*;
+import kr.or.connect.reservation.dto.api.CommentApiDTO;
 import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +19,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public CommentApitDTO getComment(int productId, int start) {
-        CommentApitDTO commentApitDTO = new CommentApitDTO();
-        commentApitDTO.setReservationUserComments(commentDAO.getComment(productId, start));
-        commentApitDTO.setTotalCount(commentDAO.getTotalCount(productId));
-        return commentApitDTO;
+    public CommentApiDTO getComment(int productId, int start) {
+        List<CommentImagesDTO> commentImgList = commentDAO.getCommentImage(productId);
+
+        List<CommentDTO> commentList = commentDAO.getCommentList(productId, start);
+        for (int i = 0; i < commentImgList.size(); i++) {
+            commentList.get(i).setReservationUserCommentImages(commentImgList);
+        }
+        CommentApiDTO commentApiDTO = new CommentApiDTO();
+        commentApiDTO.setReservationUserComments(commentList);
+        commentApiDTO.setTotalCount(commentDAO.getTotalCount(productId));
+        return commentApiDTO;
 
     }
 
@@ -31,7 +37,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID, MultipartFile file) {
         int productId = commentDAO.getProductId(reservationInfoId, userID);
-
 
         InsertCommentDTO insert = InsertCommentDTO.builder()
                 .productId(productId)

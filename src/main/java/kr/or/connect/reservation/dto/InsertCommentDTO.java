@@ -19,9 +19,9 @@ public class InsertCommentDTO {
     private int score;
     private String comment;
     @JsonFormat(pattern = "yyyy.MM.dd")
-    private LocalDateTime createDate;
+    private LocalDateTime createDate = LocalDateTime.now();
     @JsonFormat(pattern = "yyyy.MM.dd")
-    private LocalDateTime modifyDate;
+    private LocalDateTime modifyDate = LocalDateTime.now();
 
     @Builder
 

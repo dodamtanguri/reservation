@@ -1,8 +1,9 @@
 package kr.or.connect.reservation.dao;
 
+import kr.or.connect.reservation.dao.rowMapper.GetCommentImgRowMapper;
+import kr.or.connect.reservation.dao.rowMapper.GetCommentRowMapper;
 import kr.or.connect.reservation.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,31 +40,14 @@ public class CommentDAO {
                 .usingGeneratedKeyColumns("product_id");
     }
 
-    public List<CommentDTO> getComment(int productId, int start) {
+    public List<CommentDTO> getCommentList(int productId, int start) {
         Map<String, Integer> params = new HashMap<String, Integer>() {
             {
                 put("productId", productId);
                 put("START", start);
             }
         };
-
-        return jdbc.query(SELECT_COMMENT_LIST, params, (resultSet, i) -> {
-            CommentDTO commentDTO = new CommentDTO();
-            commentDTO.setId(resultSet.getInt("id"));
-            commentDTO.setProductId(productId);
-            commentDTO.setReservationInfoId(resultSet.getInt("reservationInfoId"));
-            commentDTO.setScore(resultSet.getInt("score"));
-            commentDTO.setReservationEmail(resultSet.getString("reservationEmail"));
-            commentDTO.setComment(resultSet.getString("comment"));
-            commentDTO.setCreateDate(resultSet.getString("create_date"));
-            commentDTO.setModifyDate(resultSet.getString("modify_date"));
-
-            List<CommentImagesDTO> commentImagesDTOS = getCommentImage(resultSet.getInt("reservationInfoId"));
-            if (commentImagesDTOS != null)
-                commentDTO.setReservationUserCommentImages(commentImagesDTOS);
-            return commentDTO;
-
-        });
+        return jdbc.query(SELECT_COMMENT_LIST, params, new GetCommentRowMapper());
     }
 
     public List<CommentImagesDTO> getCommentImage(Integer productId) {
@@ -73,23 +56,7 @@ public class CommentDAO {
                 put("productId", productId);
             }
         };
-
-        try {
-            return jdbc.query(SELECT_COMMENT_IMAGE, params, (resultSet, i) -> {
-                CommentImagesDTO commentImagesDTO = new CommentImagesDTO();
-                commentImagesDTO.setCommentImageId(resultSet.getInt("reservationCommentImageId"));
-                commentImagesDTO.setReservationId(resultSet.getInt("reservationInfoId"));
-                commentImagesDTO.setCommentImageId(resultSet.getInt("reservationCommentId"));
-                commentImagesDTO.setFileId(resultSet.getInt("file_id"));
-
-
-                return commentImagesDTO;
-            });
-        } catch (EmptyResultDataAccessException e) {
-            return Collections.emptyList();
-
-        }
-
+        return jdbc.query(SELECT_COMMENT_IMAGE, params, new GetCommentImgRowMapper());
     }
 
     public int getTotalCount(Integer productId) {

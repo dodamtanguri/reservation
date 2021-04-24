@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import kr.or.connect.reservation.dto.api.CommentApitDTO;
+import kr.or.connect.reservation.dto.api.CommentApiDTO;
 import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.service.CommentService;
 import kr.or.connect.reservation.service.security.CustomUserDetails;
@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Api(tags = {"댓글목록 API"})
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/comments")
 @RequiredArgsConstructor
 public class CommentApiController {
     private final CommentService commentService;
@@ -25,14 +25,14 @@ public class CommentApiController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Exception")
     })
-    @GetMapping(value = "/displayinfos/comment")
-    public CommentApitDTO commentApitDTO(
+    @GetMapping
+    public CommentApiDTO commentApitDTO(
             @RequestParam(name = "START", required = false, defaultValue = "0") int start,
             @RequestParam(name = "productId", required = false, defaultValue = "1") int productId) {
         return commentService.getComment(productId, start);
     }
 
-    @PostMapping(value = "/comments")
+    @PostMapping
     public PostCommentApiDTO postCommentDTO(
 
             @RequestParam(name = "reservationInfoId", required = true, defaultValue = "1") int reservationInfoId,
