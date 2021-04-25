@@ -29,7 +29,9 @@ public class CommentApiController {
     public CommentApiDTO commentApitDTO(
             @RequestParam(name = "START", required = false, defaultValue = "0") int start,
             @RequestParam(name = "productId", required = false, defaultValue = "1") int productId) {
-        return commentService.getComment(productId, start);
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userID = customUserDetails.getUserId();
+        return commentService.getComment(productId, start, userID);
     }
 
     @PostMapping

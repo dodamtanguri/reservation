@@ -40,20 +40,24 @@ public class CommentDAO {
                 .usingGeneratedKeyColumns("product_id");
     }
 
-    public List<CommentDTO> getCommentList(int productId, int start) {
+    public List<CommentDTO> getCommentList(int productId, int start, int userId) {
         Map<String, Integer> params = new HashMap<String, Integer>() {
             {
+                put("userId", userId);
                 put("productId", productId);
                 put("START", start);
             }
         };
         return jdbc.query(SELECT_COMMENT_LIST, params, new GetCommentRowMapper());
+
+
     }
 
-    public List<CommentImagesDTO> getCommentImage(Integer productId) {
+    public List<CommentImagesDTO> getCommentImage(int reservationInfoId, int reservationCommentId) {
         Map<String, Object> params = new HashMap<String, Object>() {
             {
-                put("productId", productId);
+                put("reservationInfoId", reservationInfoId);
+                put("reservationCommentId", reservationCommentId);
             }
         };
         return jdbc.query(SELECT_COMMENT_IMAGE, params, new GetCommentImgRowMapper());

@@ -19,13 +19,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public CommentApiDTO getComment(int productId, int start) {
-        List<CommentImagesDTO> commentImgList = commentDAO.getCommentImage(productId);
+    public CommentApiDTO getComment(int productId, int start, int userId) {
 
-        List<CommentDTO> commentList = commentDAO.getCommentList(productId, start);
-        for (int i = 0; i < commentImgList.size(); i++) {
-            commentList.get(i).setReservationUserCommentImages(commentImgList);
+        List<CommentDTO> commentList = commentDAO.getCommentList(productId, start, userId);
+        for (int i = 0; i < 5; i++) {
+            int reservationInfoId = commentList.get(i).getReservationInfoId();
+            int reservationCommentId = commentList.get(i).getId();
+            List<CommentImagesDTO> commentImage = commentDAO.getCommentImage(reservationInfoId, reservationCommentId);
+            if (commentImage != null)
+                commentList.get(i).setReservationUserCommentImages(commentImage);
         }
+
         CommentApiDTO commentApiDTO = new CommentApiDTO();
         commentApiDTO.setReservationUserComments(commentList);
         commentApiDTO.setTotalCount(commentDAO.getTotalCount(productId));
