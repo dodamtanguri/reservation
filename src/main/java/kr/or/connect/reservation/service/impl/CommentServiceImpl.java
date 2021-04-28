@@ -51,11 +51,15 @@ public class CommentServiceImpl implements CommentService {
                 .build();
 
         int commentId = commentDAO.insertComment(insert);
+        if(file != null) {
+            InsertFileDTO fileDTO = new InsertFileDTO();
+            fileDTO.setFileName(file.getOriginalFilename());
+            fileDTO.setSaveFileName(file.getOriginalFilename());
+            fileDTO.setContentType(file.getContentType());
+        } else {
+            
+        }
 
-        InsertFileDTO fileDTO = new InsertFileDTO();
-        fileDTO.setFileName(file.getOriginalFilename());
-        fileDTO.setSaveFileName(file.getOriginalFilename());
-        fileDTO.setContentType(file.getContentType());
 
 
         int fileId = commentDAO.insertCommentFile(fileDTO);

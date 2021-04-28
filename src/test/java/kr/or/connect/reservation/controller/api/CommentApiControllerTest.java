@@ -37,7 +37,6 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -120,7 +119,7 @@ public class CommentApiControllerTest {
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
 
         FileInputStream fis = new FileInputStream("/Users/BOOST/temp/부스트코스.png");
-        MockMultipartFile file = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
+        MockMultipartFile file = new MockMultipartFile("file", "file.png", "image.png", "file".getBytes());
 
 
         HashMap<String, String> contentTypeParams = new HashMap<String, String>();
@@ -128,15 +127,19 @@ public class CommentApiControllerTest {
         MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
 
 
-        MockMvc mockMvc1 = MockMvcBuilders.webAppContextSetup(context).build();
+        MockMvc mockMvc1 = MockMvcBuilders.webAppContextSetup(context)
+                .alwaysExpect(status().isOk())
+                .addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
+
         mockMvc1.perform(MockMvcRequestBuilders.multipart("/api/comments")
                 .file(file)
                 .param("reservationInfoId", "1")
                 .param("score", "3")
-                .param("comment", "댓글을 저장합니다.")
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(content().string("success"));
+                .param("comment", "댓글을 저장합니다."))
+                .andExpect(status().isOk()).andReturn();
+
+
+
 
     }
 

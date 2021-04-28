@@ -38,8 +38,8 @@ public class CommentApiController {
     public PostCommentApiDTO addCommentDTO(
             @RequestParam(name = "reservationInfoId", required = true, defaultValue = "1") int reservationInfoId,
             @RequestParam(name = "score", required = true, defaultValue = "3") int score,
-            @RequestParam(name = "comment", required = true, defaultValue = "댓글을 저장합니다.") String comment,
-            @RequestParam(name = "file") MultipartFile file
+            @RequestParam(name = "comment", defaultValue = "댓글을 저장합니다.") String comment,
+            @RequestPart(name = "file", required = false) MultipartFile file
     ) throws Exception {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
