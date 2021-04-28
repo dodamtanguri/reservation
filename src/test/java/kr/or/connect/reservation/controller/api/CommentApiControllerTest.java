@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.io.FileInputStream;
@@ -35,17 +37,19 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
 @WebAppConfiguration
 public class CommentApiControllerTest {
-
     @InjectMocks
     public CommentApiController controller;
     @Mock
     CommentService commentService;
+    @Autowired
+    private WebApplicationContext context;
     private MockMvc mockMvc;
 
     @Before
@@ -112,13 +116,11 @@ public class CommentApiControllerTest {
     @DisplayName("댓글 등록 하기")
     public void addComment() throws Exception {
 
-
-
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
 
         FileInputStream fis = new FileInputStream("/Users/BOOST/temp/부스트코스.png");
-        MockMultipartFile file = new MockMultipartFile("file",fis);
+        MockMultipartFile file = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
 
 
         HashMap<String, String> contentTypeParams = new HashMap<String, String>();
@@ -126,19 +128,17 @@ public class CommentApiControllerTest {
         MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
 
 
-        mockMvc.perform(
-                MockMvcRequestBuilders
-                        .multipart("/api/comments")
-                        .accept(MediaType.MULTIPART_FORM_DATA_VALUE)
-                        .param("reservationInfoId", "1")
-                        .param("score", "3")
-                        .param("comment", "댓글을 저장합니다.")
-                        .param("file", file.getName())
-                        .contentType(mediaType)
-
-        ).andDo(print())
+        MockMvc mockMvc1 = MockMvcBuilders.webAppContextSetup(context).build();
+        mockMvc1.perform(MockMvcRequestBuilders.multipart("/api/comments")
+                .file(file)
+                .param("reservationInfoId", "1")
+                .param("score", "3")
+                .param("comment", "댓글을 저장합니다.")
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
                 .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(content().string("success"));
+
     }
+
 
 }
