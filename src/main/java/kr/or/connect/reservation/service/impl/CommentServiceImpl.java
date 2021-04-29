@@ -40,39 +40,42 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID, MultipartFile file) {
-        int productId = commentDAO.getProductId(reservationInfoId, userID);
+        PostCommentApiDTO commentApi = new PostCommentApiDTO();
+        if (file.isEmpty()) {
+            commentApi.setResult("fail");
+            commentApi.setProductId(0);
+        } else {
+            int productId = commentDAO.getProductId(reservationInfoId, userID);
 
-        InsertCommentDTO insert = InsertCommentDTO.builder()
-                .productId(productId)
-                .userId(userID)
-                .comment(comment)
-                .reservationInfoId(reservationInfoId)
-                .score(score)
-                .build();
+            InsertCommentDTO insert = InsertCommentDTO.builder()
+                    .productId(productId)
+                    .userId(userID)
+                    .comment(comment)
+                    .reservationInfoId(reservationInfoId)
+                    .score(score)
+                    .build();
+            int commentId = commentDAO.insertComment(insert);
 
-        int commentId = commentDAO.insertComment(insert);
-        if(file != null) {
+
             InsertFileDTO fileDTO = new InsertFileDTO();
             fileDTO.setFileName(file.getOriginalFilename());
             fileDTO.setSaveFileName(file.getOriginalFilename());
             fileDTO.setContentType(file.getContentType());
-        } else {
-            
+
+            int fileId = commentDAO.insertCommentFile(fileDTO);
+
+            InsertCommentImgDTO insertImg = InsertCommentImgDTO.builder()
+                    .reservationInfoId(reservationInfoId)
+                    .reservationUserCommentId(commentId)
+                    .fileId(fileId)
+                    .build();
+            int status = commentDAO.insertCommentImg(insertImg);
+
+            commentApi.setProductId(productId);
+            commentApi.setResult(status == 0 ? "fail" : "Success");
+
+
         }
-
-
-
-        int fileId = commentDAO.insertCommentFile(fileDTO);
-
-        InsertCommentImgDTO insertImg = InsertCommentImgDTO.builder()
-                .reservationInfoId(reservationInfoId)
-                .reservationUserCommentId(commentId)
-                .fileId(fileId)
-                .build();
-        int status = commentDAO.insertCommentImg(insertImg);
-        PostCommentApiDTO commentApi = new PostCommentApiDTO();
-        commentApi.setProductId(productId);
-        commentApi.setResult(status == 0 ? "fail" : "Success");
         return commentApi;
     }
 }

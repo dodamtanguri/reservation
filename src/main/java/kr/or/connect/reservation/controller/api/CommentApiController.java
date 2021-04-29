@@ -13,6 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+
 @Api(tags = {"댓글목록 API"})
 @RestController
 @RequestMapping(value = "/api/comments")
@@ -44,5 +48,16 @@ public class CommentApiController {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
         return commentService.insertComments(reservationInfoId, score, comment, userID, file);
+    }
+    @GetMapping(value = "/api/files/{fileId}")
+    public void downloadFile(@PathVariable(name = "fileId") int fileId, HttpServletResponse response) throws IOException {
+        try {
+            InputStream inputStreamResource = new InputStream("/Users/BOOST/temp") {
+                @Override
+                public int read() throws IOException {
+                    return 0;
+                }
+            };
+        }
     }
 }
