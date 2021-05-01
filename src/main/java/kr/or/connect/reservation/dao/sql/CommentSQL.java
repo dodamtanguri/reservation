@@ -17,4 +17,5 @@ public class CommentSQL {
 
     public static final String SELECT_COMMENT_PRODUCTID = "select product_id from reservation_info ri where ri.id = :reservationInfoId and ri.user_id = :userId";
 
+    public static final String SELECT_FILE_INFO = "SELECT file_name,save_file_name,content_type FROM file_info WHERE id = :fileId;";
 }

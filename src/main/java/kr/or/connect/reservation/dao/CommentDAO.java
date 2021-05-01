@@ -1,5 +1,6 @@
 package kr.or.connect.reservation.dao;
 
+import kr.or.connect.reservation.dao.rowMapper.DownloadFile;
 import kr.or.connect.reservation.dao.rowMapper.GetCommentImgRowMapper;
 import kr.or.connect.reservation.dao.rowMapper.GetCommentRowMapper;
 import kr.or.connect.reservation.dto.*;
@@ -105,4 +106,13 @@ public class CommentDAO {
     }
 
 
+    public InsertFileDTO downloadFile(int fileId) {
+        Map<String, Integer> params = new HashMap<String, Integer>() {
+            {
+                put("fileId", fileId);
+            }
+        };
+        return jdbc.queryForObject(SELECT_FILE_INFO, params, new DownloadFile());
+
+    }
 }

@@ -16,8 +16,8 @@ public class InsertFileDTO {
     private String saveFileName;
     private String contentType;
     private int deleteFlag;
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
+    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime modifyDate = LocalDateTime.now();
 
     @Builder
 

@@ -38,6 +38,15 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
                 .addResolver(new EncodedResourceResolver());
         registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(3600).resourceChain(true)
                 .addResolver(new EncodedResourceResolver());
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations(environment.getProperty("static.resource.location.img")).setCachePeriod(3600)
+                .resourceChain(true).addResolver(new EncodedResourceResolver());
+        registry.addResourceHandler("/img_map/**")
+                .addResourceLocations(environment.getProperty("static.resource.location.img_map")).setCachePeriod(3600)
+                .resourceChain(true).addResolver(new EncodedResourceResolver());
+        registry.addResourceHandler("/temp/**")
+                .addResourceLocations(environment.getProperty("static.resource.location.commentImage"))
+                .setCachePeriod(3600).resourceChain(true).addResolver(new EncodedResourceResolver());
 
 
 

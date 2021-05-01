@@ -6,16 +6,25 @@ import kr.or.connect.reservation.dto.api.CommentApiDTO;
 import kr.or.connect.reservation.dto.api.PostCommentApiDTO;
 import kr.or.connect.reservation.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final CommentDAO commentDAO;
+
+    @Autowired
+    Environment environment;
 
     @Override
     @Transactional(readOnly = true)
@@ -39,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID, MultipartFile file) {
+    public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID, MultipartFile file) throws IOException {
         PostCommentApiDTO commentApi = new PostCommentApiDTO();
         if (file.isEmpty()) {
             commentApi.setResult("fail");
@@ -58,9 +67,15 @@ public class CommentServiceImpl implements CommentService {
 
 
             InsertFileDTO fileDTO = new InsertFileDTO();
+
+            String saveName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
             fileDTO.setFileName(file.getOriginalFilename());
-            fileDTO.setSaveFileName(file.getOriginalFilename());
+            fileDTO.setSaveFileName(saveName);
             fileDTO.setContentType(file.getContentType());
+
+            File target = new File(environment.getProperty("static.resource.location.img"), saveName);
+            FileCopyUtils.copy(file.getBytes(), target);
 
             int fileId = commentDAO.insertCommentFile(fileDTO);
 
@@ -77,5 +92,10 @@ public class CommentServiceImpl implements CommentService {
 
         }
         return commentApi;
+    }
+
+    @Override
+    public InsertFileDTO downloadFile(int fileId) {
+        return commentDAO.downloadFile(fileId);
     }
 }
