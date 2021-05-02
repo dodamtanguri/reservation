@@ -70,7 +70,7 @@ public class CommentApiController {
         InsertFileDTO downloadFile = commentService.downloadFile(fileId);
         File file = new File(environment.getProperty("static.resource.location.img") + "/" + downloadFile.getSaveFileName());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Cache-Control", "ㅌno-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
         headers.add("Content-Disposition", "attachment; filename=" + file.getName());

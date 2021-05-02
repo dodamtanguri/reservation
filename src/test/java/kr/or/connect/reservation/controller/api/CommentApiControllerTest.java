@@ -136,7 +136,7 @@ public class CommentApiControllerTest {
                 .param("reservationInfoId", "1")
                 .param("score", "3")
                 .param("comment", "댓글을 저장합니다."))
-                .andExpect(status().isOk()).andReturn();
+                .andExpect(status().is4xxClientError()).andReturn();
 
 
 
