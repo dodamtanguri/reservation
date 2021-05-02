@@ -17,7 +17,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -43,7 +42,7 @@ public class ReservationServiceImplTest {
 
     @Mock
     public ReservationDAO reservationDAO;
-    private MockMvc mockMvc;
+
 
     @Before
     public void setUp() {

@@ -30,7 +30,7 @@ public class ReservationApiController {
             @ApiResponse(code = 500, message = "SERVER ERROR")
     })
     @PostMapping
-    public ReservationApiDTO reservation(@RequestBody ReservationBody reservation) {
+    public ReservationApiDTO addReservation(@RequestBody ReservationBody reservation) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
         return reservationService.insertReservationInfo(reservation, userID);

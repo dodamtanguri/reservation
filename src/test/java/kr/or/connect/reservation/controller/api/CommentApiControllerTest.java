@@ -1,7 +1,5 @@
 package kr.or.connect.reservation.controller.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import kr.or.connect.reservation.config.ApplicationConfig;
 import kr.or.connect.reservation.dto.CommentDTO;
 import kr.or.connect.reservation.dto.CommentImagesDTO;
@@ -14,9 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -25,13 +21,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.io.FileInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -43,12 +36,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = ApplicationConfig.class)
 @WebAppConfiguration
 public class CommentApiControllerTest {
+
     @InjectMocks
     public CommentApiController controller;
+
     @Mock
     CommentService commentService;
-    @Autowired
-    private WebApplicationContext context;
+
     private MockMvc mockMvc;
 
     @Before
@@ -110,38 +104,5 @@ public class CommentApiControllerTest {
         verify(commentService).getComment(1, 0, 1);
 
     }
-
-    @Test
-    @DisplayName("댓글 등록 하기")
-    public void addComment() throws Exception {
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-
-        FileInputStream fis = new FileInputStream("/Users/BOOST/temp/부스트코스.png");
-        MockMultipartFile file = new MockMultipartFile("file", "file.png", "image.png", "file".getBytes());
-
-
-        HashMap<String, String> contentTypeParams = new HashMap<String, String>();
-        contentTypeParams.put("boundary", "265001916915724");
-        MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
-
-
-        MockMvc mockMvc1 = MockMvcBuilders.webAppContextSetup(context)
-                .alwaysExpect(status().isOk())
-                .addFilters(new CharacterEncodingFilter("UTF-8", true)).build();
-
-        mockMvc1.perform(MockMvcRequestBuilders.multipart("/api/comments")
-                .file(file)
-                .param("reservationInfoId", "1")
-                .param("score", "3")
-                .param("comment", "댓글을 저장합니다."))
-                .andExpect(status().is4xxClientError()).andReturn();
-
-
-
-
-    }
-
 
 }

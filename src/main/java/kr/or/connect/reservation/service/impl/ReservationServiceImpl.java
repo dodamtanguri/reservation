@@ -3,6 +3,7 @@ package kr.or.connect.reservation.service.impl;
 import kr.or.connect.reservation.dao.ReservationDAO;
 import kr.or.connect.reservation.dto.Body.CancelBody;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
+import kr.or.connect.reservation.dto.Body.ReservationPriceBody;
 import kr.or.connect.reservation.dto.CancelReservation;
 import kr.or.connect.reservation.dto.InsertReservationInfo;
 import kr.or.connect.reservation.dto.ReservationPrice;
@@ -36,11 +37,11 @@ public class ReservationServiceImpl implements ReservationService {
         int reservationInfoId = dao.insertReservationInfo(info);
 
         List<ReservationPrice> priceList = new ArrayList<>();
-        for (int i = 0; i < reservation.getPrices().size(); i++) {
+        for (ReservationPriceBody price : reservation.getPrices()) {
             priceList.add(ReservationPrice.builder()
                     .reservationInfoId(reservationInfoId)
-                    .productPriceId(reservation.getPrices().get(i).getProductPriceId())
-                    .count(reservation.getPrices().get(i).getCount())
+                    .productPriceId(price.getProductPriceId())
+                    .count(price.getCount())
                     .build());
         }
         dao.insertReservationPriceInfo(priceList);
