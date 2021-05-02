@@ -12,19 +12,20 @@ import kr.or.connect.reservation.service.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Api(tags = {"댓글목록 API"})
 @RestController
@@ -34,6 +35,8 @@ public class CommentApiController {
     private final CommentService commentService;
     @Autowired
     Environment environment;
+
+    @Autowired
     private ServletContext servletContext;
 
     @ApiOperation(value = "댓글 목록 구하기")
@@ -63,12 +66,18 @@ public class CommentApiController {
     }
 
     @GetMapping(value = "/files/{fileId}")
-    @ResponseBody
-    public ResponseEntity<Resource> downloadFile(@PathVariable(name = "fileId") int fileId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<Resource> downloadFile(@PathVariable(name = "fileId") int fileId) throws IOException {
         InsertFileDTO downloadFile = commentService.downloadFile(fileId);
-        File file = new File(downloadFile.getSaveFileName());
-        final HttpHeaders headers = new HttpHeaders();
-        Resource resource = new ServletContextResource(servletContext,file.getPath());
-        return new ResponseEntity<>(resource,headers, HttpStatus.CREATED);
+        File file = new File(environment.getProperty("static.resource.location.img") + "/" + downloadFile.getSaveFileName());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.add("Content-Disposition", "attachment; filename=" + file.getName());
+        headers.add("Content-Type", "application/octet-stream; charset = utf-8");
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).body(resource);
+
     }
 }
