@@ -1,18 +1,19 @@
 package kr.or.connect.reservation.dao;
 
 import kr.or.connect.reservation.dao.rowMapper.GetInfosRowMapper;
-import kr.or.connect.reservation.dao.rowMapper.InfoRowMapper;
 import kr.or.connect.reservation.dao.rowMapper.PriceRowMapper;
+import kr.or.connect.reservation.dto.InsertReservationInfo;
 import kr.or.connect.reservation.dto.ReservationInfos;
 import kr.or.connect.reservation.dto.ReservationPrice;
-import kr.or.connect.reservation.dto.api.ReservationApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.Collections;
@@ -20,8 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static javax.swing.UIManager.put;
-import static kr.or.connect.reservation.dao.sql.reservationSQL.*;
+import static kr.or.connect.reservation.dao.sql.ReservationSQL.*;
 
 @Repository
 public class ReservationDAO {
@@ -41,38 +41,33 @@ public class ReservationDAO {
                 .usingGeneratedKeyColumns("id");
     }
 
-    /*
-    예약 등록 하기 
-     */
-    public int insertReservationInfo(ReservationApiDTO reservationInfo) {
-        SqlParameterSource params = new BeanPropertySqlParameterSource(reservationInfo);
+    @Transactional
+    public int insertReservationInfo(InsertReservationInfo insertReservationInfo) {
+        SqlParameterSource params = new BeanPropertySqlParameterSource(insertReservationInfo);
         return insertInfo.executeAndReturnKey(params).intValue();
     }
 
-    public int insertReservationPrice(ReservationPrice reservationPrice) {
-        SqlParameterSource params = new BeanPropertySqlParameterSource(reservationPrice);
-        return insertPrice.executeAndReturnKey(params).intValue();
+    @Transactional
+    public void insertReservationPriceInfo(List<ReservationPrice> prices) {
+        SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(prices);
+        insertPrice.executeBatch(batch);
     }
 
-    public ReservationApiDTO getReservationInfo(int reservationInfoId) {
+    @Transactional
+    public List<ReservationPrice> getReservationPriceInfo(int reservationInfoId, int limit) {
         try {
-            Map<String, Integer> params = new HashMap<>();
-            put("reservationInfoId", reservationInfoId);
-            return jdbc.queryForObject(SELECT_RESERVATION_INFOS, params, new InfoRowMapper());
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
-    public List<ReservationPrice> getReservationPrice(int reservationPriceId) {
-        try {
-            Map<String, Integer> params = new HashMap<>();
-            put("reservationPriceId", reservationPriceId);
+            Map<String, Integer> params = new HashMap<String, Integer>() {
+                {
+                    put("reservationInfoId", reservationInfoId);
+                    put("limit", limit);
+                }
+            };
             return jdbc.query(SELECT_RESERVATION_PRICES, params, new PriceRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return Collections.emptyList();
         }
     }
+
 
     /*
     예약 조회 하기
@@ -80,8 +75,11 @@ public class ReservationDAO {
     public List<ReservationInfos> getReservationInfoApiDTO(int userID) {
         try {
 
-            Map<String, Integer> params = new HashMap<>();
-            put("userID", userID);
+            Map<String, Integer> params = new HashMap<String, Integer>() {
+                {
+                    put("userID", userID);
+                }
+            };
             return jdbc.query(SELECT_GET_RESERVATION_INFOS, params, new GetInfosRowMapper());
 
         } catch (EmptyResultDataAccessException e) {
@@ -94,9 +92,13 @@ public class ReservationDAO {
      */
     public int cancelReservation(int id, int userID) {
         try {
-            Map<String, Integer> params = new HashMap<>();
-            put("id", id);
-            put("userID", userID);
+            Map<String, Integer> params = new HashMap<String, Integer>() {
+                {
+                    put("id", id);
+                    put("userID", userID);
+                }
+            };
+
             return jdbc.update(UPDATE_CANCEL_FLAG, params);
         } catch (EmptyResultDataAccessException e) {
             return 0;

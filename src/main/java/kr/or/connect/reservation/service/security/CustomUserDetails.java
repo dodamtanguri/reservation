@@ -21,8 +21,6 @@ public class CustomUserDetails implements UserDetails {
     private boolean isCredentialsNonExpired;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(String username) {
-    }
 
     public CustomUserDetails(int userId, String username, String password) {
         this.userId = userId;

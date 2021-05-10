@@ -4,6 +4,8 @@ import kr.or.connect.reservation.interceptor.HttpInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.resource.EncodedResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -36,6 +38,10 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
                 .addResolver(new EncodedResourceResolver());
         registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(3600).resourceChain(true)
                 .addResolver(new EncodedResourceResolver());
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations(environment.getProperty("static.resource.location.img")).setCachePeriod(3600)
+                .resourceChain(true).addResolver(new EncodedResourceResolver());
+
 
 
         /* Swagger 2 */
@@ -52,11 +58,18 @@ public class WebMvcContextConfiguration implements WebMvcConfigurer {
 
     }
 
+
     @Bean
     public InternalResourceViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
+        return resolver;
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        StandardServletMultipartResolver resolver = new StandardServletMultipartResolver();
         return resolver;
     }
 }

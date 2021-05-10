@@ -1,9 +1,11 @@
 package kr.or.connect.reservation.service.impl;
 
+import kr.or.connect.reservation.controller.api.WithMockCustomUser;
 import kr.or.connect.reservation.dao.ReservationDAO;
 import kr.or.connect.reservation.dto.Body.CancelBody;
 import kr.or.connect.reservation.dto.Body.ReservationBody;
 import kr.or.connect.reservation.dto.Body.ReservationPriceBody;
+import kr.or.connect.reservation.dto.InsertReservationInfo;
 import kr.or.connect.reservation.dto.ReservationInfos;
 import kr.or.connect.reservation.dto.ReservationPrice;
 import kr.or.connect.reservation.dto.api.GetReservationInfoApiDTO;
@@ -14,30 +16,33 @@ import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
-
 @WebAppConfiguration
-@WithMockUser(username = "carami@connect.co.kr", password = "1234", roles = {"ROLE_USER"})
+@WithMockCustomUser
+@Transactional
 public class ReservationServiceImplTest {
 
 
     @InjectMocks
     public ReservationServiceImpl reservationService;
+
+
     @Mock
     public ReservationDAO reservationDAO;
-    private MockMvc mockMvc;
+
 
     @Before
     public void setUp() {
@@ -45,66 +50,78 @@ public class ReservationServiceImplTest {
 
     }
 
-    //예약 등록 하기
-    @Test
-    @DisplayName("예약 등록 하기 - ReservationInfos")
-    public void testInsertReservation() throws Exception {
 
-        //given
-        ReservationPriceBody reqPrice = new ReservationPriceBody();
-        reqPrice.setCount(2);
-        reqPrice.setProductPriceId(3);
+    @Test
+    public void insertReservationInfo() throws Exception {
+        ReservationPriceBody reqPrice = ReservationPriceBody.builder()
+                .productPriceId(3)
+                .count(3).build();
 
         List<ReservationPriceBody> reqPriceList = new ArrayList<>();
         reqPriceList.add(reqPrice);
 
-        ReservationBody req = new ReservationBody();
-        req.setProductId(1);
-        req.setPrices(reqPriceList);
-        req.setUserId(1);
-        req.setDisplayInfoId(1);
-        req.setReservationYearMonthDay(new Date());
+        ReservationBody req = ReservationBody.builder()
+                .productId(1)
+                .prices(reqPriceList)
+                .displayInfoId(1)
+                .userId(1)
+                .reservationYearMonthDay(LocalDate.now()).build();
 
-        ReservationApiDTO apiDTO = new ReservationApiDTO();
-        ReservationPrice apiPrice = new ReservationPrice();
+        InsertReservationInfo info = InsertReservationInfo.builder()
+                .reservationDate(req.getReservationYearMonthDay())
+                .productId(req.getProductId())
+                .displayInfoId(req.getDisplayInfoId())
+                .userId(req.getUserId())
+                .id(53)
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now())
+                .cancelFlag(0)
+                .build();
 
-        when(reservationDAO.insertReservationInfo(apiDTO)).thenReturn(1);
-        when(reservationDAO.insertReservationPrice(apiPrice)).thenReturn(1);
+        List<ReservationPrice> prices = new ArrayList<>();
+        ReservationPrice price = ReservationPrice.builder()
+                .id(104)
+                .productPriceId(reqPrice.getProductPriceId())
+                .reservationInfoId(info.getId())
+                .count(reqPrice.getCount())
+                .build();
+        prices.add(price);
 
 
-        //When
-        int insertActual = 1;
-        int insertInfoResult = reservationDAO.insertReservationInfo(apiDTO);
-        int insertPriceResult = reservationDAO.insertReservationPrice(apiPrice);
-        System.out.println("insertInfoResult: " + insertInfoResult + "insertPriceResult: " + insertPriceResult);
-        //then
-        assertEquals(insertActual, insertInfoResult);
-        assertEquals(insertActual, insertPriceResult);
+        ReservationApiDTO actual = new ReservationApiDTO(info, prices);
+
+        given(reservationDAO.insertReservationInfo(info)).willReturn(info.getId());
+        given(reservationDAO.getReservationPriceInfo(info.getId(), prices.size())).willReturn(prices);
 
 
-        //vertify
-        verify(reservationDAO, times(1)).insertReservationInfo(apiDTO);
+        ReservationApiDTO insertReservationInfo = reservationService.insertReservationInfo(req, 1);
+
+
+        assertEquals(insertReservationInfo.getProductId(), info.getProductId());
+        assertEquals(insertReservationInfo.getDisplayInfoId(), info.getDisplayInfoId());
+        assertEquals(insertReservationInfo.getUserId(), info.getUserId());
+
 
     }
+
 
     // 예약조회하기
     @Test
     @DisplayName("예약 조회 하기 ")
     public void testGetReservation() throws Exception {
-
         //given
-        ReservationInfos reservationInfos = new ReservationInfos();
-        reservationInfos.setId(51);
-        reservationInfos.setProductId(1);
-        reservationInfos.setDisplayInfoId(1);
-        reservationInfos.setCancelFlag(1);
-        reservationInfos.setProductDescription("PRODUCT DESCRIPTION");
-        reservationInfos.setProductContent("PRODUCT CONTENT");
-        reservationInfos.setUserId(1);
-        reservationInfos.setSumPrice(11000);
-        reservationInfos.setReservationDate(new Date(20200102));
-        reservationInfos.setCreateDate(new Date());
-        reservationInfos.setModifyDate(new Date());
+        ReservationInfos reservationInfos = ReservationInfos.builder()
+                .id(51)
+                .productId(1)
+                .displayInfoId(1)
+                .cancelFlag(1)
+                .productDescription("PRODUCT DESCRIPTION")
+                .productContent("PRODUCT CONTENT")
+                .userId(1)
+                .sumPrice(11000)
+                .reservationDate(LocalDate.of(2020, 1, 2))
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now()).build();
 
 
         List<ReservationInfos> reservation = new ArrayList<>();

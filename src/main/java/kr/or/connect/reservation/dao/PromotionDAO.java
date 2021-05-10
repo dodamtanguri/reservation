@@ -14,7 +14,7 @@ import static kr.or.connect.reservation.dao.sql.PromotionSQL.SELECT_PROMOTION_LI
 @Repository
 public class PromotionDAO {
 
-    private NamedParameterJdbcTemplate jdbc;
+    private final NamedParameterJdbcTemplate jdbc;
 
     @Autowired
     public PromotionDAO(DataSource dataSource) {

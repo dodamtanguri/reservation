@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CommentApitDTO {
+public class CommentApiDTO {
     private int totalCount;
     private int commentCount;
     private List<CommentDTO> reservationUserComments;
