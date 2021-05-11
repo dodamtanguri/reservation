@@ -31,12 +31,11 @@ public class CommentServiceImpl implements CommentService {
     public CommentApiDTO getComment(int productId, int start, int userId) {
 
         List<CommentDTO> commentList = commentDAO.getCommentList(productId, start, userId);
-        for (int i = 0; i < 5; i++) {
-            int reservationInfoId = commentList.get(i).getReservationInfoId();
-            int reservationCommentId = commentList.get(i).getId();
+        for (CommentDTO comment : commentList) {
+            int reservationInfoId = comment.getReservationInfoId();
+            int reservationCommentId = comment.getId();
             List<CommentImagesDTO> commentImage = commentDAO.getCommentImage(reservationInfoId, reservationCommentId);
-            if (commentImage != null)
-                commentList.get(i).setReservationUserCommentImages(commentImage);
+            comment.setReservationUserCommentImages(commentImage);
         }
 
         CommentApiDTO commentApiDTO = new CommentApiDTO();

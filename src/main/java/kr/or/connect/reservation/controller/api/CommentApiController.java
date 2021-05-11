@@ -55,9 +55,9 @@ public class CommentApiController {
 
     @PostMapping
     public PostCommentApiDTO addCommentDTO(
-            @RequestParam(name = "reservationInfoId", required = true, defaultValue = "1") int reservationInfoId,
-            @RequestParam(name = "score", required = true, defaultValue = "3") int score,
-            @RequestParam(name = "comment", defaultValue = "댓글을 저장합니다.") String comment,
+            @RequestParam(defaultValue = "1") int reservationInfoId,
+            @RequestParam(defaultValue = "3") int score,
+            @RequestParam(defaultValue = "댓글을 저장합니다.") String comment,
             @RequestPart(name = "file", required = false) MultipartFile file
     ) throws Exception {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -70,7 +70,7 @@ public class CommentApiController {
         InsertFileDTO downloadFile = commentService.downloadFile(fileId);
         File file = new File(environment.getProperty("static.resource.location.img") + "/" + downloadFile.getSaveFileName());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Cache-Control", "ㅌno-cache, no-store, must-revalidate");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
         headers.add("Content-Disposition", "attachment; filename=" + file.getName());
