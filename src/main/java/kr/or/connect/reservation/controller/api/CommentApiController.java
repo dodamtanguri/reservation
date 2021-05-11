@@ -62,7 +62,10 @@ public class CommentApiController {
     ) throws Exception {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userID = customUserDetails.getUserId();
+
         return commentService.insertComments(reservationInfoId, score, comment, userID, file);
+
+
     }
 
     @GetMapping(value = "/files/{fileId}")

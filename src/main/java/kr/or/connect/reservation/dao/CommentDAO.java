@@ -5,6 +5,7 @@ import kr.or.connect.reservation.dao.rowMapper.GetCommentImgRowMapper;
 import kr.or.connect.reservation.dao.rowMapper.GetCommentRowMapper;
 import kr.or.connect.reservation.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -76,14 +77,18 @@ public class CommentDAO {
 
     @Transactional
     public int getProductId(int reservationInfoId, int userId) {
-        Map<String, Integer> params = new HashMap<String, Integer>() {
-            {
-                put("reservationInfoId", reservationInfoId);
-                put("userId", userId);
-            }
-        };
-        return jdbc.queryForObject(SELECT_COMMENT_PRODUCTID, params, Integer.class);
+        try {
+            Map<String, Integer> params = new HashMap<String, Integer>() {
+                {
+                    put("reservationInfoId", reservationInfoId);
+                    put("userId", userId);
+                }
+            };
+            return jdbc.queryForObject(SELECT_COMMENT_PRODUCTID, params, Integer.class);
 
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
 
     }
 

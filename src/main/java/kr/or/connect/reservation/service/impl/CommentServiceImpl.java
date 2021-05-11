@@ -45,16 +45,13 @@ public class CommentServiceImpl implements CommentService {
 
     }
 
-
     @Override
     public PostCommentApiDTO insertComments(int reservationInfoId, int score, String comment, int userID, MultipartFile file) throws IOException {
         PostCommentApiDTO commentApi = new PostCommentApiDTO();
-        if (file.isEmpty()) {
-            commentApi.setResult("fail");
-            commentApi.setProductId(0);
+        int productId = commentDAO.getProductId(reservationInfoId, userID);
+        if (productId == 0) {
+            commentApi.setResult("등록되지 않은 예약 번호입니다.");
         } else {
-            int productId = commentDAO.getProductId(reservationInfoId, userID);
-
             InsertCommentDTO insert = InsertCommentDTO.builder()
                     .productId(productId)
                     .userId(userID)
@@ -63,35 +60,37 @@ public class CommentServiceImpl implements CommentService {
                     .score(score)
                     .build();
             int commentId = commentDAO.insertComment(insert);
-
-
-            InsertFileDTO fileDTO = new InsertFileDTO();
-
-            String saveName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-
-            fileDTO.setFileName(file.getOriginalFilename());
-            fileDTO.setSaveFileName(saveName);
-            fileDTO.setContentType(file.getContentType());
-
-            File target = new File(environment.getProperty("static.resource.location.img"), saveName);
-            FileCopyUtils.copy(file.getBytes(), target);
-
-            int fileId = commentDAO.insertCommentFile(fileDTO);
-
-            InsertCommentImgDTO insertImg = InsertCommentImgDTO.builder()
-                    .reservationInfoId(reservationInfoId)
-                    .reservationUserCommentId(commentId)
-                    .fileId(fileId)
-                    .build();
-            int status = commentDAO.insertCommentImg(insertImg);
-
             commentApi.setProductId(productId);
-            commentApi.setResult(status == 0 ? "fail" : "Success");
+            commentApi.setResult(commentId == 0 ? "fail" : "Success");
 
+            if (file != null) {
+                InsertFileDTO fileDTO = new InsertFileDTO();
 
+                String saveName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+                fileDTO.setFileName(file.getOriginalFilename());
+                fileDTO.setSaveFileName(saveName);
+                fileDTO.setContentType(file.getContentType());
+
+                File target = new File(environment.getProperty("static.resource.location.img"), saveName);
+                FileCopyUtils.copy(file.getBytes(), target);
+
+                int fileId = commentDAO.insertCommentFile(fileDTO);
+
+                InsertCommentImgDTO insertImg = InsertCommentImgDTO.builder()
+                        .reservationInfoId(reservationInfoId)
+                        .reservationUserCommentId(commentId)
+                        .fileId(fileId)
+                        .build();
+                int status = commentDAO.insertCommentImg(insertImg);
+
+                commentApi.setProductId(productId);
+                commentApi.setResult(status == 0 ? "fail" : "Success");
+            }
         }
         return commentApi;
     }
+
 
     @Override
     public InsertFileDTO downloadFile(int fileId) {
